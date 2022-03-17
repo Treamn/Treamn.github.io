@@ -14,12 +14,5 @@
     </author><guid>http://example.org/2022/first-post/</guid>
     <description><![CDATA[T
 This is first testThis is first test.]]></description>
-</item><item>
-    <title>Second</title>
-    <link>http://example.org/2022/second/</link>
-    <pubDate>Thu, 17 Mar 2022 11:40:44 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/second/</guid>
-    <description><![CDATA[This is sec.This is sec.]]></description>
 </item></channel>
 </rss>
