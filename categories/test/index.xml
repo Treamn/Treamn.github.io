@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Test - 分类 - Dling</title>
+        <link>http://example.org/categories/test/</link>
+        <description>Test - 分类 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 17 Mar 2022 21:52:54 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/test/" rel="self" type="application/rss+xml" /><item>
+    <title>First Post</title>
+    <link>http://example.org/2022/first-post/</link>
+    <pubDate>Thu, 17 Mar 2022 21:52:54 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/first-post/</guid>
+    <description><![CDATA[T This is first testThis is first test. 出现了奇奇怪怪的错误，打开了懵逼新世界的大门~]]></description>
+</item></channel>
+</rss>
