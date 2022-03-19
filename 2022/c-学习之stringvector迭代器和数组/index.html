@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">C&#43;&#43;学习之string、vector、迭代器和数组 - Dling</title><meta name="Description" content="Dling | 煜江的个人博客"><meta property="og:title" content="C&#43;&#43;学习之string、vector、迭代器和数组" />
+<meta property="og:description" content="stringstring表示可变长的字符序列，使用string类型前需要包含string头文件，同时需要在命名空间中声明。需要注意，stri" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" /><meta property="og:image" content="http://example.org/logo.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-19T17:43:16+08:00" />
+<meta property="article:modified_time" content="2022-03-19T17:43:16+08:00" /><meta property="og:site_name" content="Dling | 煜江的个人博客" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.jpg"/>
+
+<meta name="twitter:title" content="C&#43;&#43;学习之string、vector、迭代器和数组"/>
+<meta name="twitter:description" content="stringstring表示可变长的字符序列，使用string类型前需要包含string头文件，同时需要在命名空间中声明。需要注意，stri"/>
+<meta name="application-name" content="Dling">
+<meta name="apple-mobile-web-app-title" content="Dling">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.1d6e6517c44074bf1c692657d249d106a5e98bb9db25f7773715b24eda7aa575354611c095c23092aa17916f1b5be527.css" integrity="sha384-HW5lF8RAdL8caSZX0knRBqXpi7nbJfd3NxWyTtp6pXU1RhHAlcIwkqoXkW8bW&#43;Un"><link rel="stylesheet" href="/css/style.min.8540842213936bd2a523af7a572a979f0061839c28d9f3f25e5edb76d34b76136170ccd1a71501f0ecc51daadc867cb2.css" integrity="sha384-hUCEIhOTa9KlI696VyqXnwBhg5wo2fPyXl7bdtNLdhNhcMzRpxUB8OzFHarchnyy"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC"></noscript>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "C++学习之string、vector、迭代器和数组",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84\/"
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "string, vector, 迭代器, 数组","wordcount":  1978 ,
+        "url": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84\/","datePublished": "2022-03-19T17:43:16+08:00","dateModified": "2022-03-19T17:43:16+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "煜江叔叔"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('light' === 'light' || 'light' === 'dark' || 'light' === 'black') setTheme('light'), saveTheme('light'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/series/"><i class="fas fa-object-group"></i> 系列 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/link/"><i class="fas fa-link"></i> 友链 </a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/series/" title=""><i class="fas fa-object-group"></i>系列</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/link/" title=""><i class="fas fa-link"></i>友链</a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#string">string</a></li>
+    <li><a href="#vector">vector</a></li>
+    <li><a href="#迭代器">迭代器</a>
+      <ul>
+        <li><a href="#解引用">解引用</a></li>
+      </ul>
+    </li>
+    <li><a href="#数组">数组</a>
+      <ul>
+        <li><a href="#指针和数组">指针和数组</a></li>
+        <li><a href="#多维数组">多维数组</a></li>
+        <li><a href="#指针和多维数组">指针和多维数组</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;学习之string、vector、迭代器和数组</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/cpp-prime/"><i class="far fa-list-alt fa-fw"></i>CPP Prime</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-19">03-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-19">03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1978 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details series-nav open">
+                                <div class="details-summary series-title">
+                                    <span>系列 - CPP Prime</span>
+                                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                                </div>
+                                <div class="details-content series-content">
+                                    <nav>
+                                        <ul><li><span class="active">C&#43;&#43;学习之string、vector、迭代器和数组</span></li></ul>
+                                    </nav>
+                                </div>
+                            </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#string">string</a></li>
+    <li><a href="#vector">vector</a></li>
+    <li><a href="#迭代器">迭代器</a>
+      <ul>
+        <li><a href="#解引用">解引用</a></li>
+      </ul>
+    </li>
+    <li><a href="#数组">数组</a>
+      <ul>
+        <li><a href="#指针和数组">指针和数组</a></li>
+        <li><a href="#多维数组">多维数组</a></li>
+        <li><a href="#指针和多维数组">指针和多维数组</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="string" class="headerLink">
+    <a href="#string" class="header-mark"></a>string</h2><p>string表示可变长的字符序列，使用string类型前需要包含string头文件，同时需要在命名空间中声明。需要注意，string对象对大小写敏感。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#incude &lt;string&gt;
+</span></span><span class="line"><span class="cl">using std::string;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在最终的字符串中保留输入时的空白符，可以使用getline函数。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">string line;
+</span></span><span class="line"><span class="cl">getline(cin, line);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>getline函数的参数是一个输入流和一个string对象，函数从给定的输入流中读入内容，遇到换行符则停止读入，然后将读入的内容存到string对象中。需要注意，如果一开始就读到换行符的话，就会得到一个空的string。</p>
+<ul>
+<li>empty函数判断一个string对象是否为空。</li>
+<li>size函数返回string对象的长度(无符号整数)。</li>
+<li>在使用‘+’对string进行操作时候，<strong>必须确保</strong>运算符两侧的对象至少有一个是string。</li>
+<li>cctype头文件中定义了一组标准库函数对string进行处理。</li>
+<li>如果想要使用循环改变string中字符的值。必须将循环变量定义成引用类型。</li>
+</ul>
+<hr>
+<h2 id="vector" class="headerLink">
+    <a href="#vector" class="header-mark"></a>vector</h2><p>vector存放某种给定类型的可变长序列，由于vector容纳者其他对象，因此也被称为容器。同string，要使用vector，必须包含相应的头文件，同时在命名空间中声明。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;vector&gt;
+</span></span><span class="line"><span class="cl">using std::vector;
+</span></span><span class="line"><span class="cl">vector&lt;int&gt;  ivec;         //ivec保存int类型的对象
+</span></span><span class="line"><span class="cl">vector&lt;int&gt;  ivec2(ivec);  //创建ivec2，并把ivec的值复制给ivec2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用push_back函数可以往vector对象中压入元素。</li>
+<li>需要注意，如果循环体内包含有向vector对象添加元素的语句，则不能使用范围for循环。</li>
+<li>访问vector中元素的方法和访问string中字符的方法是差不多的，包括empty，size等。</li>
+<li>如果在for循环中对vector元素继续赋值操作，则需要将循环变量设置为引用类型。</li>
+</ul>
+<hr>
+<h2 id="迭代器" class="headerLink">
+    <a href="#%e8%bf%ad%e4%bb%a3%e5%99%a8" class="header-mark"></a>迭代器</h2><p>在迭代器中，begin成员负责返回指向第一个元素的迭代器。end则负责指向尾元素的下一个位置（尾后元素）。</p>
+<ul>
+<li>begin和end的返回值类型是由对象是否是常量决定，如果对象是常量则返回const_iterator，如果对象不是常量，则返回iterator。</li>
+<li>如果对象只需要读操作而无需写操作的话，最好使用常量类型，此时可以使用<strong>cbegin</strong>和<strong>cend</strong>函数，上述函数不论对象本身是否为常量，返回值都是const_iterator。</li>
+</ul>
+<h3 id="解引用" class="headerLink">
+    <a href="#%e8%a7%a3%e5%bc%95%e7%94%a8" class="header-mark"></a>解引用</h3><p>解引用迭代器可以获得迭代器所指的对象，如果该对象恰好是类，就有可能希望进一步访问他的成员。<br>
+例如，对于一个由字符串组成的vector对象来说，检查其元素是否为空，令it为迭代器，检查it所指字符串是否为空即可。需要注意，(*it)的圆括号必不可少。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(*it).empty();  //先解引用，再调用empty
+</span></span><span class="line"><span class="cl">*it.empty();    //错误，it是个迭代器
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或直接使用箭头运算符(-&gt;)，箭头运算符把解引用和成员访问两个操作结合在一起。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(*it).empty();  //判断it是否为空
+</span></span><span class="line"><span class="cl">it-&gt;empty();    //判断it是否为空
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>但凡是使用迭代器的循环体，都不要向迭代器所属容器添加元素。</li>
+<li>string和vector的迭代器可以使用加减操作，使得迭代器每次的移动跨过多个元素。</li>
+<li>在对两个迭代器进行运算时，参与运算的两个迭代器必须指向的是同一容器中的元素。</li>
+<li>迭代器可用于实现二分搜索。</li>
+</ul>
+<hr>
+<h2 id="数组" class="headerLink">
+    <a href="#%e6%95%b0%e7%bb%84" class="header-mark"></a>数组</h2><p>数组也是存放类型相同的对象的容器，与vector类似，但与vector不同的是，数组的大小确定不变，不能随意向数组中增加元素。</p>
+<ul>
+<li>如果不清楚元素的确切数量，则使用vector</li>
+<li>数组在定义时需指定类型，不允许使用auto关键字推断。</li>
+<li>不能将数组的内容拷贝给其他数组做初始值。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int *ptrs[10];             //ptrs是含有10个整形指针的数组     
+</span></span><span class="line"><span class="cl">int (*Parray)[10] = &amp;arr;  //Parray指向一个含有10个整数的数组
+</span></span><span class="line"><span class="cl">int (&amp;arrRef)[10] = arr;   //arrRef引用一个含有10个整数的数组
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="指针和数组" class="headerLink">
+    <a href="#%e6%8c%87%e9%92%88%e5%92%8c%e6%95%b0%e7%bb%84" class="header-mark"></a>指针和数组</h3><ul>
+<li>当使用数组作为一个auto变量的初始值时，推断得到的类型是指针。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int ia[] = {0,1,2};
+</span></span><span class="line"><span class="cl">auto ia2(ia);              //ia2是一个指针，指向ia的第一个元素
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>指向数组的指针可以当作迭代器进行使用，但是尾后元素需要自行获取。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int arr[] = {0,1,2,3,4};
+</span></span><span class="line"><span class="cl">int *p = arr;     //p指向arr第一个元素
+</span></span><span class="line"><span class="cl">int *e = arr[5];   //e指向arr尾元素的下一位置
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>C++11引入名为begin和end的函数用于获取数组首元素和尾后元素,这两个函数定义在iterator头文件中。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int arr[] = {0,1,2,3,4};
+</span></span><span class="line"><span class="cl">int *p = begin(arr);   //p指向arr第一个元素
+</span></span><span class="line"><span class="cl">int *e = end(arr);     //e指向arr尾元素的下一位置
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>指针运算和迭代器运算类似。</li>
+<li>假如结果指针指向了一个元素，则允许解引用该结果指针。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int arr[] = {0,2,4,6,8};
+</span></span><span class="line"><span class="cl">int last = *(ar + 4);     //last值为8 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="多维数组" class="headerLink">
+    <a href="#%e5%a4%9a%e7%bb%b4%e6%95%b0%e7%bb%84" class="header-mark"></a>多维数组</h3><p>多维数组就是数组的数组。</p>
+<ul>
+<li>C++11中新增or语句对多维数组进行处理。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int ia[3][4];
+</span></span><span class="line"><span class="cl">size_t cnt = 0;
+</span></span><span class="line"><span class="cl">for(auto &amp;row : ia)         //对于外层数组的每一个元素
+</span></span><span class="line"><span class="cl">    for(auto &amp;col : row){   //对于内层数组的每一个元素
+</span></span><span class="line"><span class="cl">        col = cnt;
+</span></span><span class="line"><span class="cl">        cnt++;
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在遍历多维数组时，要将外围for循环的循环变量设置为引用型，这样是为了避免数组被自动转换为指针。</li>
+</ul>
+<h3 id="指针和多维数组" class="headerLink">
+    <a href="#%e6%8c%87%e9%92%88%e5%92%8c%e5%a4%9a%e7%bb%b4%e6%95%b0%e7%bb%84" class="header-mark"></a>指针和多维数组</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int ia[3][4];
+</span></span><span class="line"><span class="cl">for(auto p = begin(ia); p != end(ia); p++){  //q指向内层元素的首元素
+</span></span><span class="line"><span class="cl">    for(auto q = begin(*p); q != end(*q); q++)
+</span></span><span class="line"><span class="cl">        cout &lt;&lt; *q;  //输出q所指的值
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 03-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-title="C&#43;&#43;学习之string、vector、迭代器和数组" data-hashtags="string,vector,迭代器,数组"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-hashtag="string"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-title="C&#43;&#43;学习之string、vector、迭代器和数组" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-title="C&#43;&#43;学习之string、vector、迭代器和数组"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-title="C&#43;&#43;学习之string、vector、迭代器和数组"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-title="C&#43;&#43;学习之string、vector、迭代器和数组"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-title="C&#43;&#43;学习之string、vector、迭代器和数组" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" data-title="C&#43;&#43;学习之string、vector、迭代器和数组"><i class="fab fa-skype fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/string/">string</a>,&nbsp;<a href="/tags/vector/">vector</a>,&nbsp;<a href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/">迭代器</a>,&nbsp;<a href="/tags/%E6%95%B0%E7%BB%84/">数组</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.94.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">煜江叔叔</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div><script>
+                    if('serviceWorker' in navigator) {
+                        navigator.serviceWorker
+                            .register('/sw.min.js', { scope: '/' })
+                            .then(function(registration) {
+                            });
+                
+                        navigator.serviceWorker
+                            .ready
+                            .then(function(registration) {
+                            });
+                    }
+                </script></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.dd4cfdb9c1bcaa687c9794e0620c478af43dec711c465b0560c274a0c20d6023bc183b8817015eb778ab746927905d6e.js" integrity="sha384-3Uz9ucG8qmh8l5TgYgxHivQ97HEcRlsFYMJ0oMINYCO8GDuIFwFet3irdGknkF1u"></script><script type="text/javascript" src="/lib/fuse/fuse.min.48c164d6be2fb1688f4fe95c476118b3a5dbda2aad6b2cd12c8ccb959d37db926987c59fdc9338e377b745807f0c06b0.js" integrity="sha384-SMFk1r4vsWiPT&#43;lcR2EYs6Xb2iqtayzRLIzLlZ0325Jph8Wf3JM443e3RYB/DAaw"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.de04ffbec7a95a47f3fdf7fb3e958d51e333796a07ddc0e19bf03c8ccee8ba800ad3f7cfffd6dc1c7479907ab69dff9e.js" integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e"></script><script type="text/javascript" src="/lib/topbar/topbar.min.1c26dd3f83978c568ee1c91cb7c6f1e397518b40c73c772d534ff3f3bb81cae306c6b7e8ee2275017e43fe0c0ed56822.js" integrity="sha384-HCbdP4OXjFaO4ckct8bx45dRi0DHPHctU0/z87uByuMGxrfo7iJ1AX5D/gwO1Wgi"></script><script type="text/javascript" src="/lib/pjax/pjax.min.811be7fbe3806492067fb1a7b4488f825fae80cc1d97e76064e8db943473e99ba8cb53fc73cd34a2cd2de52f2548f677.js" integrity="sha384-gRvn&#43;&#43;OAZJIGf7GntEiPgl&#43;ugMwdl&#43;dgZOjblDRz6Zuoy1P8c800os0t5S8lSPZ3"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":true,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":true,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.094758c1816ef1698123c876e7b739ac27751905f428bfb349857a93244d636b615bb42a43298a19f4c2235587c33bf2.js" integrity="sha384-CUdYwYFu8WmBI8h257c5rCd1GQX0KL&#43;zSYV6kyRNY2thW7QqQymKGfTCI1WHwzvy"></script><script type="text/javascript" src="/lib/sharer/sharer.min.0097b33812ac4873e9a2e0813de400c9ea9b07e223998d3cbc38a89bdfa3f45cc344689061a836fcd6f4c120eed429b4.js" integrity="sha384-AJezOBKsSHPpouCBPeQAyeqbB&#43;IjmY08vDiom9&#43;j9FzDRGiQYag2/Nb0wSDu1Cm0"></script><script type="text/javascript" src="/lib/katex/katex.min.cf57c90eac3c640a6318edffba73d650fb08ca67ec266cab0d5582f13bff6b51de3ad1a693035dffbc544b45dc9efb31.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.f970658d73cf8aff8ecdf6c1ddc5662c77f885d5051e558d64de6ca4d43bae61d35e977b5af26e9ba7c8002a4d35f211.js" integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.129f44b345428d59fd74579a376b90c6019c1a61bea5f678781687c54a715c3391aeb54009954ea72c32cef15119b9af.js" integrity="sha384-Ep9Es0VCjVn9dFeaN2uQxgGcGmG&#43;pfZ4eBaHxUpxXDORrrVACZVOpywyzvFRGbmv" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.50463d2113e457e4d34d8ee72b5c12adf8563c3272f70af83e6620dc32cf70de45e0d0e5230199916b56bde291ff8e5c.js" integrity="sha384-UEY9IRPkV&#43;TTTY7nK1wSrfhWPDJy9wr4PmYg3DLPcN5F4NDlIwGZkWtWveKR/45c" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.c1295c9b11c1c40c96352d034d67fdec66a788f699f663cc2bd92b0081cb3f444ae3739dcd761e19ee5b23006356ac7d.css" integrity="sha384-wSlcmxHBxAyWNS0DTWf97GaniPaZ9mPMK9krAIHLP0RK43OdzXYeGe5bIwBjVqx9"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK"></noscript></div>
+</body>
+
+</html>
