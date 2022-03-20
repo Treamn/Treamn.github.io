@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "string, vector, 迭代器, 数组","wordcount":  1978 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "string, vector, 迭代器, 数组","wordcount":  1977 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84\/","datePublished": "2022-03-19T17:43:16+08:00","dateModified": "2022-03-19T17:43:16+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -140,12 +140,12 @@
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;学习之string、vector、迭代器和数组</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
-                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/cpp-prime/"><i class="far fa-list-alt fa-fw"></i>CPP Prime</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-19">03-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-19">03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1978 字&nbsp;
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++-prime/"><i class="far fa-list-alt fa-fw"></i>C++ Prime</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-19">03-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-19">03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1977 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
-                                    <span>系列 - CPP Prime</span>
+                                    <span>系列 - C&#43;&#43; Prime</span>
                                     <span><i class="details-icon fas fa-angle-right"></i></span>
                                 </div>
                                 <div class="details-content series-content">
@@ -184,8 +184,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#incude &lt;string&gt;
-</span></span><span class="line"><span class="cl">using std::string;
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#incude &lt;string&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -197,8 +197,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">string line;
-</span></span><span class="line"><span class="cl">getline(cin, line);
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="n">line</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">line</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>getline函数的参数是一个输入流和一个string对象，函数从给定的输入流中读入内容，遇到换行符则停止读入，然后将读入的内容存到string对象中。需要注意，如果一开始就读到换行符的话，就会得到一个空的string。</p>
@@ -220,11 +220,11 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;vector&gt;
-</span></span><span class="line"><span class="cl">using std::vector;
-</span></span><span class="line"><span class="cl">vector&lt;int&gt;  ivec;         //ivec保存int类型的对象
-</span></span><span class="line"><span class="cl">vector&lt;int&gt;  ivec2(ivec);  //创建ivec2，并把ivec的值复制给ivec2
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span>  <span class="n">ivec</span><span class="p">;</span>         <span class="c1">//ivec保存int类型的对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span>  <span class="n">ivec2</span><span class="p">(</span><span class="n">ivec</span><span class="p">);</span>  <span class="c1">//创建ivec2，并把ivec的值复制给ivec2
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>使用push_back函数可以往vector对象中压入元素。</li>
@@ -248,9 +248,9 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(*it).empty();  //先解引用，再调用empty
-</span></span><span class="line"><span class="cl">*it.empty();    //错误，it是个迭代器
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">).</span><span class="n">empty</span><span class="p">();</span>  <span class="c1">//先解引用，再调用empty
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">*</span><span class="n">it</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span>    <span class="c1">//错误，it是个迭代器
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>或直接使用箭头运算符(-&gt;)，箭头运算符把解引用和成员访问两个操作结合在一起。</p>
 <div class="highlight"><div class="chroma">
@@ -259,9 +259,9 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(*it).empty();  //判断it是否为空
-</span></span><span class="line"><span class="cl">it-&gt;empty();    //判断it是否为空
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">).</span><span class="n">empty</span><span class="p">();</span>  <span class="c1">//判断it是否为空
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">it</span><span class="o">-&gt;</span><span class="n">empty</span><span class="p">();</span>    <span class="c1">//判断it是否为空
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>但凡是使用迭代器的循环体，都不要向迭代器所属容器添加元素。</li>
@@ -284,10 +284,10 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int *ptrs[10];             //ptrs是含有10个整形指针的数组     
-</span></span><span class="line"><span class="cl">int (*Parray)[10] = &amp;arr;  //Parray指向一个含有10个整数的数组
-</span></span><span class="line"><span class="cl">int (&amp;arrRef)[10] = arr;   //arrRef引用一个含有10个整数的数组
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">ptrs</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>             <span class="c1">//ptrs是含有10个整形指针的数组     
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">Parray</span><span class="p">)[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">;</span>  <span class="c1">//Parray指向一个含有10个整数的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">arrRef</span><span class="p">)[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">;</span>   <span class="c1">//arrRef引用一个含有10个整数的数组
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="指针和数组" class="headerLink">
     <a href="#%e6%8c%87%e9%92%88%e5%92%8c%e6%95%b0%e7%bb%84" class="header-mark"></a>指针和数组</h3><ul>
@@ -299,9 +299,9 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int ia[] = {0,1,2};
-</span></span><span class="line"><span class="cl">auto ia2(ia);              //ia2是一个指针，指向ia的第一个元素
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">ia</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="nf">ia2</span><span class="p">(</span><span class="n">ia</span><span class="p">);</span>              <span class="c1">//ia2是一个指针，指向ia的第一个元素
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>指向数组的指针可以当作迭代器进行使用，但是尾后元素需要自行获取。</li>
@@ -313,10 +313,10 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int arr[] = {0,1,2,3,4};
-</span></span><span class="line"><span class="cl">int *p = arr;     //p指向arr第一个元素
-</span></span><span class="line"><span class="cl">int *e = arr[5];   //e指向arr尾元素的下一位置
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">arr</span><span class="p">;</span>     <span class="c1">//p指向arr第一个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>   <span class="c1">//e指向arr尾元素的下一位置
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>C++11引入名为begin和end的函数用于获取数组首元素和尾后元素,这两个函数定义在iterator头文件中。</li>
@@ -328,10 +328,10 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int arr[] = {0,1,2,3,4};
-</span></span><span class="line"><span class="cl">int *p = begin(arr);   //p指向arr第一个元素
-</span></span><span class="line"><span class="cl">int *e = end(arr);     //e指向arr尾元素的下一位置
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">begin</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>   <span class="c1">//p指向arr第一个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">end</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>     <span class="c1">//e指向arr尾元素的下一位置
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>指针运算和迭代器运算类似。</li>
@@ -343,9 +343,9 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int arr[] = {0,2,4,6,8};
-</span></span><span class="line"><span class="cl">int last = *(ar + 4);     //last值为8 
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">ar</span> <span class="o">+</span> <span class="mi">4</span><span class="p">);</span>     <span class="c1">//last值为8 
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="多维数组" class="headerLink">
     <a href="#%e5%a4%9a%e7%bb%b4%e6%95%b0%e7%bb%84" class="header-mark"></a>多维数组</h3><p>多维数组就是数组的数组。</p>
@@ -363,13 +363,13 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int ia[3][4];
-</span></span><span class="line"><span class="cl">size_t cnt = 0;
-</span></span><span class="line"><span class="cl">for(auto &amp;row : ia)         //对于外层数组的每一个元素
-</span></span><span class="line"><span class="cl">    for(auto &amp;col : row){   //对于内层数组的每一个元素
-</span></span><span class="line"><span class="cl">        col = cnt;
-</span></span><span class="line"><span class="cl">        cnt++;
-</span></span><span class="line"><span class="cl">    }
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">ia</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="n">size_t</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">row</span> <span class="p">:</span> <span class="n">ia</span><span class="p">)</span>         <span class="c1">//对于外层数组的每一个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">col</span> <span class="p">:</span> <span class="n">row</span><span class="p">){</span>   <span class="c1">//对于内层数组的每一个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">col</span> <span class="o">=</span> <span class="n">cnt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cnt</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -385,11 +385,11 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int ia[3][4];
-</span></span><span class="line"><span class="cl">for(auto p = begin(ia); p != end(ia); p++){  //q指向内层元素的首元素
-</span></span><span class="line"><span class="cl">    for(auto q = begin(*p); q != end(*q); q++)
-</span></span><span class="line"><span class="cl">        cout &lt;&lt; *q;  //输出q所指的值
-</span></span><span class="line"><span class="cl">}
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">ia</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">begin</span><span class="p">(</span><span class="n">ia</span><span class="p">);</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">end</span><span class="p">(</span><span class="n">ia</span><span class="p">);</span> <span class="n">p</span><span class="o">++</span><span class="p">){</span>  <span class="c1">//q指向内层元素的首元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">q</span> <span class="o">=</span> <span class="n">begin</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span> <span class="n">q</span> <span class="o">!=</span> <span class="n">end</span><span class="p">(</span><span class="o">*</span><span class="n">q</span><span class="p">);</span> <span class="n">q</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">q</span><span class="p">;</span>  <span class="c1">//输出q所指的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></div>

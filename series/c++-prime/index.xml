@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>C&#43;&#43; Prime - 系列 - Dling</title>
+        <link>http://example.org/series/c&#43;&#43;-prime/</link>
+        <description>C&#43;&#43; Prime - 系列 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 19 Mar 2022 17:43:16 &#43;0800</lastBuildDate><atom:link href="http://example.org/series/c&#43;&#43;-prime/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;学习之string、vector、迭代器和数组</title>
+    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/</link>
+    <pubDate>Sat, 19 Mar 2022 17:43:16 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/</guid>
+    <description><![CDATA[stringstring表示可变长的字符序列，使用string类型前需要包含string头文件，同时需要在命名空间中声明。需要注意，stri]]></description>
+</item></channel>
+</rss>
