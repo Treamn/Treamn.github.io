@@ -2,14 +2,17 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://example.org/series/c&#43;&#43;-primer/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/series/c&#43;&#43;-primer/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/categories/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/posts/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/series/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/%E5%BC%82%E5%B8%B8/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/%E8%AF%AD%E5%8F%A5/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/categories/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/posts/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/series/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/tags/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://example.org/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://example.org/tags/%E8%BF%90%E7%AE%97%E7%AC%A6/</loc><lastmod>2022-03-20T14:38:41&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/</loc><lastmod>2022-03-19T17:43:16&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>

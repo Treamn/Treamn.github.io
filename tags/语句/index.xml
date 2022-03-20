@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>语句 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E8%AF%AD%E5%8F%A5/</link>
+        <description>语句 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 20 Mar 2022 16:29:22 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E8%AF%AD%E5%8F%A5/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;学习之语句及异常</title>
+    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/</link>
+    <pubDate>Sun, 20 Mar 2022 16:29:22 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/</guid>
+    <description><![CDATA[简单语句 空语句 空语句中只含有一个单独的分号。 1 ; //空语句 如果程序的某个地方，语法上需要一条语句，但是逻辑上不需要，此时应该使用空语句。 例如]]></description>
+</item></channel>
+</rss>
