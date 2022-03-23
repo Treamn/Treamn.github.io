@@ -64,7 +64,7 @@ void* p = & d;
 double *dp = static_cast<double*>(p);  //将void*转换为初始的指针类型
 ```
 - const_cast   
-只能改变运算对象的底层const。
+只能改变运算对象的底层const,可以用来移除常量性或易变性。
 ```cpp
 const char *pc;
 char *p = const_cast<char*>(pc);

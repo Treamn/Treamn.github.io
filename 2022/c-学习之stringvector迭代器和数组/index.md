@@ -27,7 +27,7 @@ int main(){
         string s("Exemplary");
         char& back = s.back();
         back = 's';
-        cout << s << endl;    // Exemplas
+        cout << s << endl;    // Exemplars
     }
     {
         string const c("Exemplary");
