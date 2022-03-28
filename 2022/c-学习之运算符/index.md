@@ -55,14 +55,42 @@ int* ip = ia; //ia转换成指向数组首元素的指针
 一个命名的强制类型转换具有如下形式：  
 ` cast-name<type>(expression) `  
 type是转换的目标类型，expression是要转换的值。casy-name是static_cast、dynamic_cast、const_cast和reinterpret_cast中的一种。
+
+
 - static_cast  
 适用于任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast。  
 当把较大的算数类型赋值给较小的类型时，static_cast非常有用。  
-ststic_cast同样适用于编译器无法自动执行的类型转换。
+static_cast同样适用于编译器无法自动执行的类型转换。
 ```cpp
-void* p = & d;
-double *dp = static_cast<double*>(p);  //将void*转换为初始的指针类型
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct B{
+    int m = 0;
+    void hello() const{
+        cout << "this is B" << endl;
+    }
+};
+
+struct D:B{
+    void hello() const{
+        cout << "this is D" << endl;
+    }
+};
+
+int main(){
+    D d;
+    B& br = d;
+    br.hello(); // this is B
+    D& another_d = static_cast<D&>(br);
+    another_d.hello(); // this is D
+
+}
 ```
+
+
+
 
 
 - const_cast   
