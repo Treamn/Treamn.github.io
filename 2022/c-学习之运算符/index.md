@@ -63,14 +63,44 @@ ststic_cast同样适用于编译器无法自动执行的类型转换。
 void* p = & d;
 double *dp = static_cast<double*>(p);  //将void*转换为初始的指针类型
 ```
+
+
 - const_cast   
 只能改变运算对象的底层const,可以用来移除常量性或易变性。
+函数指针和成员函数指针无法用于const_cast。
+const_cast使得到非const类型的应用或指针能够实际指代const对象，货或到非volatile类型的引用或指针能够实际指代volatile对象。
 ```cpp
-const char *pc;
-char *p = const_cast<char*>(pc);
+#include <iostream>
+using namespace std;
+
+struct type{
+    int i;
+    type(): i(3){} // 构造函数
+    void f(int v) const{
+        // this->i = v;
+        const_cast<type*>(this)->i = v; 
+    }
+};
+
+int main(){
+    int i = 3;
+    const int& rci = i;
+    cout << rci << endl; // 3
+    const_cast<int&>(rci) = 4;
+    cout << rci << endl; // 4
+
+    type t;
+    t.f(5);
+    cout << t.i << endl;
+
+}
 ```
+
+
+
 - reinterpret_cast  
-通常为运算对象的位模式提供较低层次上的重新编译。
+与static_const不同，但与const_cast类似。reinterpret_cast是一个编译时指令，通常为运算对象的位模式提供较低层次上的重新编译。
+
 ```cpp
 int *io;
 char *pc = reinterpret_cast<char*>(ip);
