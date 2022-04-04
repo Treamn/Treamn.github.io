@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>高考 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E9%AB%98%E8%80%83/</link>
+        <description>高考 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 04 Apr 2022 16:10:20 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E9%AB%98%E8%80%83/" rel="self" type="application/rss+xml" /><item>
+    <title>青春派</title>
+    <link>http://example.org/2022/youngstyle/</link>
+    <pubDate>Mon, 04 Apr 2022 16:10:20 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/youngstyle/</guid>
+    <description><![CDATA[This is a test text!!!]]></description>
+</item></channel>
+</rss>
