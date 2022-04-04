@@ -221,6 +221,57 @@ else
 - 不要返回局部对象的引用或指针  
 函数完成后，它所占用的存储空间也随之被释放。因此，函数终止意味着局部变量的引用意味着局部变量的引用将指向不再有效的内存区域。
 
+## 函数重载
+如果同一作用域的几个函数名字相同但形参列表不同，称之为重载函数。(main函数不能重载)   
+重载函数最好只用于操作非常相似的函数。   
+虽然函数的名称相同，但编译器会格局实参的类型确定应该调用哪个函数。  
+```cpp
+
+```
+但是，不允许两个函数除了返回值类型之外其他所有的要素都相同。假设有两个函数，他们的形参列表一样，的那是返回类型不同，那么第二个函数的声明是错误的。
+```cpp
+int lookup(const Account&);
+bool lookup(const Account&); //错误，与上一函数相比，仅返回类型不同。
+```
+
+### 重载和const形参  
+一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来。  
+```cpp
+Record lookup(phone);
+Record lookup(const phone);  //重复声明了Record lookup(phone)
+```
+如果形参是某种类型的指针或引用，则通过区分其指向的是常量对象还是非常量对象可以实现函数重载，此时的const是底层的。  
+```cpp
+Record lookup(Account&);
+Reocrd lookup(const Account&);
+Record lookup(Account*);
+Reocrd lookup(const Account*);
+```
+### const_cast和重载
+```cpp
+const string &shortString(const string &s1, const string &s2){
+    reutrn s1.size() <= s2.size() ? s1 : s2;
+}
+```
+这个函数的参数和返回值类型都是const string的引用。我们可以对两个非常量的string实参调用这个函数，但返回的结果依然是const string的引用。因此，我们需要一种新的shortString函数，当它的实参不是常量时，得到的结果是一个普通的引用，此时可使用const_cast。
+```cpp
+string &shortString(string &s1, string &s2){
+    auto &r = shortString(const_cast<const string&>(s1), const_cast<const string&>(s2));
+    return const_cast<string&>(r);
+}
+```
+
+## 默认实参  
+在函数的很多次调用中他们都被赋予一个相同的值，此时，将这个反复出现的值称为函数的默认实参。
+```cpp
+typedef string::size_type sz;
+string screen(sz ht = 24, sz wid = 80, char backgrnd = ' ');
+
+string window;
+window = screen(); // screen(24,80,' ')
+window = screen(66,256,'#'); // screen(66,256,'#')
+```
+
 
 
 
