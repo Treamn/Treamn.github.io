@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  3332 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  5562 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0\/","datePublished": "2022-03-28T14:15:45+08:00","dateModified": "2022-03-28T14:15:45+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -164,15 +164,35 @@
         <li><a href="#const_cast和重载">const_cast和重载</a></li>
       </ul>
     </li>
-    <li><a href="#默认实参">默认实参</a></li>
+    <li><a href="#默认实参">默认实参</a>
+      <ul>
+        <li><a href="#默认实参声明">默认实参声明</a></li>
+        <li><a href="#默认实参初始值">默认实参初始值</a></li>
+      </ul>
+    </li>
+    <li><a href="#内联函数和constexpr函数">内联函数和constexpr函数</a>
+      <ul>
+        <li><a href="#内联函数可以避免函数调用的开销">内联函数可以避免函数调用的开销</a></li>
+        <li><a href="#constexpr函数">constexpr函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数匹配">函数匹配</a></li>
+    <li><a href="#函数指针">函数指针</a>
+      <ul>
+        <li><a href="#使用函数指针">使用函数指针</a></li>
+        <li><a href="#重载函数的指针">重载函数的指针</a></li>
+        <li><a href="#函数和指针形参">函数和指针形参</a></li>
+        <li><a href="#返回指向函数的指针">返回指向函数的指针</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;学习之函数</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++-primer/"><i class="far fa-list-alt fa-fw"></i>C++ Primer</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3332 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5562 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43; Primer</span>
@@ -236,7 +256,27 @@
         <li><a href="#const_cast和重载">const_cast和重载</a></li>
       </ul>
     </li>
-    <li><a href="#默认实参">默认实参</a></li>
+    <li><a href="#默认实参">默认实参</a>
+      <ul>
+        <li><a href="#默认实参声明">默认实参声明</a></li>
+        <li><a href="#默认实参初始值">默认实参初始值</a></li>
+      </ul>
+    </li>
+    <li><a href="#内联函数和constexpr函数">内联函数和constexpr函数</a>
+      <ul>
+        <li><a href="#内联函数可以避免函数调用的开销">内联函数可以避免函数调用的开销</a></li>
+        <li><a href="#constexpr函数">constexpr函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数匹配">函数匹配</a></li>
+    <li><a href="#函数指针">函数指针</a>
+      <ul>
+        <li><a href="#使用函数指针">使用函数指针</a></li>
+        <li><a href="#重载函数的指针">重载函数的指针</a></li>
+        <li><a href="#函数和指针形参">函数和指针形参</a></li>
+        <li><a href="#返回指向函数的指针">返回指向函数的指针</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="函数基础" class="headerLink">
@@ -716,6 +756,280 @@ initializer_list是一种标准库类型，用于表示某种特定类型的值�
 </span></span><span class="line"><span class="cl"><span class="n">window</span> <span class="o">=</span> <span class="n">screen</span><span class="p">();</span> <span class="c1">// screen(24,80,&#39; &#39;)
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">window</span> <span class="o">=</span> <span class="n">screen</span><span class="p">(</span><span class="mi">66</span><span class="p">,</span><span class="mi">256</span><span class="p">,</span><span class="sc">&#39;#&#39;</span><span class="p">);</span> <span class="c1">// screen(66,256,&#39;#&#39;)
 </span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="默认实参声明" class="headerLink">
+    <a href="#%e9%bb%98%e8%ae%a4%e5%ae%9e%e5%8f%82%e5%a3%b0%e6%98%8e" class="header-mark"></a>默认实参声明</h3><p>对于函数声明，通常习惯将其放在头文件中，并且一个函数只声明一次，但多次声明同一函数也是合法的。<br>
+但是，需要注意，在给定的作用域中，一个形参只能被赋予一次默认实参。换句话说，就是在函数的后续声明中，只能为之前没有默认值的形参添加默认实参，而且该形参右侧所有形参必须都有默认值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">screen</span><span class="p">(</span><span class="n">sz</span><span class="p">,</span> <span class="n">sz</span><span class="p">,</span> <span class="kt">char</span> <span class="o">=</span> <span class="sc">&#39; &#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">screen</span><span class="p">(</span><span class="n">sz</span><span class="p">,</span> <span class="n">sz</span><span class="p">,</span> <span class="kt">char</span> <span class="o">=</span> <span class="sc">&#39;*&#39;</span><span class="p">);</span> <span class="c1">// 错误，不能修改一个已经存在的默认值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="nf">screen</span><span class="p">(</span><span class="n">sz</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span> <span class="n">hcar</span><span class="p">);</span> <span class="c1">//正确，添加默认实参
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="默认实参初始值" class="headerLink">
+    <a href="#%e9%bb%98%e8%ae%a4%e5%ae%9e%e5%8f%82%e5%88%9d%e5%a7%8b%e5%80%bc" class="header-mark"></a>默认实参初始值</h3><p>局部变量不能作为默认实参。除此之外，只要表达式的类型能够转换成形参所需的类型，该表达式就能作为默认实参。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">sz</span> <span class="n">wd</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">def</span> <span class="o">=</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">sz</span> <span class="nf">ht</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">screen</span><span class="p">(</span><span class="n">sz</span> <span class="o">=</span> <span class="n">ht</span><span class="p">(),</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">wd</span><span class="p">,</span> <span class="kt">char</span> <span class="o">=</span> <span class="n">def</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">window</span> <span class="o">=</span> <span class="n">screen</span><span class="p">();</span> <span class="c1">// screen(ht(), 80, &#39; &#39;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f2</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">def</span> <span class="o">=</span> <span class="sc">&#39;*&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sz</span> <span class="n">wd</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">window</span> <span class="o">=</span> <span class="n">screen</span><span class="p">();</span> <span class="c1">// screen(ht(), 80, &#39;*&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>def的值在函数f2中被改变，所以screen会调用这个更新过的值，但是wd只是函数内部声明的一个局部变量，和传给screen的实参没有任何关系。</p>
+<hr>
+<h2 id="内联函数和constexpr函数" class="headerLink">
+    <a href="#%e5%86%85%e8%81%94%e5%87%bd%e6%95%b0%e5%92%8cconstexpr%e5%87%bd%e6%95%b0" class="header-mark"></a>内联函数和constexpr函数</h2><p>内联函数和constexpr函数通常定义在头文件中。</p>
+<h3 id="内联函数可以避免函数调用的开销" class="headerLink">
+    <a href="#%e5%86%85%e8%81%94%e5%87%bd%e6%95%b0%e5%8f%af%e4%bb%a5%e9%81%bf%e5%85%8d%e5%87%bd%e6%95%b0%e8%b0%83%e7%94%a8%e7%9a%84%e5%bc%80%e9%94%80" class="header-mark"></a>内联函数可以避免函数调用的开销</h3><p>将函数指定为内联函数(inline)，通常就是在他的每个调用点上内联的展开。<br>
+<code>cout &lt;&lt; shotrString(s1, s2) &lt;&lt; endl;</code><br>
+会在编译过程中展开成如下形式<br>
+<code>cout &lt;&lt; (s1.size() &lt; s2.size() ? s1 : s2) &lt;&lt; endl;</code><br>
+从而消除shortString函数的运行时开销。
+在函数的返回类型前加上关键字inline，就可以将函数声明为内联函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kr">inline</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">shortString</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">?</span> <span class="nl">s1</span> <span class="p">:</span> <span class="n">s2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em><strong>需要注意，内联函数只是向编译器发出的一个请求，编译器可以选择忽略这个请求。</strong></em><br>
+一般来说，内联机制用于优化规模较小，流程直接，频繁调用的函数。</p>
+<h3 id="constexpr函数" class="headerLink">
+    <a href="#constexpr%e5%87%bd%e6%95%b0" class="header-mark"></a>constexpr函数</h3><p>contexpr函数是指能用与常量表达式的函数。定义constexpr函数的方法和其他函数类似，不过要遵循几项约定：<strong>函数的返回类型以及所有形参的类型都得是字面值类型，而且函数体中有且只有一条return语句。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">constexpr</span> <span class="kt">int</span> <span class="nf">new_sz</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">constexpr</span> <span class="kt">int</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">new_sz</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>constexpr函数体内也可以包含其他语句，只要这些语句在运行时不执行操作即可。例如，contexor函数中可以有空语句、类型别名以及using声明。<br>
+也允许constexpr函数的返回值并非一个常量。
+<code>constexpr size_t scale(size_t cnt) { return new_sz() * cnt; }</code>
+当scale的实参是常量表达式时，它的返回值也是常量表达式，反之则不然。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="n">scale</span><span class="p">(</span><span class="mi">2</span><span class="p">)];</span> <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="n">scale</span><span class="p">(</span><span class="n">i</span><span class="p">)];</span> <span class="c1">// 错误，scale(i)不是常量表达式
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="函数匹配" class="headerLink">
+    <a href="#%e5%87%bd%e6%95%b0%e5%8c%b9%e9%85%8d" class="header-mark"></a>函数匹配</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="p">(</span><span class="mf">5.6</span><span class="p">);</span>  <span class="c1">// 调用f(double, double)
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="函数指针" class="headerLink">
+    <a href="#%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88" class="header-mark"></a>函数指针</h2><p>函数指针指向的是函数而非对象。和其他指针一样，函数指针指向某种特定类型。函数的类型由它的返回类型和形参类型共同决定。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">lengthCompare</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>*pf两端的括号必不可少，如果没有括号，则pf是一个返回值为bool指针的函数。</p>
+<h3 id="使用函数指针" class="headerLink">
+    <a href="#%e4%bd%bf%e7%94%a8%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88" class="header-mark"></a>使用函数指针</h3><p>当把函数名作为一个值使用时，该函数自动转换为指针，按照如下形式可以将lengthCompare函数的地址赋给pf</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">pf</span> <span class="o">=</span> <span class="n">lengthCompare</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">pf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lengthCompare</span><span class="p">;</span> <span class="c1">// 等价赋值语句，取址符时可选的
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>此外，可以直接使用指向函数的指针调用该函数，无须提前解引用指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">,</span> <span class="s">&#34;goodbye&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="s">&#34;hello&#34;</span><span class="p">,</span> <span class="s">&#34;goodbye&#34;</span><span class="p">);</span> <span class="c1">//等价调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">lengthCompare</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">,</span> <span class="s">&#34;goodbye&#34;</span><span class="p">);</span> <span class="c1">//另一个等价调用
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在指向不同的函数类型的指针间不存在转换规则。但是和往常一样，可以为函数指针赋一个nullptr或值为0的整型常量表达式，表示该指针没有指向任何一个函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span><span class="o">::</span><span class="n">size_type</span> <span class="n">sumLength</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">cstringCompare</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">pf</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 正确，此时pf为空指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pf</span> <span class="o">=</span> <span class="n">sumLength</span><span class="p">;</span> <span class="c1">// 错误，返回值类型不匹配
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pf</span> <span class="o">=</span> <span class="n">cstringCompare</span><span class="p">;</span> <span class="c1">// 错误，形参类型不匹配
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pf</span> <span class="o">=</span> <span class="n">lengthComapre</span><span class="p">;</span> <span class="c1">// 正确，函数和指针的类型精确匹配
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="重载函数的指针" class="headerLink">
+    <a href="#%e9%87%8d%e8%bd%bd%e5%87%bd%e6%95%b0%e7%9a%84%e6%8c%87%e9%92%88" class="header-mark"></a>重载函数的指针</h3><p>当使用重载函数时，上下文必须清晰的界定到底选用哪个函数。如果定义了指向重载函数的指针，编译器通过指针类型决定选用哪个函数，指针类型必须和重载函数中某一个精确匹配。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">ff</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">ff</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pf1</span><span class="p">)(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span> <span class="o">=</span> <span class="n">ff</span><span class="p">;</span> <span class="c1">//pf1指向ff(unsigned)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pf2</span><span class="p">)(</span><span class="kt">int</span><span class="p">)</span> <span class="o">=</span> <span class="n">ff</span><span class="p">;</span> <span class="c1">//错误，没有ff与此形参列表匹配
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span> <span class="p">(</span><span class="o">*</span><span class="n">pf3</span><span class="p">)(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="o">=</span> <span class="n">ff</span><span class="p">;</span> <span class="c1">// 错误，返回类型不匹配
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="函数和指针形参" class="headerLink">
+    <a href="#%e5%87%bd%e6%95%b0%e5%92%8c%e6%8c%87%e9%92%88%e5%bd%a2%e5%8f%82" class="header-mark"></a>函数和指针形参</h3><p>和数组类似，虽然不能定义函数类型的形参，但是形参可以是指向函数的指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">useBigger</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">pf</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">));</span> <span class="c1">// 第三个形参是函数类型，会自动转换成指向函数的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">useBigger</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">,</span> <span class="kt">bool</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">));</span>  <span class="c1">// 等价声明，显式的将形参定义为指向函数的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">useBigger</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">lengthCompare</span><span class="p">);</span> <span class="c1">//自动将lenthCompare转换成指向该函数的指针
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接使用函数指针类型显得冗长而繁琐。类型别名和decltype可以简化使用函数指针的代码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//Func和Func2时函数类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="kt">bool</span> <span class="nf">Func</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="nf">decltype</span><span class="p">(</span><span class="n">lengthCompare</span><span class="p">)</span> <span class="n">Func2</span><span class="p">;</span><span class="c1">//等价的类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//FuncP和FuncP2是指向函数的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="nf">bool</span><span class="p">(</span><span class="o">*</span><span class="n">FuncP</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">decltype</span><span class="p">(</span><span class="n">lengthCompare</span><span class="p">)</span> <span class="o">*</span><span class="n">FuncP2</span> <span class="c1">// 等价的类型
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是，decltype返回函数类型，此时不会将函数类型自动转换为指针类型。因为decltype的结果是哈书类型，所以只有在结果前加上*才能得到指针。可以使用如下的形式重新声明useBigger：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">useBigger</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">Func</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">useBigger</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="o">*</span><span class="n">FuncP2</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="返回指向函数的指针" class="headerLink">
+    <a href="#%e8%bf%94%e5%9b%9e%e6%8c%87%e5%90%91%e5%87%bd%e6%95%b0%e7%9a%84%e6%8c%87%e9%92%88" class="header-mark"></a>返回指向函数的指针</h3><p>和数组类似虽然不能返回一个函数，但是可以返回指向函数类型的指针。然而，必须把返回类型写成指针类型，编译器不会自动将函数返回类型当成对应的指针类型处理。与往常一样，要想声明一个返回函数指针的函数，最简单的方法是使用类型别名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">F</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span> <span class="c1">//F为函数类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">using</span> <span class="n">PF</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span> <span class="c1">// PF是指针类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">PF</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="c1">// 正确，PF是指向函数的指针，f1返回指向函数的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">F</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="c1">//错误，F是函数类型，f1不能返回一个函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">F</span> <span class="o">*</span><span class="nf">f1</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="c1">//正确，显式的指定返回类型是指向函数的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f1</span><span class="p">(</span><span class="kt">int</span><span class="p">))(</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//或使用尾置返回类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></div>
 

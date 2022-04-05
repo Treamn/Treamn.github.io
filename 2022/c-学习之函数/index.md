@@ -271,22 +271,151 @@ string window;
 window = screen(); // screen(24,80,' ')
 window = screen(66,256,'#'); // screen(66,256,'#')
 ```
+### 默认实参声明  
+对于函数声明，通常习惯将其放在头文件中，并且一个函数只声明一次，但多次声明同一函数也是合法的。  
+但是，需要注意，在给定的作用域中，一个形参只能被赋予一次默认实参。换句话说，就是在函数的后续声明中，只能为之前没有默认值的形参添加默认实参，而且该形参右侧所有形参必须都有默认值。
+```cpp
+string screen(sz, sz, char = ' ');
+string screen(sz, sz, char = '*'); // 错误，不能修改一个已经存在的默认值
+string screen(sz = 24, sz = 24, hcar); //正确，添加默认实参
+```
+### 默认实参初始值  
+局部变量不能作为默认实参。除此之外，只要表达式的类型能够转换成形参所需的类型，该表达式就能作为默认实参。  
+```cpp
+sz wd = 80;
+char def = ' ';
+sz ht();
+string screen(sz = ht(), sz = wd, char = def);
+string window = screen(); // screen(ht(), 80, ' ')
+
+void f2(){
+    def = '*';
+    sz wd = 100;
+    window = screen(); // screen(ht(), 80, '*')
+}
+```
+def的值在函数f2中被改变，所以screen会调用这个更新过的值，但是wd只是函数内部声明的一个局部变量，和传给screen的实参没有任何关系。
+
+----
+## 内联函数和constexpr函数  
+内联函数和constexpr函数通常定义在头文件中。
+### 内联函数可以避免函数调用的开销
+将函数指定为内联函数(inline)，通常就是在他的每个调用点上内联的展开。  
+`cout << shotrString(s1, s2) << endl;`  
+会在编译过程中展开成如下形式  
+`cout << (s1.size() < s2.size() ? s1 : s2) << endl;`  
+从而消除shortString函数的运行时开销。
+在函数的返回类型前加上关键字inline，就可以将函数声明为内联函数。  
+```cpp
+inline const string& shortString(const String &s1, const String &s2){
+    return s1.size() < s2.size() ? s1 : s2;
+}
+```
+***需要注意，内联函数只是向编译器发出的一个请求，编译器可以选择忽略这个请求。***   
+一般来说，内联机制用于优化规模较小，流程直接，频繁调用的函数。  
+### constexpr函数
+contexpr函数是指能用与常量表达式的函数。定义constexpr函数的方法和其他函数类似，不过要遵循几项约定：**函数的返回类型以及所有形参的类型都得是字面值类型，而且函数体中有且只有一条return语句。**  
+```cpp
+constexpr int new_sz() { return 42; }
+constexpr int foo = new_sz();
+```
+constexpr函数体内也可以包含其他语句，只要这些语句在运行时不执行操作即可。例如，contexor函数中可以有空语句、类型别名以及using声明。  
+也允许constexpr函数的返回值并非一个常量。
+`constexpr size_t scale(size_t cnt) { return new_sz() * cnt; }`
+当scale的实参是常量表达式时，它的返回值也是常量表达式，反之则不然。
+```cpp
+int arr[scale(2)]; // 正确
+int i = 2;
+int arr[scale(i)]; // 错误，scale(i)不是常量表达式
+```
+---
+## 函数匹配  
+```cpp
+void f();
+void f(int);
+void f(int, int);
+void f(double, double = 3.14);
+
+f(5.6);  // 调用f(double, double)
+```
+---
+## 函数指针
+函数指针指向的是函数而非对象。和其他指针一样，函数指针指向某种特定类型。函数的类型由它的返回类型和形参类型共同决定。
+```cpp
+bool lengthCompare(const string &, const string &);
+bool (*pf)(const string &, const string&)
+```
+*pf两端的括号必不可少，如果没有括号，则pf是一个返回值为bool指针的函数。
+### 使用函数指针
+当把函数名作为一个值使用时，该函数自动转换为指针，按照如下形式可以将lengthCompare函数的地址赋给pf
+```cpp
+pf = lengthCompare;
+pf = &lengthCompare; // 等价赋值语句，取址符时可选的
+```
+此外，可以直接使用指向函数的指针调用该函数，无须提前解引用指针：
+```cpp
+bool b1 = pf("hello", "goodbye");
+bool b2 = (*pf)("hello", "goodbye"); //等价调用
+bool b3 = lengthCompare("hello", "goodbye"); //另一个等价调用
+```
+在指向不同的函数类型的指针间不存在转换规则。但是和往常一样，可以为函数指针赋一个nullptr或值为0的整型常量表达式，表示该指针没有指向任何一个函数。
+```cpp
+string::size_type sumLength(const string&, const string&);
+bool cstringCompare(const char*, const char*);
+pf = 0; // 正确，此时pf为空指针
+pf = sumLength; // 错误，返回值类型不匹配
+pf = cstringCompare; // 错误，形参类型不匹配
+pf = lengthComapre; // 正确，函数和指针的类型精确匹配
+```
+### 重载函数的指针
+当使用重载函数时，上下文必须清晰的界定到底选用哪个函数。如果定义了指向重载函数的指针，编译器通过指针类型决定选用哪个函数，指针类型必须和重载函数中某一个精确匹配。
+```cpp
+void ff(int*);
+void ff(unsigned int);
+
+void (*pf1)(unsigned int) = ff; //pf1指向ff(unsigned)
+void (*pf2)(int) = ff; //错误，没有ff与此形参列表匹配
+double (*pf3)(int*) = ff; // 错误，返回类型不匹配
+```
+
+### 函数和指针形参
+和数组类似，虽然不能定义函数类型的形参，但是形参可以是指向函数的指针。
+```cpp
+void useBigger(const string &s1, const string &s2, bool pf(const string &, const string &)); // 第三个形参是函数类型，会自动转换成指向函数的指针
+void useBigger(const string &s1, const string &s2, bool (*pf)(const string &, const string &));  // 等价声明，显式的将形参定义为指向函数的指针
+
+useBigger(s1, s2, lengthCompare); //自动将lenthCompare转换成指向该函数的指针
+```
+直接使用函数指针类型显得冗长而繁琐。类型别名和decltype可以简化使用函数指针的代码。
+```cpp
+//Func和Func2时函数类型
+typedef bool Func(const string&, const string&);
+typedef decltype(lengthCompare) Func2;//等价的类型
 
 
+//FuncP和FuncP2是指向函数的指针
+typedef bool(*FuncP)(const string&, const string&);
+typedef decltype(lengthCompare) *FuncP2 // 等价的类型
+```
+需要注意的是，decltype返回函数类型，此时不会将函数类型自动转换为指针类型。因为decltype的结果是哈书类型，所以只有在结果前加上*才能得到指针。可以使用如下的形式重新声明useBigger：
+```cpp
+void useBigger(const string&, const string&, Func);
+void useBigger(const string&, const string&, *FuncP2);
+```
 
+### 返回指向函数的指针
+和数组类似虽然不能返回一个函数，但是可以返回指向函数类型的指针。然而，必须把返回类型写成指针类型，编译器不会自动将函数返回类型当成对应的指针类型处理。与往常一样，要想声明一个返回函数指针的函数，最简单的方法是使用类型别名：
+```cpp
+using F = int(int*, int); //F为函数类型
+using PF = int(*)(int*, int); // PF是指针类型
 
+PF f1(int); // 正确，PF是指向函数的指针，f1返回指向函数的指针
+F f1(int); //错误，F是函数类型，f1不能返回一个函数
+F *f1(int); //正确，显式的指定返回类型是指向函数的指针
 
-
-
-
-
-
-
-
-
-
-
-
-
+int (*f1(int))(int*, int);
+//或使用尾置返回类型
+auto f1(int) -> int(*)(int*, int);
+```
 
 
