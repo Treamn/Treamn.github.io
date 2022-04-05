@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0/" /><meta property="og:image" content="http://example.org/logo.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-28T14:15:45+08:00" />
 <meta property="article:modified_time" content="2022-03-28T14:15:45+08:00" /><meta property="og:site_name" content="Dling | 煜江的个人博客" />
-<meta property="og:see_also" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/" /><meta property="og:see_also" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/" /><meta property="og:see_also" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" />
+<meta property="og:see_also" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/" /><meta property="og:see_also" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/" /><meta property="og:see_also" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/" /><meta property="og:see_also" content="http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://example.org/logo.jpg"/>
@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  5562 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  5972 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0\/","datePublished": "2022-03-28T14:15:45+08:00","dateModified": "2022-03-28T14:15:45+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -170,6 +170,7 @@
         <li><a href="#默认实参初始值">默认实参初始值</a></li>
       </ul>
     </li>
+    <li><a href="#变长实参">变长实参</a></li>
     <li><a href="#内联函数和constexpr函数">内联函数和constexpr函数</a>
       <ul>
         <li><a href="#内联函数可以避免函数调用的开销">内联函数可以避免函数调用的开销</a></li>
@@ -185,13 +186,14 @@
         <li><a href="#返回指向函数的指针">返回指向函数的指针</a></li>
       </ul>
     </li>
+    <li><a href="#lambda表达式">lambda表达式</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;学习之函数</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++-primer/"><i class="far fa-list-alt fa-fw"></i>C++ Primer</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5562 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-28">03-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5972 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
@@ -200,7 +202,8 @@
                                 </div>
                                 <div class="details-content series-content">
                                     <nav>
-                                        <ul><li><span class="active">C&#43;&#43;学习之函数</span></li>
+                                        <ul>
+                                                    <li><a href="/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/">C&#43;&#43;学习之类</a></li><li><span class="active">C&#43;&#43;学习之函数</span></li>
                                                     <li><a href="/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/">C&#43;&#43;学习之语句及异常</a></li>
                                                     <li><a href="/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/">C&#43;&#43;学习之运算符</a></li>
                                                     <li><a href="/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/">C&#43;&#43;学习之string、vector、迭代器和数组</a></li></ul>
@@ -262,6 +265,7 @@
         <li><a href="#默认实参初始值">默认实参初始值</a></li>
       </ul>
     </li>
+    <li><a href="#变长实参">变长实参</a></li>
     <li><a href="#内联函数和constexpr函数">内联函数和constexpr函数</a>
       <ul>
         <li><a href="#内联函数可以避免函数调用的开销">内联函数可以避免函数调用的开销</a></li>
@@ -277,6 +281,7 @@
         <li><a href="#返回指向函数的指针">返回指向函数的指针</a></li>
       </ul>
     </li>
+    <li><a href="#lambda表达式">lambda表达式</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="函数基础" class="headerLink">
@@ -330,7 +335,8 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="局部对象" class="headerLink">
+</div><hr>
+<h2 id="局部对象" class="headerLink">
     <a href="#%e5%b1%80%e9%83%a8%e5%af%b9%e8%b1%a1" class="header-mark"></a>局部对象</h2><p>名字有作用域，对象有生命周期。</p>
 <h3 id="自动对象" class="headerLink">
     <a href="#%e8%87%aa%e5%8a%a8%e5%af%b9%e8%b1%a1" class="header-mark"></a>自动对象</h3><p>对于普通局部变量对应的对象来说，当函数的控制路径经过变量定义语句时创建该对象，当到达定义的块末尾时销毁它。把志存在于块执行期间的对象成为自动对象。</p>
@@ -372,9 +378,11 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="函数声明" class="headerLink">
+</div><hr>
+<h2 id="函数声明" class="headerLink">
     <a href="#%e5%87%bd%e6%95%b0%e5%a3%b0%e6%98%8e" class="header-mark"></a>函数声明</h2><p>函数只能定义一次，但是可以声明多次。函数的声明和定义十分类似，唯一的区别就是函数声明无需函数体，一个分号替代即可。<br>
 函数的三要素（返回类型、函数声明和形参类型）描述了函数的接口，说明了调用该函数所需的全部信息。函数声明也被成为函数原型。</p>
+<hr>
 <h2 id="参数传递" class="headerLink">
     <a href="#%e5%8f%82%e6%95%b0%e4%bc%a0%e9%80%92" class="header-mark"></a>参数传递</h2><p>形参的类型决定了形参和实参交互方式。如果形参时引用类型，它将绑定到对应的实参上；否则，将实参的值拷贝后赋给形参。<br>
 当形参是引用类型时，我们说它对应的实参被<strong>引用传递</strong>或者函数被<strong>传引用调用</strong>。<br>
@@ -420,6 +428,7 @@
 <li>使用形参返回额外信息<br>
 <em>？？？还没整明白</em></li>
 </ul>
+<hr>
 <h2 id="const形参和实参" class="headerLink">
     <a href="#const%e5%bd%a2%e5%8f%82%e5%92%8c%e5%ae%9e%e5%8f%82" class="header-mark"></a>const形参和实参</h2><p>和其他初始化过程一样，当用实参初始化形参时会忽略掉顶层const。当形参有顶层const时，传给他常量对象或者非常量对象都是可以的。</p>
 <div class="highlight"><div class="chroma">
@@ -455,6 +464,7 @@
 </div>
 </div><h3 id="尽量使用常量引用" class="headerLink">
     <a href="#%e5%b0%bd%e9%87%8f%e4%bd%bf%e7%94%a8%e5%b8%b8%e9%87%8f%e5%bc%95%e7%94%a8" class="header-mark"></a>尽量使用常量引用</h3><p>把函数不会改变的形参定义成普通引用是一种比较常见的错误，这样做会给调用者一种误导，即函数可以修改它实参的值。此外，使用引用而非常量引用也会极大限制函数所能接受的实参类型。</p>
+<hr>
 <h2 id="数组形参" class="headerLink">
     <a href="#%e6%95%b0%e7%bb%84%e5%bd%a2%e5%8f%82" class="header-mark"></a>数组形参</h2><p>数组的两个特殊性质：<br>
 1.不允许拷贝数组；<br>
@@ -579,7 +589,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">matrix</span><span class="p">[][</span><span class="mi">10</span><span class="p">],</span> <span class="kt">int</span> <span class="n">rowSize</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="含有可变形参的函数" class="headerLink">
+</div><hr>
+<h2 id="含有可变形参的函数" class="headerLink">
     <a href="#%e5%90%ab%e6%9c%89%e5%8f%af%e5%8f%98%e5%bd%a2%e5%8f%82%e7%9a%84%e5%87%bd%e6%95%b0" class="header-mark"></a>含有可变形参的函数</h2><p>有时无法提前预知应该向函数传递几个实参，此时最好使用同一个函数实现该项功能。</p>
 <ul>
 <li>initializer_list形参<br>
@@ -652,7 +663,8 @@ initializer_list是一种标准库类型，用于表示某种特定类型的值�
 </span></span><span class="line"><span class="cl">    <span class="nf">error_msg</span><span class="p">(</span><span class="n">ErrCode</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">{</span><span class="s">&#34;functionX&#34;</span><span class="p">,</span> <span class="s">&#34;okay&#34;</span><span class="p">});</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="返回类型和return语句" class="headerLink">
+</div><hr>
+<h2 id="返回类型和return语句" class="headerLink">
     <a href="#%e8%bf%94%e5%9b%9e%e7%b1%bb%e5%9e%8b%e5%92%8creturn%e8%af%ad%e5%8f%a5" class="header-mark"></a>返回类型和return语句</h2><h3 id="无返回值函数" class="headerLink">
     <a href="#%e6%97%a0%e8%bf%94%e5%9b%9e%e5%80%bc%e5%87%bd%e6%95%b0" class="header-mark"></a>无返回值函数</h3><p>没有返回值的return语句只能用在返回类型是void的函数中。<br>
 通常，如果void函数如果想在中间位置提前退出，可以使用return语句。此时return语句的作用类似于break语句。</p>
@@ -664,14 +676,8 @@ initializer_list是一种标准库类型，用于表示某种特定类型的值�
 <h2 id="函数重载" class="headerLink">
     <a href="#%e5%87%bd%e6%95%b0%e9%87%8d%e8%bd%bd" class="header-mark"></a>函数重载</h2><p>如果同一作用域的几个函数名字相同但形参列表不同，称之为重载函数。(main函数不能重载)<br>
 重载函数最好只用于操作非常相似的函数。<br>
-虽然函数的名称相同，但编译器会格局实参的类型确定应该调用哪个函数。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"></code></pre></td></tr></table>
-</div>
-</div><p>但是，不允许两个函数除了返回值类型之外其他所有的要素都相同。假设有两个函数，他们的形参列表一样，的那是返回类型不同，那么第二个函数的声明是错误的。</p>
+虽然函数的名称相同，但编译器会格局实参的类型确定应该调用哪个函数。<br>
+但是，不允许两个函数除了返回值类型之外其他所有的要素都相同。假设有两个函数，他们的形参列表一样，的那是返回类型不同，那么第二个函数的声明是错误的。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -737,8 +743,11 @@ initializer_list是一种标准库类型，用于表示某种特定类型的值�
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="默认实参" class="headerLink">
-    <a href="#%e9%bb%98%e8%ae%a4%e5%ae%9e%e5%8f%82" class="header-mark"></a>默认实参</h2><p>在函数的很多次调用中他们都被赋予一个相同的值，此时，将这个反复出现的值称为函数的默认实参。</p>
+</div><hr>
+<h2 id="默认实参" class="headerLink">
+    <a href="#%e9%bb%98%e8%ae%a4%e5%ae%9e%e5%8f%82" class="header-mark"></a>默认实参</h2><p>默认实参只能在函数声明和lambda表达式的形参列表中出现，而不能在<strong>函数指针、到函数的引用，或在typedef声明中出现。</strong><br>
+如果friend声明指定了默认实参。那么它必须是友元函数的定义，且该翻译单元中不能有此函数的其他声明。<br>
+在函数的很多次调用中他们都被赋予一个相同的值，此时，将这个反复出现的值称为函数的默认实参。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -802,8 +811,72 @@ initializer_list是一种标准库类型，用于表示某种特定类型的值�
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>def的值在函数f2中被改变，所以screen会调用这个更新过的值，但是wd只是函数内部声明的一个局部变量，和传给screen的实参没有任何关系。</p>
-<hr>
+</div><p>def的值在函数f2中被改变，所以screen会调用这个更新过的值，但是wd只是函数内部声明的一个局部变量，和传给screen的实参没有任何关系。<br>
+using声明会将已知的默认实参集承接过来，如果向函数的命名空间中添加更多的默认形参，那么这些默认实参在这条using声明可见得的任何位置均可见。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">namespace</span> <span class="n">N</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">N</span><span class="o">::</span><span class="n">f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span> <span class="c1">// 正确，f(7,1)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">();</span>  <span class="c1">// 错误，实参数量不够
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="n">N</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">h</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">();</span> <span class="c1">// 正确，f(2,1)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="变长实参" class="headerLink">
+    <a href="#%e5%8f%98%e9%95%bf%e5%ae%9e%e5%8f%82" class="header-mark"></a>变长实参</h2><p>允许函数接受任意数量的额外实参。由跟在函数声明的形参列表之后的尾随&hellip;指定。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">printx</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fmt</span><span class="p">,</span> <span class="p">...);</span>
+</span></span><span class="line"><span class="cl"><span class="n">printx</span><span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">printx</span><span class="p">(</span><span class="s">&#34;a=%d b=%d&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">printx</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fmt</span><span class="p">...);</span> <span class="c1">//效果同上述函数声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">printy</span><span class="p">(...,</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fmt</span><span class="p">...);</span> <span class="c1">//错误，...不能作为形参出现
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">ptintz</span><span class="p">(...);</span> <span class="c1">//合法，但无法可移植的访问参数
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
 <h2 id="内联函数和constexpr函数" class="headerLink">
     <a href="#%e5%86%85%e8%81%94%e5%87%bd%e6%95%b0%e5%92%8cconstexpr%e5%87%bd%e6%95%b0" class="header-mark"></a>内联函数和constexpr函数</h2><p>内联函数和constexpr函数通常定义在头文件中。</p>
 <h3 id="内联函数可以避免函数调用的开销" class="headerLink">
@@ -1031,7 +1104,10 @@ initializer_list是一种标准库类型，用于表示某种特定类型的值�
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div>
+</div><hr>
+<h2 id="lambda表达式" class="headerLink">
+    <a href="#lambda%e8%a1%a8%e8%be%be%e5%bc%8f" class="header-mark"></a>lambda表达式</h2><p>构造闭包：能够捕获作用域中的变量的无名函数对象。</p>
+</div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">

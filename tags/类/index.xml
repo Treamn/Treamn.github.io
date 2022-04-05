@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>类 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E7%B1%BB/</link>
+        <description>类 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 05 Apr 2022 19:36:03 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E7%B1%BB/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;学习之类</title>
+    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</link>
+    <pubDate>Tue, 05 Apr 2022 19:36:03 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
+</rss>
