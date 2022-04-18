@@ -10,7 +10,7 @@
     <pubDate>Tue, 05 Apr 2022 19:36:03 &#43;0800</pubDate><author>
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</guid>
-    <description><![CDATA[]]></description>
+    <description><![CDATA[构造函数 类通过一个或几个特殊的成员函数来控制其对象的初始化过程，这些函数叫构造函数。构造函数的任务是初始化类对象的数据成员。 构造函数没有返回]]></description>
 </item><item>
     <title>C&#43;&#43;学习之函数</title>
     <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0/</link>
