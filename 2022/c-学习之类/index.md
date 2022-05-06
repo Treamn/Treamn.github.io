@@ -17,6 +17,88 @@ Sales_data(const std::string&s, unsigned n, double p): book(s), units_sold(n), r
 函数名和花括号之间的部分称为构造函数初始值列表，负责为新创建的对象的一个或几个数据成员赋初值。  
 构造函数不应该轻易覆盖掉类内的初始值，除非新赋的值与原值不同。如果不能使用类内初始值，则所有构造函数都应该显式的初始化每个内置类型的成员。  
 
+### 构造函数初始值列表  
+我们定义变量时习惯于立即对其进行初始化，而非先定义、再赋值：
+```cpp
+string foo = "Hello World!"; //定义并初始化
+string bar;   //默认初始化成string对象
+bar = "Hello World!";  //为bar赋一个新值
+```
+就对象的数据成员而言，初始化和赋值也有类似的区别。如果没有在构造函数的初始值列表中显式的初始化成员，则该成员将在构造函数体之前执行默认初始化。
+```cpp
+Sales_data::Sales_data(const string &s, unsigned cnt, double price){
+    bookNo = s;
+    units_sold = cnt;
+    revenue = cnt * price;
+}
+```
+先前的版本是初始化了它的数据成员，而这个版本是对数据成员进行赋值操作。
+
+### 构造函数的初始值有时必不可少 
+有时可以忽略数据成员初始化和赋值之间的差异，但并非总能这样。如果成员是const或者引用的话，必须将其初始化，类似的，当成员属于某种类类型且该类没有定义默认构造函数时，也必须将这个成员初始化。
+```cpp
+class ConstRef{
+    public:
+        ConstRef(int ii);
+    private:
+        int i;
+        const int ci;
+        int &ri;
+};
+```
+和其他
+常量对象或引用一样，成员ci和ri都必须被初始化。因此，如果我们没有为它们提供构造函数初始值的话将会引发错误：
+```cpp
+ConstRef::ConstRef{int ii}{
+    i = ii;
+    ci = ii; //错误，不能给const赋值
+    ri = i;  //错误，ri没初始化
+}
+```
+随着构造函数体一开始执行，初始化就完成。初始化const或者引用类型的数据成员的唯一机会就是通过构造函数初始值，因此该构造函数的正确形式是：
+```cpp
+ConstRef::ConstRef(int ii): i(ii), ci(ii), ri(ii){}
+```
+
+### 成员初始化的顺序  
+成员的初始化顺序与它们在类定义中的出现顺序一致：第一个成员先被初始化，然后第二个，以此类推。构造函数初始值列表中初始值的前后位置不会影响实际的初始化顺序。  
+如果一成员是用另一个成员来初始化的，那么这两个成员的初始化顺序就很关键了。
+```cpp
+class X{
+    int i;
+    int j;
+public:
+    //i在j之前被初始化
+    X(int val):j(val), i(j){}
+};
+```
+实际上，i先被初始化，因此这个初始值的效果是试图使用未定义的值j初始化i。  
+**最好令构造函数初始值的顺序和成员声明的顺序保持一致。而且如果可能的话，尽量避免使用某些成员初始化其他成员。**  
+可能的话，最好使用构造函数的参数作为成员的初始值，而尽量避免使用同一个对象的其他成员。这样的好处是可以不必考虑成员的初始化顺序。  
+
+### 默认实参和构造函数  
+Sales_data默认构造函数的行为与只接受一个string实参的构造函数差不多。唯一的区别就是接受string实参的构造函数使用这个实参初始化bookNo，而默认构造函数（隐式的）使用string的默认构造函数初始化bookNo。我们可以将它们写成一个使用默认实参的构造函数。  
+```cpp
+class Sales_data{
+public:
+    // 定义默认构造函数，令其只接受一个string实参的构造函数功能相同
+    Sales_data(std::string s = “ ”):bookNo(s){}
+    // 其他构造函数与之前一致
+    Sales_data(std::string s, unsigned cnt, double rev):bookNo(s), units_sold(cnt), revenue(rev*cnt){}
+    Sales_data(std::istream &is){
+        read(is,*this);
+    }
+};
+```
+当没有给定实参，或者给定一个string实参时，两个版本的类创建了相同的对象。  
+**如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数**
+
+
+
+
+
+
+
 ---
 ## 拷贝、赋值和析构
 除了定义类的对象如何初始化之外，类还需要控制拷贝、赋值和销毁对象时发生的行为。如果不主动定义这些操作，编译器将替我们合成它们。  
@@ -373,7 +455,53 @@ class Screen{
         pos height = 0, width = 0;
 };
 ```
-当编译器处理dummy_fcn中的乘法表达式时，
+当编译器处理dummy_fcn中的乘法表达式时，首先在函数作用域内查找表达式中用到的名字。函数的参数位于函数作用域内，因此dummy_fcn函数体内用到的名字height指的是参数声明。  
+此例中，height参数隐藏了同名的成员。如果想绕开上面的查找规则1，应该将代码变为：  
+```cpp
+// 成员函数中的名字不应该隐藏同名成员
+void Screen::dummy_fcn(pos height){
+    cursor = width * this->height;
+    //另一种表示该成员的方式
+    cursor = width * Screen::height;
+}
+```
+最好的确保使用height成员的方法是给参数起个其他名字：
+```cpp
+//建议的写法：不要把成员名字作为参数或其他局部变量使用
+void Screen::dummy_fcn(pos ht){
+    cursor = width * height;
+}
+```
+在此例中，编译器查找名字height时，在dummy_fcn函数内部是找不到的。编译器接着会在Screen内查找匹配的声明，即使height的声明在dummy_fcn使用它之后，编译器也能正确地解析函数使用的是名为height的成员。
+### 类作用域之后，在外围的作用域中查找  
+如果编译器在函数和类的作用域中都没有找到名字，它将接着在外围的作用域中查找。在我们的例子中。名字height定义在外层作用域中。且位于Screen的定义之前。然而，外层作用域中的对象被名为height的成员隐藏掉了。因此，如果我们需要的是外层作用域中的名字，可以显式的通过作用域运算符进行请求：
+```cpp
+//不建议的写法，不要隐藏外层作用域中可能被用到的名字
+void Screen::dummy_fcn(pos height){
+    cursor = width * ::height;
+}
+```
+### 在文件中名字出现处对其进行解析  
+当成员定义在类的外部时，名字查找的第三步不仅要考虑定义之前的全局作用域中的声明，还要考虑在成员函数定义之前的全局作用域中的声明。
+```cpp
+int height;
+class Screen{
+public:
+    typedef std::string::size_type pos;
+    void setHeight(pos);
+    pos height = 0;  //隐藏外层作用域中的height
+};
+Screen::pos verify(Screen::pos);
+void Screen::setHeight(pos var){
+    //var：参数
+    //height：类的成员
+    //verify：全局函数
+    height = verify(var);
+}
+```
+全局函数verify的声明在Screen的定义之前是不可见的。然而，名字查找的第三步包括了成员函数出现之前的全局作用域。在此例中，verify的声明位于setHeight的定义之前，因此可以被正常使用。
+
+
 
 
 

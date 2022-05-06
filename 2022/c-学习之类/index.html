@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "类, 继承","wordcount":  6487 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "类, 继承","wordcount":  8457 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB\/","datePublished": "2022-04-05T19:36:03+08:00","dateModified": "2022-04-05T19:36:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -125,6 +125,10 @@
       <ul>
         <li><a href="#默认构造函数">默认构造函数</a></li>
         <li><a href="#default的含义">=default的含义</a></li>
+        <li><a href="#构造函数初始值列表">构造函数初始值列表</a></li>
+        <li><a href="#构造函数的初始值有时必不可少">构造函数的初始值有时必不可少</a></li>
+        <li><a href="#成员初始化的顺序">成员初始化的顺序</a></li>
+        <li><a href="#默认实参和构造函数">默认实参和构造函数</a></li>
       </ul>
     </li>
     <li><a href="#拷贝赋值和析构">拷贝、赋值和析构</a>
@@ -177,6 +181,8 @@
         <li><a href="#用于类成员声明的名字查找">用于类成员声明的名字查找</a></li>
         <li><a href="#类姓名要特殊处理">类姓名要特殊处理</a></li>
         <li><a href="#成员定义中普通块作用域的名字查找">成员定义中普通块作用域的名字查找</a></li>
+        <li><a href="#类作用域之后在外围的作用域中查找">类作用域之后，在外围的作用域中查找</a></li>
+        <li><a href="#在文件中名字出现处对其进行解析">在文件中名字出现处对其进行解析</a></li>
       </ul>
     </li>
   </ul>
@@ -185,8 +191,8 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++-primer/"><i class="far fa-list-alt fa-fw"></i>C++ Primer</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6487 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 13 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 8457 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 17 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43; Primer</span>
@@ -212,6 +218,10 @@
       <ul>
         <li><a href="#默认构造函数">默认构造函数</a></li>
         <li><a href="#default的含义">=default的含义</a></li>
+        <li><a href="#构造函数初始值列表">构造函数初始值列表</a></li>
+        <li><a href="#构造函数的初始值有时必不可少">构造函数的初始值有时必不可少</a></li>
+        <li><a href="#成员初始化的顺序">成员初始化的顺序</a></li>
+        <li><a href="#默认实参和构造函数">默认实参和构造函数</a></li>
       </ul>
     </li>
     <li><a href="#拷贝赋值和析构">拷贝、赋值和析构</a>
@@ -264,6 +274,8 @@
         <li><a href="#用于类成员声明的名字查找">用于类成员声明的名字查找</a></li>
         <li><a href="#类姓名要特殊处理">类姓名要特殊处理</a></li>
         <li><a href="#成员定义中普通块作用域的名字查找">成员定义中普通块作用域的名字查找</a></li>
+        <li><a href="#类作用域之后在外围的作用域中查找">类作用域之后，在外围的作用域中查找</a></li>
+        <li><a href="#在文件中名字出现处对其进行解析">在文件中名字出现处对其进行解析</a></li>
       </ul>
     </li>
   </ul>
@@ -295,6 +307,145 @@
 </div>
 </div><p>函数名和花括号之间的部分称为构造函数初始值列表，负责为新创建的对象的一个或几个数据成员赋初值。<br>
 构造函数不应该轻易覆盖掉类内的初始值，除非新赋的值与原值不同。如果不能使用类内初始值，则所有构造函数都应该显式的初始化每个内置类型的成员。</p>
+<h3 id="构造函数初始值列表" class="headerLink">
+    <a href="#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e5%88%9d%e5%a7%8b%e5%80%bc%e5%88%97%e8%a1%a8" class="header-mark"></a>构造函数初始值列表</h3><p>我们定义变量时习惯于立即对其进行初始化，而非先定义、再赋值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&#34;Hello World!&#34;</span><span class="p">;</span> <span class="c1">//定义并初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">bar</span><span class="p">;</span>   <span class="c1">//默认初始化成string对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">bar</span> <span class="o">=</span> <span class="s">&#34;Hello World!&#34;</span><span class="p">;</span>  <span class="c1">//为bar赋一个新值
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>就对象的数据成员而言，初始化和赋值也有类似的区别。如果没有在构造函数的初始值列表中显式的初始化成员，则该成员将在构造函数体之前执行默认初始化。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Sales_data</span><span class="o">::</span><span class="n">Sales_data</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">cnt</span><span class="p">,</span> <span class="kt">double</span> <span class="n">price</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bookNo</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">units_sold</span> <span class="o">=</span> <span class="n">cnt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">revenue</span> <span class="o">=</span> <span class="n">cnt</span> <span class="o">*</span> <span class="n">price</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>先前的版本是初始化了它的数据成员，而这个版本是对数据成员进行赋值操作。</p>
+<h3 id="构造函数的初始值有时必不可少" class="headerLink">
+    <a href="#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e7%9a%84%e5%88%9d%e5%a7%8b%e5%80%bc%e6%9c%89%e6%97%b6%e5%bf%85%e4%b8%8d%e5%8f%af%e5%b0%91" class="header-mark"></a>构造函数的初始值有时必不可少</h3><p>有时可以忽略数据成员初始化和赋值之间的差异，但并非总能这样。如果成员是const或者引用的话，必须将其初始化，类似的，当成员属于某种类类型且该类没有定义默认构造函数时，也必须将这个成员初始化。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ConstRef</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ConstRef</span><span class="p">(</span><span class="kt">int</span> <span class="n">ii</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ri</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>和其他
+常量对象或引用一样，成员ci和ri都必须被初始化。因此，如果我们没有为它们提供构造函数初始值的话将会引发错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">ConstRef</span><span class="o">::</span><span class="n">ConstRef</span><span class="p">{</span><span class="kt">int</span> <span class="n">ii</span><span class="p">}{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="n">ii</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ci</span> <span class="o">=</span> <span class="n">ii</span><span class="p">;</span> <span class="c1">//错误，不能给const赋值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">ri</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>  <span class="c1">//错误，ri没初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>随着构造函数体一开始执行，初始化就完成。初始化const或者引用类型的数据成员的唯一机会就是通过构造函数初始值，因此该构造函数的正确形式是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">ConstRef</span><span class="o">::</span><span class="n">ConstRef</span><span class="p">(</span><span class="kt">int</span> <span class="n">ii</span><span class="p">)</span><span class="o">:</span> <span class="n">i</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span> <span class="n">ci</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span> <span class="n">ri</span><span class="p">(</span><span class="n">ii</span><span class="p">){}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="成员初始化的顺序" class="headerLink">
+    <a href="#%e6%88%90%e5%91%98%e5%88%9d%e5%a7%8b%e5%8c%96%e7%9a%84%e9%a1%ba%e5%ba%8f" class="header-mark"></a>成员初始化的顺序</h3><p>成员的初始化顺序与它们在类定义中的出现顺序一致：第一个成员先被初始化，然后第二个，以此类推。构造函数初始值列表中初始值的前后位置不会影响实际的初始化顺序。<br>
+如果一成员是用另一个成员来初始化的，那么这两个成员的初始化顺序就很关键了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">X</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//i在j之前被初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">X</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span><span class="o">:</span><span class="n">j</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">i</span><span class="p">(</span><span class="n">j</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实际上，i先被初始化，因此这个初始值的效果是试图使用未定义的值j初始化i。<br>
+<strong>最好令构造函数初始值的顺序和成员声明的顺序保持一致。而且如果可能的话，尽量避免使用某些成员初始化其他成员。</strong><br>
+可能的话，最好使用构造函数的参数作为成员的初始值，而尽量避免使用同一个对象的其他成员。这样的好处是可以不必考虑成员的初始化顺序。</p>
+<h3 id="默认实参和构造函数" class="headerLink">
+    <a href="#%e9%bb%98%e8%ae%a4%e5%ae%9e%e5%8f%82%e5%92%8c%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0" class="header-mark"></a>默认实参和构造函数</h3><p>Sales_data默认构造函数的行为与只接受一个string实参的构造函数差不多。唯一的区别就是接受string实参的构造函数使用这个实参初始化bookNo，而默认构造函数（隐式的）使用string的默认构造函数初始化bookNo。我们可以将它们写成一个使用默认实参的构造函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Sales_data</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 定义默认构造函数，令其只接受一个string实参的构造函数功能相同
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="err">“</span> <span class="err">”</span><span class="p">)</span><span class="o">:</span><span class="n">bookNo</span><span class="p">(</span><span class="n">s</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 其他构造函数与之前一致
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">cnt</span><span class="p">,</span> <span class="kt">double</span> <span class="n">rev</span><span class="p">)</span><span class="o">:</span><span class="n">bookNo</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">units_sold</span><span class="p">(</span><span class="n">cnt</span><span class="p">),</span> <span class="n">revenue</span><span class="p">(</span><span class="n">rev</span><span class="o">*</span><span class="n">cnt</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="n">is</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">read</span><span class="p">(</span><span class="n">is</span><span class="p">,</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当没有给定实参，或者给定一个string实参时，两个版本的类创建了相同的对象。<br>
+<strong>如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数</strong></p>
 <hr>
 <h2 id="拷贝赋值和析构" class="headerLink">
     <a href="#%e6%8b%b7%e8%b4%9d%e8%b5%8b%e5%80%bc%e5%92%8c%e6%9e%90%e6%9e%84" class="header-mark"></a>拷贝、赋值和析构</h2><p>除了定义类的对象如何初始化之外，类还需要控制拷贝、赋值和销毁对象时发生的行为。如果不主动定义这些操作，编译器将替我们合成它们。</p>
@@ -921,7 +1072,95 @@
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>当编译器处理dummy_fcn中的乘法表达式时，</p>
+</div><p>当编译器处理dummy_fcn中的乘法表达式时，首先在函数作用域内查找表达式中用到的名字。函数的参数位于函数作用域内，因此dummy_fcn函数体内用到的名字height指的是参数声明。<br>
+此例中，height参数隐藏了同名的成员。如果想绕开上面的查找规则1，应该将代码变为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 成员函数中的名字不应该隐藏同名成员
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">Screen</span><span class="o">::</span><span class="n">dummy_fcn</span><span class="p">(</span><span class="n">pos</span> <span class="n">height</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cursor</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//另一种表示该成员的方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cursor</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="n">Screen</span><span class="o">::</span><span class="n">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最好的确保使用height成员的方法是给参数起个其他名字：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//建议的写法：不要把成员名字作为参数或其他局部变量使用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">Screen</span><span class="o">::</span><span class="n">dummy_fcn</span><span class="p">(</span><span class="n">pos</span> <span class="n">ht</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cursor</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在此例中，编译器查找名字height时，在dummy_fcn函数内部是找不到的。编译器接着会在Screen内查找匹配的声明，即使height的声明在dummy_fcn使用它之后，编译器也能正确地解析函数使用的是名为height的成员。</p>
+<h3 id="类作用域之后在外围的作用域中查找" class="headerLink">
+    <a href="#%e7%b1%bb%e4%bd%9c%e7%94%a8%e5%9f%9f%e4%b9%8b%e5%90%8e%e5%9c%a8%e5%a4%96%e5%9b%b4%e7%9a%84%e4%bd%9c%e7%94%a8%e5%9f%9f%e4%b8%ad%e6%9f%a5%e6%89%be" class="header-mark"></a>类作用域之后，在外围的作用域中查找</h3><p>如果编译器在函数和类的作用域中都没有找到名字，它将接着在外围的作用域中查找。在我们的例子中。名字height定义在外层作用域中。且位于Screen的定义之前。然而，外层作用域中的对象被名为height的成员隐藏掉了。因此，如果我们需要的是外层作用域中的名字，可以显式的通过作用域运算符进行请求：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//不建议的写法，不要隐藏外层作用域中可能被用到的名字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">Screen</span><span class="o">::</span><span class="n">dummy_fcn</span><span class="p">(</span><span class="n">pos</span> <span class="n">height</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cursor</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="o">::</span><span class="n">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在文件中名字出现处对其进行解析" class="headerLink">
+    <a href="#%e5%9c%a8%e6%96%87%e4%bb%b6%e4%b8%ad%e5%90%8d%e5%ad%97%e5%87%ba%e7%8e%b0%e5%a4%84%e5%af%b9%e5%85%b6%e8%bf%9b%e8%a1%8c%e8%a7%a3%e6%9e%90" class="header-mark"></a>在文件中名字出现处对其进行解析</h3><p>当成员定义在类的外部时，名字查找的第三步不仅要考虑定义之前的全局作用域中的声明，还要考虑在成员函数定义之前的全局作用域中的声明。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Screen</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">size_type</span> <span class="n">pos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">setHeight</span><span class="p">(</span><span class="n">pos</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">//隐藏外层作用域中的height
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">Screen</span><span class="o">::</span><span class="n">pos</span> <span class="n">verify</span><span class="p">(</span><span class="n">Screen</span><span class="o">::</span><span class="n">pos</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Screen</span><span class="o">::</span><span class="n">setHeight</span><span class="p">(</span><span class="n">pos</span> <span class="n">var</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//var：参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//height：类的成员
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//verify：全局函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">height</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>全局函数verify的声明在Screen的定义之前是不可见的。然而，名字查找的第三步包括了成员函数出现之前的全局作用域。在此例中，verify的声明位于setHeight的定义之前，因此可以被正常使用。</p>
 </div>
 
         <div class="post-footer" id="post-footer">
