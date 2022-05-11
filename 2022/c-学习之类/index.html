@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "类, 继承","wordcount":  8457 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "类, 继承","wordcount":  11438 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB\/","datePublished": "2022-04-05T19:36:03+08:00","dateModified": "2022-04-05T19:36:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -129,6 +129,9 @@
         <li><a href="#构造函数的初始值有时必不可少">构造函数的初始值有时必不可少</a></li>
         <li><a href="#成员初始化的顺序">成员初始化的顺序</a></li>
         <li><a href="#默认实参和构造函数">默认实参和构造函数</a></li>
+        <li><a href="#委托构造函数">委托构造函数</a></li>
+        <li><a href="#默认构造函数的作用">默认构造函数的作用</a></li>
+        <li><a href="#使用默认构造函数">使用默认构造函数</a></li>
       </ul>
     </li>
     <li><a href="#拷贝赋值和析构">拷贝、赋值和析构</a>
@@ -185,14 +188,24 @@
         <li><a href="#在文件中名字出现处对其进行解析">在文件中名字出现处对其进行解析</a></li>
       </ul>
     </li>
+    <li><a href="#隐式的类类型转换">隐式的类类型转换</a>
+      <ul>
+        <li><a href="#只允许一步类类型转换">只允许一步类类型转换</a></li>
+        <li><a href="#类类型转换不是总有效">类类型转换不是总有效</a></li>
+        <li><a href="#抑制构造函数定义的隐式转换">抑制构造函数定义的隐式转换</a></li>
+        <li><a href="#explicit构造函数只能用于直接初始化">explicit构造函数只能用于直接初始化</a></li>
+        <li><a href="#为转换显式的使用构造函数">为转换显式的使用构造函数</a></li>
+        <li><a href="#标准库中含有显式构造函数的类">标准库中含有显式构造函数的类</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;学习之类</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++-primer/"><i class="far fa-list-alt fa-fw"></i>C++ Primer</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 8457 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 17 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="04-05">04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 11438 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 23 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43; Primer</span>
@@ -222,6 +235,9 @@
         <li><a href="#构造函数的初始值有时必不可少">构造函数的初始值有时必不可少</a></li>
         <li><a href="#成员初始化的顺序">成员初始化的顺序</a></li>
         <li><a href="#默认实参和构造函数">默认实参和构造函数</a></li>
+        <li><a href="#委托构造函数">委托构造函数</a></li>
+        <li><a href="#默认构造函数的作用">默认构造函数的作用</a></li>
+        <li><a href="#使用默认构造函数">使用默认构造函数</a></li>
       </ul>
     </li>
     <li><a href="#拷贝赋值和析构">拷贝、赋值和析构</a>
@@ -276,6 +292,16 @@
         <li><a href="#成员定义中普通块作用域的名字查找">成员定义中普通块作用域的名字查找</a></li>
         <li><a href="#类作用域之后在外围的作用域中查找">类作用域之后，在外围的作用域中查找</a></li>
         <li><a href="#在文件中名字出现处对其进行解析">在文件中名字出现处对其进行解析</a></li>
+      </ul>
+    </li>
+    <li><a href="#隐式的类类型转换">隐式的类类型转换</a>
+      <ul>
+        <li><a href="#只允许一步类类型转换">只允许一步类类型转换</a></li>
+        <li><a href="#类类型转换不是总有效">类类型转换不是总有效</a></li>
+        <li><a href="#抑制构造函数定义的隐式转换">抑制构造函数定义的隐式转换</a></li>
+        <li><a href="#explicit构造函数只能用于直接初始化">explicit构造函数只能用于直接初始化</a></li>
+        <li><a href="#为转换显式的使用构造函数">为转换显式的使用构造函数</a></li>
+        <li><a href="#标准库中含有显式构造函数的类">标准库中含有显式构造函数的类</a></li>
       </ul>
     </li>
   </ul>
@@ -446,7 +472,105 @@
 </div>
 </div><p>当没有给定实参，或者给定一个string实参时，两个版本的类创建了相同的对象。<br>
 <strong>如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数</strong></p>
-<hr>
+<h3 id="委托构造函数" class="headerLink">
+    <a href="#%e5%a7%94%e6%89%98%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0" class="header-mark"></a>委托构造函数</h3><p>一个委托构造函数使用它所属类的其他构造函数执行它自己的初始化过程，或者说它把自己的一些（或全部）职责委托给了其他构造函数。<br>
+一个委托构造函数也有一个成员初始值的列表和一个函数体。在委托构造函数内，成员初始值列表只有一个唯一的入口，就是类名本身。和其他成员的初始值一样，类名后边紧跟圆括号括起来的参数列表，参数列表必须与类中另一个构造函数相匹配。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Sales_data</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//非委托构造函数使用对用的实参初始化成员
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">cnt</span><span class="p">,</span> <span class="kt">double</span> <span class="n">price</span><span class="p">)</span><span class="o">:</span><span class="n">bookNo</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">units_sold</span><span class="p">(</span><span class="n">cnt</span><span class="p">),</span> <span class="n">revenue</span><span class="p">(</span><span class="n">cnt</span><span class="o">*</span><span class="n">price</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//其余构造函数全都委托给另一个构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Sales_data</span><span class="p">()</span><span class="o">:</span><span class="n">Sales_data</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span><span class="o">:</span><span class="n">Sales_data</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="n">is</span><span class="p">)</span><span class="o">:</span> <span class="n">Sales_data</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">read</span><span class="p">(</span><span class="n">is</span><span class="p">,</span> <span class="o">*</span><span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在上面的例子中，除了一个构造函数外，其他的都委托了他的工作。第一个构造函数接受三个实参，使用这些实参初始化数据成员，然后结束工作。我们定义默认构造函数令其使用三参数的构造函数完成初始化过程，它也无须执行其他任务。<br>
+接受istream&amp;的构造函数也是委托构造函数，它委托给默认构造函数，默认构造函数函数又委托给三参数构造函数。当受委托的构造函数执行完成后，接着执行istream&amp;构造函数体的内容。它的构造函数体调用read函数读取给定的istream。<br>
+当一个构造函数委托给另一个构造函数时，受委托的构造函数的初始值列表和函数体被依次执行。在Sales_data类中，受委托的构造函数体恰好是空的。假如函数体包含有代码的话，将先执行这些代码，然后控制权才会交还给委托者的函数体。</p>
+<h3 id="默认构造函数的作用" class="headerLink">
+    <a href="#%e9%bb%98%e8%ae%a4%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e7%9a%84%e4%bd%9c%e7%94%a8" class="header-mark"></a>默认构造函数的作用</h3><p>当对象被默认初始化或值初始化时自动执行默认构造函数。默认初始化在以下情况发生：</p>
+<ul>
+<li>当我们在块作用域内不使用任意初始值定义一个非静态变量或者数组时。</li>
+<li>当一个类本身含有类类型的成员且使用合成的默认构造函数时。</li>
+<li>当类类型的成员没有在构造函数初始值列表中显式的初始化时。<br>
+值初始化在以下情况发生：</li>
+<li>在数组初始化的过程中如果我们提供的初始值数量少于数组的大小时。</li>
+<li>当我们不使用初始值定义一个局部静态变量时。</li>
+<li>当我们通过书写形如T()的表达式显式的请求值初始化时，其中T是类型名。<br>
+类必须包含一个默认构造函数以便在上述情况下使用，其中大多数情况非常容易判断。<br>
+不那么明显的一种情况是类的某些数据成员缺少默认构造函数：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">NoDefault</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NoDefault</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 还有其他成员，但是没有其他构造函数了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>  <span class="c1">//默认情况下，my_mem是public的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">NoDefault</span> <span class="n">my_eme</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">A</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// 错误，不能为A合成构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">B</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">//错误，b_member没有初始值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">NoDefault</span> <span class="n">b_member</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>在实际中，如果定义了其他构造函数，那么最好也提供一个默认构造函数。</strong></p>
+<h3 id="使用默认构造函数" class="headerLink">
+    <a href="#%e4%bd%bf%e7%94%a8%e9%bb%98%e8%ae%a4%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0" class="header-mark"></a>使用默认构造函数</h3><p>下面的obj的声明可以正常编译通过：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Sales_data</span> <span class="nf">obj</span><span class="p">();</span>  <span class="c1">// 正确：定义了一个函数而非对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">isbn</span> <span class="o">==</span> <span class="n">Primer_5th_ed</span><span class="p">.</span><span class="n">isbn</span><span class="p">())</span> <span class="c1">// 错误，obj是一个函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Sales_data</span> <span class="n">obj2</span><span class="p">;</span> <span class="c1">// 正确，obj2是一个对象而非函数。
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
 <h2 id="拷贝赋值和析构" class="headerLink">
     <a href="#%e6%8b%b7%e8%b4%9d%e8%b5%8b%e5%80%bc%e5%92%8c%e6%9e%90%e6%9e%84" class="header-mark"></a>拷贝、赋值和析构</h2><p>除了定义类的对象如何初始化之外，类还需要控制拷贝、赋值和销毁对象时发生的行为。如果不主动定义这些操作，编译器将替我们合成它们。</p>
 <h3 id="某些类不能依赖于合成的版本" class="headerLink">
@@ -1161,6 +1285,156 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>全局函数verify的声明在Screen的定义之前是不可见的。然而，名字查找的第三步包括了成员函数出现之前的全局作用域。在此例中，verify的声明位于setHeight的定义之前，因此可以被正常使用。</p>
+<hr>
+<h2 id="隐式的类类型转换" class="headerLink">
+    <a href="#%e9%9a%90%e5%bc%8f%e7%9a%84%e7%b1%bb%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2" class="header-mark"></a>隐式的类类型转换</h2><p>如果构造函数只接受一个实参，则它实际上定义了转换为此类类型的隐式转换机制，有时我们将这种构造函数称为转换构造函数。<br>
+<strong>能通过一个实参调用的构造函数定义了一条从构造函数的参数类型向类类型隐式转换的规则。</strong><br>
+在Saels_data类中，接受string的构造函数和接受istream的构造函数分别定义了两种类型向Sales_data隐式转换的规则。也就是说，在需要使用Sales_data的地方，我们可以使用string和istream作为替代：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="n">null_book</span> <span class="o">=</span> <span class="s">&#34;9-999-99999-9&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 建立一个临时的Sales_data对象
+</span></span></span><span class="line"><span class="cl"><span class="c1">//该对象的units_sold和revenue等于0，bookNo等于null_boook
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">null_book</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我们用一个string实参调用Sales_data的combine成员。该调用是合法的，编译器用给定的string自动创建了一个Sales_data对象。新生成的这个（临时）Sales_data对象被传递给combine。</p>
+<h3 id="只允许一步类类型转换" class="headerLink">
+    <a href="#%e5%8f%aa%e5%85%81%e8%ae%b8%e4%b8%80%e6%ad%a5%e7%b1%bb%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2" class="header-mark"></a>只允许一步类类型转换</h3><p>编译器只会自动的执行一步类型转换。例如，下边的代码隐式的使用了两种转换规则，所以它是错误的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 错误，需要用户定义的两种转换：
+</span></span></span><span class="line"><span class="cl"><span class="c1">// （1）把“9-999-99999-9”转换成string
+</span></span></span><span class="line"><span class="cl"><span class="c1">// （2）再把临时的string转换为Sales_data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="s">&#34;9-999-99999-9&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果想完成上述调用，可以显式的把字符串转换为string或Sales_data对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 正确：显式的转换成string，隐式的转化成Sales_data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="s">&#34;9-999-99999-9&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 正确：隐式的转换为string，显式的转换为Slaes_data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">Sales_data</span><span class="p">(</span><span class="s">&#34;9-999-99999-9&#34;</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="类类型转换不是总有效" class="headerLink">
+    <a href="#%e7%b1%bb%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2%e4%b8%8d%e6%98%af%e6%80%bb%e6%9c%89%e6%95%88" class="header-mark"></a>类类型转换不是总有效</h3><p>是否需要从string到Sales_data的转换依赖于我们对用户使用该转换的看法。在此例中，这种转换可能是对的。null_book中的string可能表示了一个不存在的ISBN编号。<br>
+另一个是从istream到Sales_data的转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 使用istream构造函数创建一个函数传递给combine
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">cin</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这段代码隐式的把cin转换成Sales_data，这个转换执行了接受一个istream的Sales_data构造函数。该构造函数通过读取标准输入创建了一个临时的Sales_data对象，随后将得到的对象传递给combine。<br>
+Sales_data对象是个临时量，一旦combine完成我们就不能再访问它。实际上，我们构建一个对象，先将它的值加到item中，随后将其丢弃。</p>
+<h3 id="抑制构造函数定义的隐式转换" class="headerLink">
+    <a href="#%e6%8a%91%e5%88%b6%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89%e7%9a%84%e9%9a%90%e5%bc%8f%e8%bd%ac%e6%8d%a2" class="header-mark"></a>抑制构造函数定义的隐式转换</h3><p>在要求隐式转换的程序上下文中，我们可以通过将构造函数声明为<strong>explicit</strong>加以阻止：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Sales_data</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Sales_data</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">cnt</span><span class="p">,</span> <span class="kt">double</span> <span class="n">price</span><span class="p">)</span><span class="o">:</span><span class="n">bookNo</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">units_sold</span><span class="p">(</span><span class="n">cnt</span><span class="p">),</span> <span class="n">revenue</span><span class="p">(</span><span class="n">cnt</span><span class="o">*</span><span class="n">price</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">explicit</span> <span class="nf">Sales_data</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">:</span><span class="n">bookNo</span><span class="p">(</span><span class="n">s</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">explicit</span> <span class="nf">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="n">is</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时，没有任何构造函数能够用于隐式的创建Sales_data对象，之前的两种用法都无法通过编译：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">item</span><span class="p">.</span><span class="n">conbine</span><span class="p">(</span><span class="n">null_book</span><span class="p">);</span> <span class="c1">// 错误，string构造函数是explicit的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">cin</span><span class="p">);</span> <span class="c1">// 错误，istream构造函数是explicit的
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>关键字explicit只对一个实参的构造函数有效。需要多个实参的构造函数不能用于执行隐式转换，所以无须将这些构造函数指定为explicit的，只需要在类内声明构造函数时使用explicit关键字，在类外部定义时不用重复：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 错误：explicit关键字只允许出现在类内的构造函数声明处
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">explicit</span> <span class="n">Sales_data</span><span class="o">::</span><span class="n">Sales_data</span><span class="p">(</span><span class="n">isteam</span><span class="o">&amp;</span> <span class="n">is</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rean</span><span class="p">(</span><span class="n">is</span><span class="p">,</span> <span class="o">*</span><span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="explicit构造函数只能用于直接初始化" class="headerLink">
+    <a href="#explicit%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e5%8f%aa%e8%83%bd%e7%94%a8%e4%ba%8e%e7%9b%b4%e6%8e%a5%e5%88%9d%e5%a7%8b%e5%8c%96" class="header-mark"></a>explicit构造函数只能用于直接初始化</h3><p>发生隐式转换的一种情况是当我们执行拷贝形式的初始化时。此时，我们只能使用直接初始化，而不能使用explicit构造函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Sales_data</span> <span class="nf">item1</span><span class="p">(</span><span class="n">null_book</span><span class="p">);</span> <span class="c1">// 正确，直接初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 错误，不能将explicit构造函数用于拷贝形式的初始化过程诶
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Sales_data</span> <span class="n">item2</span> <span class="o">-</span> <span class="n">null_book</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="为转换显式的使用构造函数" class="headerLink">
+    <a href="#%e4%b8%ba%e8%bd%ac%e6%8d%a2%e6%98%be%e5%bc%8f%e7%9a%84%e4%bd%bf%e7%94%a8%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0" class="header-mark"></a>为转换显式的使用构造函数</h3><p>尽管编译器不会将explicit的构造函数用于隐式转换过程，但是可以使用这样的构造函数显式的强制进行转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 正确，实参是一个显式构造的Sales_data对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">Sales_data</span><span class="p">(</span><span class="n">null_book</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 正确：static_cast可以使用explicit的构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">item</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">Sales_data</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Sales_data</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cin</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在第一个调用中，直接使用Sales_data的构造函数，该调用通过接受string的构造函数创建了一个临时的Sales_data对象。<br>
+在第二个调用中，使用static_cast执行了显式而非隐式的转换。其中，static_cast使用istream构造函数创建了一个临时的Sales_data对象。</p>
+<h3 id="标准库中含有显式构造函数的类" class="headerLink">
+    <a href="#%e6%a0%87%e5%87%86%e5%ba%93%e4%b8%ad%e5%90%ab%e6%9c%89%e6%98%be%e5%bc%8f%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e7%9a%84%e7%b1%bb" class="header-mark"></a>标准库中含有显式构造函数的类</h3><p>我们用过一些白赚苦衷的类含有单参数的构造函数：</p>
+<ul>
+<li>接受一个单参数的const char*的string构造函数不是explicit的。</li>
+<li>接受一个容量参数的vector构造函数是explicit的。</li>
+</ul>
 </div>
 
         <div class="post-footer" id="post-footer">

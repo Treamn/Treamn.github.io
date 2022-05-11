@@ -92,9 +92,63 @@ public:
 ```
 当没有给定实参，或者给定一个string实参时，两个版本的类创建了相同的对象。  
 **如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数**
+### 委托构造函数  
+一个委托构造函数使用它所属类的其他构造函数执行它自己的初始化过程，或者说它把自己的一些（或全部）职责委托给了其他构造函数。  
+一个委托构造函数也有一个成员初始值的列表和一个函数体。在委托构造函数内，成员初始值列表只有一个唯一的入口，就是类名本身。和其他成员的初始值一样，类名后边紧跟圆括号括起来的参数列表，参数列表必须与类中另一个构造函数相匹配。
+```cpp
+class Sales_data{
+public:
+    //非委托构造函数使用对用的实参初始化成员
+    Sales_data(std::string s, unsigned cnt, double price):bookNo(s), units_sold(cnt), revenue(cnt*price){}
+    //其余构造函数全都委托给另一个构造函数
+    Sales_data():Sales_data("", 0, 0){}
+    Sales_data(std::string s):Sales_data(s,0,0){}
+    Sales_data(std::istream &is): Sales_data(){
+        read(is, *this);
+    }
+};
+```
+在上面的例子中，除了一个构造函数外，其他的都委托了他的工作。第一个构造函数接受三个实参，使用这些实参初始化数据成员，然后结束工作。我们定义默认构造函数令其使用三参数的构造函数完成初始化过程，它也无须执行其他任务。  
+接受istream&的构造函数也是委托构造函数，它委托给默认构造函数，默认构造函数函数又委托给三参数构造函数。当受委托的构造函数执行完成后，接着执行istream&构造函数体的内容。它的构造函数体调用read函数读取给定的istream。  
+当一个构造函数委托给另一个构造函数时，受委托的构造函数的初始值列表和函数体被依次执行。在Sales_data类中，受委托的构造函数体恰好是空的。假如函数体包含有代码的话，将先执行这些代码，然后控制权才会交还给委托者的函数体。  
 
+### 默认构造函数的作用  
+当对象被默认初始化或值初始化时自动执行默认构造函数。默认初始化在以下情况发生：  
+- 当我们在块作用域内不使用任意初始值定义一个非静态变量或者数组时。  
+- 当一个类本身含有类类型的成员且使用合成的默认构造函数时。  
+- 当类类型的成员没有在构造函数初始值列表中显式的初始化时。  
+值初始化在以下情况发生：  
+- 在数组初始化的过程中如果我们提供的初始值数量少于数组的大小时。  
+- 当我们不使用初始值定义一个局部静态变量时。  
+- 当我们通过书写形如T()的表达式显式的请求值初始化时，其中T是类型名。  
+类必须包含一个默认构造函数以便在上述情况下使用，其中大多数情况非常容易判断。  
+不那么明显的一种情况是类的某些数据成员缺少默认构造函数：
+```cpp
+class NoDefault{
+public:
+    NoDefault(const std::string&);
+    // 还有其他成员，但是没有其他构造函数了
+};
+struct A
+{  //默认情况下，my_mem是public的
+    NoDefault my_eme;
+};
+A a; // 错误，不能为A合成构造函数
+struct B
+{
+    B() {} //错误，b_member没有初始值
+    NoDefault b_member;
+};
+```
+**在实际中，如果定义了其他构造函数，那么最好也提供一个默认构造函数。**
 
-
+### 使用默认构造函数  
+下面的obj的声明可以正常编译通过：
+```cpp
+Sales_data obj();  // 正确：定义了一个函数而非对象
+if (obj.isbn == Primer_5th_ed.isbn()) // 错误，obj是一个函数
+Sales_data obj2; // 正确，obj2是一个对象而非函数。
+```
 
 
 
@@ -501,9 +555,91 @@ void Screen::setHeight(pos var){
 ```
 全局函数verify的声明在Screen的定义之前是不可见的。然而，名字查找的第三步包括了成员函数出现之前的全局作用域。在此例中，verify的声明位于setHeight的定义之前，因此可以被正常使用。
 
+---
+## 隐式的类类型转换  
+如果构造函数只接受一个实参，则它实际上定义了转换为此类类型的隐式转换机制，有时我们将这种构造函数称为转换构造函数。  
+**能通过一个实参调用的构造函数定义了一条从构造函数的参数类型向类类型隐式转换的规则。**  
+在Saels_data类中，接受string的构造函数和接受istream的构造函数分别定义了两种类型向Sales_data隐式转换的规则。也就是说，在需要使用Sales_data的地方，我们可以使用string和istream作为替代：
+```cpp
+string null_book = "9-999-99999-9";
+// 建立一个临时的Sales_data对象
+//该对象的units_sold和revenue等于0，bookNo等于null_boook
+item.combine(null_book);
+```
+这里我们用一个string实参调用Sales_data的combine成员。该调用是合法的，编译器用给定的string自动创建了一个Sales_data对象。新生成的这个（临时）Sales_data对象被传递给combine。
 
+### 只允许一步类类型转换  
+编译器只会自动的执行一步类型转换。例如，下边的代码隐式的使用了两种转换规则，所以它是错误的：
+```cpp
+// 错误，需要用户定义的两种转换：
+// （1）把“9-999-99999-9”转换成string
+// （2）再把临时的string转换为Sales_data
+item.combine("9-999-99999-9");
+```
+如果想完成上述调用，可以显式的把字符串转换为string或Sales_data对象： 
+```cpp
+// 正确：显式的转换成string，隐式的转化成Sales_data
+item.combine(string("9-999-99999-9"));
+// 正确：隐式的转换为string，显式的转换为Slaes_data
+item.combine(Sales_data("9-999-99999-9"));
+```
 
+### 类类型转换不是总有效
+是否需要从string到Sales_data的转换依赖于我们对用户使用该转换的看法。在此例中，这种转换可能是对的。null_book中的string可能表示了一个不存在的ISBN编号。  
+另一个是从istream到Sales_data的转换：
+```cpp
+// 使用istream构造函数创建一个函数传递给combine
+item.combine(cin);
+```
+这段代码隐式的把cin转换成Sales_data，这个转换执行了接受一个istream的Sales_data构造函数。该构造函数通过读取标准输入创建了一个临时的Sales_data对象，随后将得到的对象传递给combine。  
+Sales_data对象是个临时量，一旦combine完成我们就不能再访问它。实际上，我们构建一个对象，先将它的值加到item中，随后将其丢弃。  
 
+### 抑制构造函数定义的隐式转换  
+在要求隐式转换的程序上下文中，我们可以通过将构造函数声明为**explicit**加以阻止：
+```cpp
+class Sales_data{
+public:
+    Sales_data() = default;
+    Sales_data(std::string s, unsigned cnt, double price):bookNo(s), units_sold(cnt), revenue(cnt*price){}
+    explicit Sales_data(const std::string &s):bookNo(s){}
+    explicit Sales_data(std::istream &is);
+```
+此时，没有任何构造函数能够用于隐式的创建Sales_data对象，之前的两种用法都无法通过编译：
+```cpp
+item.conbine(null_book); // 错误，string构造函数是explicit的
+item.combine(cin); // 错误，istream构造函数是explicit的
+```
+关键字explicit只对一个实参的构造函数有效。需要多个实参的构造函数不能用于执行隐式转换，所以无须将这些构造函数指定为explicit的，只需要在类内声明构造函数时使用explicit关键字，在类外部定义时不用重复：
+```cpp
+// 错误：explicit关键字只允许出现在类内的构造函数声明处
+explicit Sales_data::Sales_data(isteam& is){
+    rean(is, *this);
+}
+```
+
+### explicit构造函数只能用于直接初始化
+发生隐式转换的一种情况是当我们执行拷贝形式的初始化时。此时，我们只能使用直接初始化，而不能使用explicit构造函数：
+```cpp
+Sales_data item1(null_book); // 正确，直接初始化
+// 错误，不能将explicit构造函数用于拷贝形式的初始化过程诶
+Sales_data item2 - null_book;
+```
+
+### 为转换显式的使用构造函数  
+尽管编译器不会将explicit的构造函数用于隐式转换过程，但是可以使用这样的构造函数显式的强制进行转换：
+```cpp
+// 正确，实参是一个显式构造的Sales_data对象
+item.combine(Sales_data(null_book));
+// 正确：static_cast可以使用explicit的构造函数
+item.combine(Sales_data(static_cast<Sales_data>(cin)))
+```
+在第一个调用中，直接使用Sales_data的构造函数，该调用通过接受string的构造函数创建了一个临时的Sales_data对象。  
+在第二个调用中，使用static_cast执行了显式而非隐式的转换。其中，static_cast使用istream构造函数创建了一个临时的Sales_data对象。  
+
+### 标准库中含有显式构造函数的类  
+我们用过一些白赚苦衷的类含有单参数的构造函数：
+- 接受一个单参数的const char*的string构造函数不是explicit的。  
+- 接受一个容量参数的vector构造函数是explicit的。
 
 
 
