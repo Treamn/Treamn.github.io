@@ -641,6 +641,130 @@ item.combine(Sales_data(static_cast<Sales_data>(cin)))
 - 接受一个单参数的const char*的string构造函数不是explicit的。  
 - 接受一个容量参数的vector构造函数是explicit的。
 
+---
+## 聚合类  
+聚合类使得用户可以直接访问其成员，并具有特殊的初始化语法形式。当一个类满足如下条件时，我们说它是聚合的。  
+- 所有成员都是public的。
+- 没有定义任何构造函数。
+- 没有类内初始值。 
+- 没有基类，也没有virtual函数。 
+下面的类是一个聚合类。
+```cpp
+struct Data
+{
+    int ival;
+    string s;
+};
+```
+可以使用一个花括号括起来的成员初始值列表，并用它初始化聚合类的数据成员。
+```cpp
+// val1.ival = 0, val1.s = string("Anna")
+Data val1 = {0, "Anna"};
+```
+初始值的顺序必须与声明的顺序一致。下面的例子是错误的：
+```cpp
+Data val2 = {"Anna"， 0};
+```
+与初始化数组元素的规则一致，如果初始值列表中的元素个数少于类的成员数量，则靠后的成员被值初始化。初始值列表的元素个数绝对不能超过类的成员数量。  
+显式的初始化类的对象的成员存在三个明显的缺点：
+- 要求类的所有成员都是pubic的。 
+- 将正确初始化每个对象每个成员的重任交给了类的用户。
+- 添加或删除一个成员之后，所有的初始化语句都需要更新。 
+
+---
+## 字面值常量  
+constexpr函数的参数和返回值必须是字面值类型。除了算数类型、引用和指针外，某些值也是字面值类型。和其他类不同，字面值类型的类可能含有constexpr函数成员。这样的成员必须符合constexpr函数的所有要求，它们是隐式const的。  
+数据成员都是字面值类型的聚合类是字面值常量类。如果一个类不是聚合类，但他符合下述要求，则它也是一个字面值常量类：
+- 数据成员都必须是字面值类型。
+- 类必须至少含有一个constexpr构造函数。
+- 如果一个数据成员含有类内初始值，则内置类型成员的初始值必须是一条常量表达式；或者如果成员属于某种类类型，则初始值必须使用成员自己的constexpr构造函数。
+- 类必须使用析构函数的默认的定义，该成员负责销毁类的对象。 
+
+### constexpr构造函数  
+尽管构造函数不能是const的，但是字面值常量类的构造函数可以是constexpr函数。事实上，一个字面值常量类必须至少提供一个constexpr构造函数。 
+constexpr构造函数可以声明成=default的形式。否则constexpr构造函数就必须既符合构造函数的要求（不不能包含返回语句），又符合constexpr函数的要求（唯一可执行语句就是返回语句）。因此，constexpr构造函数体一般是空的。通过前置关键字constexpr就可以声明一个constexpr构造函数。
+```cpp
+class Debug{
+public:
+    constexpr Debug(bool b = true):hw(b), io(b), other(b){}
+    constexpr Debug(bool h, bool i, bool o):hw(h), io(i), other(o){}
+    constexpr bool any(){
+        return hw || io || other;
+    }
+    void set_io(bool b){
+        io = b;
+    }
+    void set_hw(bool b){
+        hw = b;
+    }
+    void set_other(bool b){
+        other = b;
+    }
+private:
+    bool hw;
+    bool io;
+    bool other;
+};
+```
+constexpr构造函数必须初始化所有数据成员，初始值或者使用constexpr构造函数，或者是一条常量表达式。  
+constexpr构造函数用于生成constexpr对象以及constexpr函数的参数或返回类型。
+```cpp
+constexpr Debug io_sub(false, true, false); //调试io
+if (io_sub.any()) // 等价于if(true)
+    cerr << "print appropriate error message" << endl;
+constexpr Debug prod(false); // 无调试
+if (prod.any()) // 等价于if(false)
+    cerr << "print an error message" << endl;
+```
+---
+
+## 类的静态成员  
+有的时候类需要它的一些成员与类本身直接相关，而不是和类的各个对象保持关联。例如，一个银行账户可能需要一个数据成员来表示当前的基准利率。在此例中，我们希望利率与类关联，而非和类的每个对象关联。从实现效率的角度来看，没必要每个对象都存储利率信息。而且更加重要的是，一旦利率浮动，我们希望所有的对象都使用新值。  
+### 声明静态成员  
+我们通过在成员的声明之前加上关键字static使得其与类关联在一起。和其他成员一样，静态成员可以是public或private的。静态成员的数据类型可以是常量、引用、指针、类类型等。
+```cpp
+class Account{
+public:
+    void calculate(){
+        amount += amount * interestRate;
+    }
+    static double rate(){
+        return interestRate;
+    }
+    static void rate(double);
+
+private:
+    string owner;
+    double amount;
+    static double interestRate;
+    static double initRate();
+};
+```
+类的静态成员存在与任何对象之外，对象中不包含任何与静态数据成员有关的数据，因此，每个Account对象将包含两个数据成员:owner和amount。只存在一个interestRate被它被所有Account对象共享。  
+类似的，静态成员函数也不与任何对象绑定在一起，它们不包含this指针。作为结果，静态成员函数不能声明成const的，而且我们也不能在static函数体内使用this指针。这一限制既适用于this的显式使用，也对调用非静态成员的隐式使用有效。
+
+### 使用类的静态成员  
+我们使用作用域运算符直接访问静态成员：
+```cpp
+double r;
+r = Account::rate(); // 使用作用域运算符访问静态成员
+```
+虽然静态成员不属于类的某个对象，但是我们仍然可以使用类的对象、引用或指针来访问静态成员。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
