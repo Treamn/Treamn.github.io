@@ -4,7 +4,14 @@
         <link>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</link>
         <description>C&#43;&#43;学习 - 分类 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 05 Apr 2022 19:36:03 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 06 Jul 2022 19:45:54 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>Review</title>
+    <link>http://example.org/2022/review/</link>
+    <pubDate>Wed, 06 Jul 2022 19:45:54 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/review/</guid>
+    <description><![CDATA[cin.get()在接收到任意输入后再执行下一条语句。 声明语句使用变量前必须声明它。 尽可能在首次使用变量前声明它。 要将信息项存储在计算机中，]]></description>
+</item><item>
     <title>C&#43;&#43;学习之类</title>
     <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</link>
     <pubDate>Tue, 05 Apr 2022 19:36:03 &#43;0800</pubDate><author>
