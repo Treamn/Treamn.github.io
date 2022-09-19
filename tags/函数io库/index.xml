@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>函数IO库 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E5%87%BD%E6%95%B0io%E5%BA%93/</link>
+        <description>函数IO库 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 19 Sep 2022 20:15:35 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E5%87%BD%E6%95%B0io%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;学习之IO库</title>
+    <link>http://example.org/2022/io%E5%BA%93/</link>
+    <pubDate>Mon, 19 Sep 2022 20:15:35 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/io%E5%BA%93/</guid>
+    <description><![CDATA[IO类iostream定义了用于读写流的基本类型 fstream定义了读写命名文件的类型 sstream定义了读写内存string对象的类型 IO]]></description>
+</item></channel>
+</rss>

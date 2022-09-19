@@ -56,8 +56,26 @@ int rocs = {}  // set roc to 0
 int psychics{}  //set psychics to 0
 ```
 
+### cout.put()函数  
+该函数显示一个字符。        
+ 
+### signed char 和 unsigned char   
+与int不同，char在默认情况下，既不是没有符号也不是有符号。是否由符号由C++实现决定。如果char有某种特定行为特别重要，则可以显式的将类型设置为signed char或unsigned char。  
+```cpp
+char fodo;           //may be signed, may be unsigned
+unsigned char bar;   //definitely usigned
+signed char snark;   //definitely signed
+```
 
-
-
+### const限定符  
+创建常量的通用格式如下：   
+```cpp
+const type name = value;
+```
+应当在声明时就对const进行初始化，如果在声明常量时没有初始化，则该常量的值将是不确定的，且无法修改。  
+**为什么const比define好**  
+- const能够明确指定类型。  
+- const可以使用C++的作用域规则将定义限制在特定的函数或。  
+- 可以将const用于更复杂的类型。
 
 
