@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>segmentation - 系列 - Dling</title>
+        <link>http://example.org/series/segmentation/</link>
+        <description>segmentation - 系列 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 27 Sep 2022 16:49:45 &#43;0800</lastBuildDate><atom:link href="http://example.org/series/segmentation/" rel="self" type="application/rss+xml" /><item>
+    <title>轻量化网络内容小结</title>
+    <link>http://example.org/2022/lightweight/</link>
+    <pubDate>Tue, 27 Sep 2022 16:49:45 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/lightweight/</guid>
+    <description><![CDATA[ADDerNetQ:在硬件设备上加法的复杂度远小于乘法, 为更好地减少计算量提出AdderNet. 对AdderNet中的Winograd算法 （]]></description>
+</item></channel>
+</rss>

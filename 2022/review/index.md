@@ -51,7 +51,7 @@ cout << "int is " << sizeof max << "bytes."
 ### C++11初始化方式  
 ```cpp
 int emus{7}  //set eum to 7
-int rheas = {12}  // setrhea to 12
+int rheas = {12}  // set rhea to 12
 int rocs = {}  // set roc to 0
 int psychics{}  //set psychics to 0
 ```
@@ -76,6 +76,12 @@ const type name = value;
 **为什么const比define好**  
 - const能够明确指定类型。  
 - const可以使用C++的作用域规则将定义限制在特定的函数或。  
-- 可以将const用于更复杂的类型。
+- 可以将const用于更复杂的类型。  
+
+
+## 类型转换    
+### 初始化和赋值进行的转换   
+假如so_long的类为long
+
 
 
