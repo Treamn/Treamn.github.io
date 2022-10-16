@@ -2,19 +2,24 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://example.org/categories/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/tags/lightweight/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/posts/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/series/segmentation/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/series/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/tags/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/categories/%E6%88%91%E7%9A%84%E7%82%BC%E4%B8%B9%E6%97%A5%E8%AE%B0/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/2022/lightweight/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://example.org/series/c&#43;&#43;-primer/</loc><lastmod>2022-09-19T20:15:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</loc><lastmod>2022-09-19T20:15:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>http://example.org/2022/io%E5%BA%93/</loc><lastmod>2022-09-19T20:15:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>http://example.org/tags/%E5%87%BD%E6%95%B0io%E5%BA%93/</loc><lastmod>2022-09-19T20:15:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/series/c&#43;&#43;%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/categories/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/posts/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/series/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/%E5%87%BD%E6%95%B0/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/%E5%AE%9E%E5%8F%82/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/%E5%BD%A2%E5%8F%82/</loc><lastmod>2022-10-16T17:41:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://example.org/tags/lightweight/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>http://example.org/series/segmentation/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>http://example.org/categories/%E6%88%91%E7%9A%84%E7%82%BC%E4%B8%B9%E6%97%A5%E8%AE%B0/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>http://example.org/2022/lightweight/</loc><lastmod>2022-09-27T16:49:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>http://example.org/series/c&#43;&#43;-primer/</loc><lastmod>2022-09-19T20:15:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>http://example.org/2022/io%E5%BA%93/</loc><lastmod>2022-09-19T20:15:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>http://example.org/tags/%E5%87%BD%E6%95%B0io%E5%BA%93/</loc><lastmod>2022-09-19T20:15:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/tags/review/</loc><lastmod>2022-07-06T19:45:54&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/2022/review/</loc><lastmod>2022-07-06T19:45:54&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</loc><lastmod>2022-04-05T19:36:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
@@ -27,9 +32,6 @@
             <loc>http://example.org/2022/youngstyle/</loc><lastmod>2022-04-04T16:10:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/tags/%E9%AB%98%E8%80%83/</loc><lastmod>2022-04-04T16:10:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0/</loc><lastmod>2022-03-28T14:15:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
-            <loc>http://example.org/tags/%E5%87%BD%E6%95%B0/</loc><lastmod>2022-03-28T14:15:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
-            <loc>http://example.org/tags/%E5%AE%9E%E5%8F%82/</loc><lastmod>2022-03-28T14:15:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
-            <loc>http://example.org/tags/%E5%BD%A2%E5%8F%82/</loc><lastmod>2022-03-28T14:15:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/tags/%E5%BC%82%E5%B8%B8/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>http://example.org/tags/%E8%AF%AD%E5%8F%A5/</loc><lastmod>2022-03-20T16:29:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>

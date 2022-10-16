@@ -4,9 +4,16 @@
         <link>http://example.org/</link>
         <description>Dling | 煜江的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 27 Sep 2022 16:49:45 &#43;0800</lastBuildDate>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 16 Oct 2022 17:41:08 &#43;0800</lastBuildDate>
             <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>C&#43;&#43;概览基础知识</title>
+    <link>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+    <pubDate>Sun, 16 Oct 2022 17:41:08 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+    <description><![CDATA[类型在定义一个变量时，如果变量的类型可以由初始化器推断得到，则无须显式指定其类型： 1 2 3 4 5 auto b = true; //bool auto ch = &#39;x&#39;; //char auto i = 123; //int auto d = 1.2; //double auto z = sqrt(y);]]></description>
+</item><item>
     <title>轻量化网络内容小结</title>
     <link>http://example.org/2022/lightweight/</link>
     <pubDate>Tue, 27 Sep 2022 16:49:45 &#43;0800</pubDate><author>
