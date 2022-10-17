@@ -179,5 +179,136 @@ double read_and_sum(int s)
 这条语句的含义是：首先从自由空间获取s个double类型的元素，并用一个指向这些元素的指针初始阿护elem；然后用s初始化sz。  
 访问元素的功能是由一个下标函数提供的，这个函数名为operator[]，它的返回值是对相应元素的引用(double&)。
 
+## 枚举  
+```cpp
+enum class Color{red, blue, green};
+enum class Traffic_light{green, yellow, red};
+
+Color col = Color::red;
+Traffic_light light = Traffic_light::red;
+```
+枚举值位于enum class的作用域之内，因此可以在不同的enum class中重复使用枚举值而不引起混淆。  
+enum后面的class指明枚举是强类型的，且它的枚举值位于制定作用域中。不同的enum class是不同的类型，这有助于防止对常量的意外误用。在上面的例子中，不能混用Traffic_light和Color的值。 
+```cpp
+Color x = red;                //错误，哪个red
+Color y = Traffic_light::red; //错误，此red不是Color的对象
+Color z = Color::red;         //OK
+```
+同样，也不能隐式的混用Color和整数值：
+```cpp
+int i = Color::red; //错误：Color::red不是一个int
+Color c = 2;        //错误：2不是一个Color对象
+```
+如果不想显式的限定枚举名字，并且希望枚举值可以是int(无须显式转换)，则应该去掉enum class中的class而得到一个“普通的”enum。  
+默认情况下，enum class只定义了赋值、初始化和比较操作。然而，既然枚举类型是一种用户自定义类型，那么我们就可以为它定义别的运算符：
+```cpp
+Traffic_light& operator++(Traffic_light& t)
+//前置递增运算符++
+{
+    switch(t){
+        case Traffic_light::green:  return t = Traffic_light::yellow;
+        case Traffic_light::yelow:  return t = Traffic_light::red;
+        case Traffic_light::red:  return t = Traffic_light::green;
+    }
+}
+
+Traffic_light next = ++light; //next变为Traffic_light::green
+```
 
 
+## 模块化  
+构建C++程序的关键就是清晰的定义这些组成部分之间的交互关系。第一步也是最重要的一步，是将某个部分的接口和实现分离开来。在语言层面，C++使用声明来描述接口。声明指定了使用某个函数或某种类型所需的所有内容。  
+```cpp
+double sqrt(double);
+
+class Vector{
+public:
+    Vector(int s);
+    double& operator[](itn i);
+    int size();
+private:
+    double* elem; //elem指向一个数组，该数组包含sz个double
+    int sz;
+};
+```
+
+## 异常  
+Vector试图访问某个越界的元素时，应该做什么？ 
+- Vector的作者不知道使用者面临这种情况时希望如何处理。 
+- Vector的使用者不能保证每次都检测到问题。  
+最佳的解决方案是由Vector的实现者负责检测可能的越界行为，然后通知使用者。之后Vector的使用者可以采取适当的应对措施。例如，Vector::operator[]()能够检测到潜在的越界访问错误并抛出一个out_of_range异常：
+```cpp
+double& Vector::operator[](int i)
+{
+    if(i < 0 || size()<=i) throw out_of_range{"Vector::operator[]"};
+}
+```
+throw负责吧程序的控制权从某个直接或间接调用Vector::operator[]的函数转移到out_of_range异常处理代码。为完成这一目标，实现部分需要展开函数调用栈以便返回主调函数的上下文。如：
+```cpp
+void f(Vector& v)
+{
+    try{//此处异常被后面定义的处理模块处理
+        v[v.size()] = 7; //试图访问v末尾之后的位置
+    }
+    catch(out_of_range){
+        //此处处理越界错误
+    }
+}
+```
+将可能处理异常的程序放在一个try块当中。显然，对v[v.size()]的赋值操作将出错。因此，程序进入到提供了out_of_range错误处理代码的catch从句中。 
+
+## 不变式  
+使用异常机制通报越界访问错误是函数检查实参的一个示例，此时，因为基本假设，即所谓的前置条件没有得到满足，所以函数拒绝执行。在正式说明Vector的下标运算符时，我们应该规定类似于”索引值必须在\[0:size())范围内“的规则，这一规则是在operator[]()内被检查的。  
+对于类来说，一条假定某事为真的声明称为类的不变式，简称不变式。建立类的不变式是构造函数的任务，它的另一个作用是确保当成员函数推出时不变式仍然成立。考虑如下情况：
+```cpp
+Vector v(-27);
+```
+与原来版本相比，下面的定义更好：
+```cpp
+Vector::Vector(int s){
+    if(s<0) throw length_error{};
+    elem = new double[s];
+    sz = s;
+}
+```
+如果new运算符找不到可分配的内存，就会抛出std::bad::alloc。
+```cpp
+void test(){
+    try{
+    Vector v(-27);
+    }
+    catch(std::length_error){
+        // 处理负值问题
+    }
+    catch(std::bad::alloc){
+        // 处理内存耗尽问题
+    }
+}
+```
+可以自定义异常类，然后让它们把指定信息从检测到异常的点传递到处理异常的点。  
+通过情况下，当遭遇异常后就无法继续完成工作。此时，”处理“异常的含义仅仅是做一些简单地局部资源清理，然后重新抛出异常。  
+不变式的概念是设计类的关键，而前置条件也在设计函数的过程中起到同样地作用。不变式
+- 帮助我们准确的理解想要什么；  
+- 强制要求具体而明确的描述设计，而这有助于确保代码正确。
+
+
+## 静态断言  
+程序异常负责报告运行时发生的错误。如果能在编译时发现错误，效果会更好。我们可以对其他一些编译时可知的属性做一些简单检查，并以编译器错误消息的形式报告所发现的问题。
+```cpp
+static_assert(4 <= sizeof(int), "integers are too small"); //检查整数的尺寸
+```
+如果4<=sizeof(int)不满足，将会输出integers are too small的信息。也就是说，如果在当前系统上一个int占有的空间不足4个字节，就会报错。我们把这种表达某种期望的语句称为断言。  
+static_assert机制能用于任何可以表达为常量表达式的东西。例如：
+```cpp
+constexpr double C = 2299.456;
+
+void f(double speed)
+{
+    const double local_max = 160.0/(60*60);
+
+    static_assert(speed < C, "can't go that fast"); //错误，速度必须是个常量
+    static_assert(local_max < C, "can't go that fast"); //OK
+}
+```
+通常情况下，static_assert(A,S)的作用是当A不为true时，把S作为一条编译器错误信息输出。  
+static_assert最重要的用途是为泛型编程中作为形参的类型设置断言。
