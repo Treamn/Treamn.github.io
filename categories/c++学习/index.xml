@@ -4,7 +4,14 @@
         <link>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</link>
         <description>C&#43;&#43;学习 - 分类 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 16 Oct 2022 17:41:08 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 18 Oct 2022 19:14:46 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;概览抽象机制</title>
+    <link>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6/</link>
+    <pubDate>Tue, 18 Oct 2022 19:14:46 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6/</guid>
+    <description><![CDATA[类三种重要类的基本支持: 具体类； 抽象类； 类层次中的类。 很多有用的类都可以归为这三个类别，其他类可以看成是这些类别的简单变形或组合。 具体类型具]]></description>
+</item><item>
     <title>C&#43;&#43;概览基础知识</title>
     <link>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
     <pubDate>Sun, 16 Oct 2022 17:41:08 &#43;0800</pubDate><author>
