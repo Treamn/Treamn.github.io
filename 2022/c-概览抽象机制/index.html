@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  4095 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  6852 ,
         "url": "http:\/\/example.org\/2022\/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6\/","datePublished": "2022-10-18T19:14:46+08:00","dateModified": "2022-10-18T19:14:46+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -129,14 +129,24 @@
       </ul>
     </li>
     <li><a href="#抽象类型">抽象类型</a></li>
+    <li><a href="#虚函数">虚函数</a></li>
+    <li><a href="#类层次">类层次</a></li>
+    <li><a href="#拷贝和移动">拷贝和移动</a>
+      <ul>
+        <li><a href="#拷贝容器">拷贝容器</a></li>
+      </ul>
+    </li>
+    <li><a href="#移动容器">移动容器</a></li>
+    <li><a href="#资源管理">资源管理</a></li>
+    <li><a href="#抑制操作">抑制操作</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;概览抽象机制</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-18">10-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-18">10-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4095 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-18">10-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-18">10-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6852 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -163,6 +173,16 @@
       </ul>
     </li>
     <li><a href="#抽象类型">抽象类型</a></li>
+    <li><a href="#虚函数">虚函数</a></li>
+    <li><a href="#类层次">类层次</a></li>
+    <li><a href="#拷贝和移动">拷贝和移动</a>
+      <ul>
+        <li><a href="#拷贝容器">拷贝容器</a></li>
+      </ul>
+    </li>
+    <li><a href="#移动容器">移动容器</a></li>
+    <li><a href="#资源管理">资源管理</a></li>
+    <li><a href="#抑制操作">抑制操作</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="类" class="headerLink">
@@ -580,7 +600,393 @@ Container的用法是：</p>
 </div>
 </div><p>这段代码的关键点在于use(Container&amp;)并不清楚它的实参是Vector_container、List_container还是其他，它根本不需要知道。只要链接Container定义的接口就可以了。因此，不论List_container的实现发生了改变还是使用Container的一个全新派生类，都不需要重新编译use(Container&amp;)。<br>
 灵活性背后的唯一不足是，只能通过引用或指针操作对象。</p>
+<h2 id="虚函数" class="headerLink">
+    <a href="#%e8%99%9a%e5%87%bd%e6%95%b0" class="header-mark"></a>虚函数</h2><p>进一步思考Container的用法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use</span><span class="p">(</span><span class="n">Container</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">sz</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>use中的c[i]是如何解析到正确的operator<a href="" rel=""></a>的？当h()调用use()时，必须调用List_container的operator<a href="" rel=""></a>；当g()调用use()时，必须调用Vector_container的operator<a href="" rel=""></a>.要想达到这种效果，Container对象就必须包含一些有助于它在运行时选择正确函数的信息。常见的做法时编译器将虚函数的名字转换成函数指针表中对应的索引值，这张表就是所谓的虚函数表或简称vtbl。每个含有虚函数的类都有它自己的vtbl用于辨识虚函数。<br>
+即使调用函数不清楚对象的大小和数据布局，vtbl中的函数也能确保对象被正确使用。调用函数的实现只需要知道Container中vtbl指针的位置以及每个虚函数对应的索引就可以了。这种虚调用机制的效率非常接近“普通函数调用”机制，而它的空间开销包括两部分：如果类包含虚函数，则该类的每个对象需要一个额外的指针；另外每个这样的类需要一个vtbl。</p>
+<h2 id="类层次" class="headerLink">
+    <a href="#%e7%b1%bb%e5%b1%82%e6%ac%a1" class="header-mark"></a>类层次</h2><p>所谓类层次是指通过派生创建的一组类，在框架中有序排列。<br>
+类层次提供两种便利：</p>
+<ul>
+<li>接口继承：派生类对象可以用在任何需要基类的地方。也就是说，基类看起来是派生类的接口一样。这样的类通常是抽象类。</li>
+<li>实现继承：基类负责提供可以简化派生类实现的函数或数据。这样的基类通常含有数据称呀和构造函数。<br>
+具体类，尤其是表现形式不复杂的类，其行为非常类似于内置类型：我们将其定义为局部变量，通过它们的名字访问它们，随意拷贝它们等。类层次中的类则有所区别：我们倾向于通过new在自由存储中为其分配空间，然后通过指针或引用访问它们。例如，我们设计这样一个函数，首先从输入流中读入描述形状的数据，然后构造对应的Shape对象：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Kind</span><span class="p">{</span><span class="n">circle</span><span class="p">,</span> <span class="n">triangle</span><span class="p">,</span> <span class="n">smiley</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Shape</span><span class="o">*</span> <span class="nf">read_shape</span><span class="p">(</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">is</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//从is中读取形状描述信息，找到形状的种类k
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">switch</span><span class="p">(</span><span class="n">k</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="n">Kind</span><span class="o">::</span><span class="nl">circle</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">new</span> <span class="n">Circle</span><span class="p">{</span><span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="n">Kind</span><span class="o">::</span><span class="nl">triangle</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">new</span> <span class="n">Triangle</span><span class="p">{</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="nl">Kind</span><span class="p">:</span><span class="err">😃</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Smiley</span><span class="o">*</span> <span class="n">ps</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Smiley</span><span class="p">{</span><span class="n">p</span><span class="p">,</span><span class="n">r</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ps</span><span class="o">-&gt;</span><span class="n">add_eye</span><span class="p">(</span><span class="n">e1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ps</span><span class="o">-&gt;</span><span class="n">add_eye</span><span class="p">(</span><span class="n">e2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ps</span><span class="o">-&gt;</span><span class="n">set_mouth</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">ps</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>程序使用该函数的方式如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">*&gt;</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="n">cin</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">read_shape</span><span class="p">(</span><span class="n">cin</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="n">draw_all</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rotate_all</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">45</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">P</span><span class="p">:</span><span class="n">v</span><span class="p">)</span> <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="拷贝和移动" class="headerLink">
+    <a href="#%e6%8b%b7%e8%b4%9d%e5%92%8c%e7%a7%bb%e5%8a%a8" class="header-mark"></a>拷贝和移动</h2><p>默认情况下，我们可以拷贝对象，不论用户自定义类型的对象还是内置类型的对象都是如此。拷贝的默认含义是逐成员的复制。如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test</span><span class="p">(</span><span class="n">complex</span> <span class="n">z1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">complex</span> <span class="n">z2</span><span class="p">{</span><span class="n">z1</span><span class="p">};</span> <span class="c1">// 拷贝初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">complex</span> <span class="n">z3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">z3</span> <span class="o">=</span> <span class="n">z2</span><span class="p">;</span> <span class="c1">//拷贝赋值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为赋值和初始化操作都复制了complex的全部两个成员，所以在上述操作之后z1,z2,z3的值变得完全一样。<br>
+当设计一个类时，必须仔细考虑对象是否会被拷贝以及如何拷贝的问题。</p>
+<h3 id="拷贝容器" class="headerLink">
+    <a href="#%e6%8b%b7%e8%b4%9d%e5%ae%b9%e5%99%a8" class="header-mark"></a>拷贝容器</h3><p>当一个类作为资源句柄时，换句话说，当这个类负责通过指针访问一个对象时，采用默认的逐成员复制方式通常意味着错误。逐成员复制将违反资源句柄的不变式。例如，下面所示的默认拷贝将产生Vector的一份拷贝，而这个拷贝所指向的元素与原来的元素是同一个：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">bad_copy</span><span class="p">(</span><span class="n">Vector</span> <span class="n">v1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">v1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">//v2[0]也是2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">v2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">//v1[1]也是3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>类对象的拷贝操作可以通过两个成员来定义：拷贝构造函数与拷贝赋值运算符：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Vector</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span><span class="o">*</span> <span class="n">elem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">sz</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span><span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">Vector</span><span class="p">(){</span><span class="k">delete</span><span class="p">[]</span> <span class="n">elem</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span>  <span class="c1">//拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Vector</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span> <span class="c1">//拷贝赋值运算符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">size</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于Vector来说，拷贝构造函数的正确定义应该为指定数量的元素分配空间，然后把元素复制到空间中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Vector</span><span class="o">::</span><span class="n">Vector</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span> <span class="c1">//复制构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">:</span><span class="n">elem</span><span class="p">{</span><span class="k">new</span> <span class="kt">double</span><span class="p">{</span><span class="n">sz</span><span class="p">}},</span> <span class="c1">//为元素分配空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sz</span><span class="p">{</span><span class="n">a</span><span class="p">.</span><span class="n">sz</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">!=</span><span class="n">sz</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="c1">//复制元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">elem</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">elem</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在拷贝构造函数之外我们还需要一个拷贝复制运算符：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Vector</span><span class="o">&amp;</span> <span class="n">Vector</span><span class="o">::</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="p">[</span><span class="n">a</span><span class="p">.</span><span class="n">sz</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">!=</span><span class="n">sz</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">elem</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span><span class="p">[]</span> <span class="n">elem</span><span class="p">;</span> <span class="c1">//删除旧元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">elem</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sz</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">sz</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中，名字this预定义在成员函数中，它指向调用该成员函数的那个对象。<br>
+类X的拷贝构造函数和拷贝赋值运算符接受的实参类型通常是const X&amp;。</p>
+<h2 id="移动容器" class="headerLink">
+    <a href="#%e7%a7%bb%e5%8a%a8%e5%ae%b9%e5%99%a8" class="header-mark"></a>移动容器</h2><p>我们能通过定义拷贝构造函数和拷贝赋值运算符来控制拷贝过程，但是对于大容量的容器来说拷贝过程有可能耗费巨大。以下面代码为例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Vector</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">!=</span><span class="n">b</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">throw</span> <span class="n">Vector_size_mismatch</span><span class="p">{};</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span> <span class="nf">res</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">!=</span><span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要想从+运算符返回结果，需要把局部变量res的内容拷贝到调用者可以访问的地方。可能这样使用+”</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">y</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">+</span><span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有时我们并不真的想要一个副本，而只想把计算结果从函数中取出来，相对于copy一个对象，我们更希望移动它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Vector</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span><span class="p">(</span><span class="n">Vector</span><span class="o">&amp;&amp;</span> <span class="n">a</span><span class="p">);</span> <span class="c1">//移动构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Vector</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Vector</span><span class="o">&amp;&amp;</span> <span class="n">a</span><span class="p">);</span> <span class="c1">//移动赋值运算符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>基于上述定义，编译器选择移动构造函数来执行从函数中移出返回值的任务。这意味着r=x+y+z不需要再拷贝Vector，只是移动它就够了。<br>
+定义Vector移动构造函数的过程非常简单：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Vector</span><span class="o">::</span><span class="n">Vector</span><span class="p">(</span><span class="n">Vector</span><span class="o">&amp;&amp;</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">:</span><span class="n">elem</span><span class="p">{</span><span class="n">a</span><span class="p">.</span><span class="n">elem</span><span class="p">},</span> <span class="c1">//从a中夺取元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sz</span><span class="p">{</span><span class="n">s</span><span class="p">.</span><span class="n">sz</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">elem</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">//现在a已经没有元素了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">a</span><span class="p">.</span><span class="n">sz</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>符号&amp;&amp;的意思是“右值引用”，我们可以给该引用绑定一个右值。“右值”的含义与“左值”正好相反，左值的大致含义是“能出现在赋值运算符左侧的内容”，因此右值大致上就是我们无法为其赋值的值，比如函数调用返回的一个整数。进一步，右值引用的含义就是引用了一个别人无法赋值的内容。Vector的operator+运算符的局部变量res就是一个示例。<br>
+移动构造函数不接受const实参：毕竟移动构造函数最终要删除掉它实参中的值。移动赋值运算符的定义与之类似。<br>
+当右值引用被用作初始化器或者赋值操作的右侧运算对象时，程序将使用移动操作，<br>
+移动之后，源对象所进入的状态应该能允许运行析构函数。通常，我们也应该允许为一个移动操作之后的源对象赋值。<br>
+程序员可以知道一个值在什么地方不再被使用，但是编译器做不到，因此最好在程序中写的明确一点：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Vector</span> <span class="nf">f</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span> <span class="n">x</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span> <span class="n">y</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Vector</span> <span class="n">z</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">//执行拷贝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">y</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">//执行移动
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">z</span><span class="err">；</span> <span class="c1">//执行移动
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中，标准库函数move()负责返回实参的右值引用。</p>
+<h2 id="资源管理" class="headerLink">
+    <a href="#%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86" class="header-mark"></a>资源管理</h2><p>通过定义构造函数，拷贝操作，移动操作和析构函数，程序员就能对受控资源的全生命周期进行管理。而且移动构造函数还允许对象从一个作用域简单便捷地移动到另一个作用域。采取这种方式，我们不能或不希望拷贝到作用域之外的对象就能简单高效地移动出去了。不妨以表示并发活动的标准库thread和含有百万个double的Vector为例，前者“不能”执行拷贝操作，而后者我们“不希望“拷贝它。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">my_threads</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Vector</span> <span class="nf">init</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">thread</span> <span class="n">t</span><span class="p">{</span><span class="n">heartbeat</span><span class="p">};</span> <span class="c1">//同时运行heartbeat
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">my_threads</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">t</span><span class="p">));</span> <span class="c1">//把t移动到my_threads
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Vector</span> <span class="n">vec</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">777</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span> <span class="c1">//把vec移动到init()之外
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">v</span> <span class="o">=</span> <span class="n">init</span><span class="p">();</span> <span class="c1">//启动heartbeat，初始化v
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在很多情况下，用Vector和thread这样的资源句柄比的效果要好。事实上，以unique_ptr为代表的”智能指针“本身就是资源句柄。</p>
+<h2 id="抑制操作" class="headerLink">
+    <a href="#%e6%8a%91%e5%88%b6%e6%93%8d%e4%bd%9c" class="header-mark"></a>抑制操作</h2></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">

@@ -222,3 +222,211 @@ void h()
 ```
 这段代码的关键点在于use(Container&)并不清楚它的实参是Vector_container、List_container还是其他，它根本不需要知道。只要链接Container定义的接口就可以了。因此，不论List_container的实现发生了改变还是使用Container的一个全新派生类，都不需要重新编译use(Container&)。  
 灵活性背后的唯一不足是，只能通过引用或指针操作对象。
+
+## 虚函数  
+进一步思考Container的用法： 
+```cpp
+void use(Container& c)
+{
+    const int sz = c.size();
+
+    for(int i = 0; i != sz; ++i)
+        cout << c[i] << '\n';
+}
+```
+use中的c[i]是如何解析到正确的operator[]()的？当h()调用use()时，必须调用List_container的operator[]()；当g()调用use()时，必须调用Vector_container的operator[]().要想达到这种效果，Container对象就必须包含一些有助于它在运行时选择正确函数的信息。常见的做法时编译器将虚函数的名字转换成函数指针表中对应的索引值，这张表就是所谓的虚函数表或简称vtbl。每个含有虚函数的类都有它自己的vtbl用于辨识虚函数。  
+即使调用函数不清楚对象的大小和数据布局，vtbl中的函数也能确保对象被正确使用。调用函数的实现只需要知道Container中vtbl指针的位置以及每个虚函数对应的索引就可以了。这种虚调用机制的效率非常接近“普通函数调用”机制，而它的空间开销包括两部分：如果类包含虚函数，则该类的每个对象需要一个额外的指针；另外每个这样的类需要一个vtbl。
+
+## 类层次  
+所谓类层次是指通过派生创建的一组类，在框架中有序排列。  
+类层次提供两种便利：
+- 接口继承：派生类对象可以用在任何需要基类的地方。也就是说，基类看起来是派生类的接口一样。这样的类通常是抽象类。  
+- 实现继承：基类负责提供可以简化派生类实现的函数或数据。这样的基类通常含有数据称呀和构造函数。  
+具体类，尤其是表现形式不复杂的类，其行为非常类似于内置类型：我们将其定义为局部变量，通过它们的名字访问它们，随意拷贝它们等。类层次中的类则有所区别：我们倾向于通过new在自由存储中为其分配空间，然后通过指针或引用访问它们。例如，我们设计这样一个函数，首先从输入流中读入描述形状的数据，然后构造对应的Shape对象：  
+```cpp
+enum class Kind{circle, triangle, smiley};
+
+Shape* read_shape(istream& is){
+    //从is中读取形状描述信息，找到形状的种类k
+    switch(k){
+        case Kind::circle:
+            return new Circle{p, r};
+        case Kind::triangle:
+            return new Triangle{p1, p2, p3};
+        case Kind::smiley:
+            Smiley* ps = new Smiley{p,r};
+            ps->add_eye(e1);
+            ps->add_eye(e2);
+            ps->set_mouth(m);
+            return ps;
+
+    }
+}
+```
+程序使用该函数的方式如下所示：
+```cpp
+void use()
+{
+    std::vector<Shape*> v;
+    while(cin)
+        v.push_back(read_shape(cin));
+        draw_all(v);
+        rotate_all(v, 45);
+        for(auto P:v) delete p;
+}
+```
+
+## 拷贝和移动  
+默认情况下，我们可以拷贝对象，不论用户自定义类型的对象还是内置类型的对象都是如此。拷贝的默认含义是逐成员的复制。如：
+```cpp
+void test(complex z1)
+{
+    complex z2{z1}; // 拷贝初始化
+    complex z3;
+    z3 = z2; //拷贝赋值
+}
+```
+因为赋值和初始化操作都复制了complex的全部两个成员，所以在上述操作之后z1,z2,z3的值变得完全一样。  
+当设计一个类时，必须仔细考虑对象是否会被拷贝以及如何拷贝的问题。  
+ 
+### 拷贝容器  
+当一个类作为资源句柄时，换句话说，当这个类负责通过指针访问一个对象时，采用默认的逐成员复制方式通常意味着错误。逐成员复制将违反资源句柄的不变式。例如，下面所示的默认拷贝将产生Vector的一份拷贝，而这个拷贝所指向的元素与原来的元素是同一个：
+```cpp
+void bad_copy(Vector v1)
+{
+    Vector v2 = v1;
+    v1[0] = 2; //v2[0]也是2
+    v2[1] = 3; //v1[1]也是3
+}
+```
+类对象的拷贝操作可以通过两个成员来定义：拷贝构造函数与拷贝赋值运算符：
+```cpp
+class Vector{
+private:
+    double* elem;
+    int sz;
+public:
+    Vector(int s);
+    ~Vector(){delete[] elem;}
+
+    Vector(const Vector& a);  //拷贝构造函数
+    Vector& operator = (const Vector& a); //拷贝赋值运算符
+
+    double& operator[](int i);
+    const double& operator[](int i) const;
+
+    int size() const;
+};
+```
+对于Vector来说，拷贝构造函数的正确定义应该为指定数量的元素分配空间，然后把元素复制到空间中。  
+```cpp
+Vector::Vector(const Vector& a) //复制构造函数
+    :elem{new double{sz}}, //为元素分配空间
+    sz{a.sz}
+{
+    for(int i=0; i!=sz; ++i) //复制元素
+        elem[i] = a.elem[i];
+}
+```
+在拷贝构造函数之外我们还需要一个拷贝复制运算符：
+```cpp
+Vector& Vector::operator=(const Vector& a)
+{
+    double* p = new double[a.sz];
+    for(int i=0; i!=sz; ++i) 
+        p[i] = a.elem[i];
+    delete[] elem; //删除旧元素
+    elem = p;
+    sz = a.sz;
+    return *this;
+}
+```
+其中，名字this预定义在成员函数中，它指向调用该成员函数的那个对象。  
+类X的拷贝构造函数和拷贝赋值运算符接受的实参类型通常是const X&。
+
+
+## 移动容器  
+我们能通过定义拷贝构造函数和拷贝赋值运算符来控制拷贝过程，但是对于大容量的容器来说拷贝过程有可能耗费巨大。以下面代码为例：
+```cpp
+Vector operator+(const Vector& a, const Vector& b)
+{
+    if(a.size()!=b.size())
+        throw Vector_size_mismatch{};
+    
+    Vector res(a.size());
+    for(int i=0; i!=a.size(); ++i)
+        res[i] = a[i] + b[i];
+    return res;
+}
+```
+要想从+运算符返回结果，需要把局部变量res的内容拷贝到调用者可以访问的地方。可能这样使用+”
+```cpp
+void f(const Vector& x, const Vector& y, const Vector& z)
+{
+    Vector r;
+    r = x+y+z;
+}
+```
+有时我们并不真的想要一个副本，而只想把计算结果从函数中取出来，相对于copy一个对象，我们更希望移动它：
+```cpp
+class Vector{
+    Vector(const Vector& a);
+    Vector& operator=(const Vector& a);
+
+    Vector(Vector&& a); //移动构造函数
+    Vector& operator=(Vector&& a); //移动赋值运算符
+};
+```
+基于上述定义，编译器选择移动构造函数来执行从函数中移出返回值的任务。这意味着r=x+y+z不需要再拷贝Vector，只是移动它就够了。  
+定义Vector移动构造函数的过程非常简单： 
+```cpp
+Vector::Vector(Vector&& a)
+    :elem{a.elem}, //从a中夺取元素
+    sz{s.sz}
+{
+    a.elem = nullptr; //现在a已经没有元素了
+    a.sz = 0;
+}
+```
+符号&&的意思是“右值引用”，我们可以给该引用绑定一个右值。“右值”的含义与“左值”正好相反，左值的大致含义是“能出现在赋值运算符左侧的内容”，因此右值大致上就是我们无法为其赋值的值，比如函数调用返回的一个整数。进一步，右值引用的含义就是引用了一个别人无法赋值的内容。Vector的operator+运算符的局部变量res就是一个示例。  
+移动构造函数不接受const实参：毕竟移动构造函数最终要删除掉它实参中的值。移动赋值运算符的定义与之类似。  
+当右值引用被用作初始化器或者赋值操作的右侧运算对象时，程序将使用移动操作，  
+移动之后，源对象所进入的状态应该能允许运行析构函数。通常，我们也应该允许为一个移动操作之后的源对象赋值。  
+程序员可以知道一个值在什么地方不再被使用，但是编译器做不到，因此最好在程序中写的明确一点：
+```cpp
+Vector f()
+{
+    Vector x(1000);
+    Vector y(1000);
+    Vector z(1000);
+
+    z = x; //执行拷贝
+    y = std::move(x); //执行移动
+    return z； //执行移动
+}
+```
+其中，标准库函数move()负责返回实参的右值引用。
+
+## 资源管理  
+通过定义构造函数，拷贝操作，移动操作和析构函数，程序员就能对受控资源的全生命周期进行管理。而且移动构造函数还允许对象从一个作用域简单便捷地移动到另一个作用域。采取这种方式，我们不能或不希望拷贝到作用域之外的对象就能简单高效地移动出去了。不妨以表示并发活动的标准库thread和含有百万个double的Vector为例，前者“不能”执行拷贝操作，而后者我们“不希望“拷贝它。
+```cpp
+std::vector<thread> my_threads;
+
+Vector init(int n)
+{
+    thread t{heartbeat}; //同时运行heartbeat
+    my_threads.push_back(move(t)); //把t移动到my_threads
+    Vector vec(n);
+    for(int i = 0; i < vec.size(); ++i)
+        vec[i] = 777;
+    return vec; //把vec移动到init()之外
+}
+
+auto v = init(); //启动heartbeat，初始化v
+```
+在很多情况下，用Vector和thread这样的资源句柄比的效果要好。事实上，以unique_ptr为代表的”智能指针“本身就是资源句柄。  
+
+## 抑制操作  
+
+
+
