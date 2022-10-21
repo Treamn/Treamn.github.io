@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  1889 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  3105 ,
         "url": "http:\/\/example.org\/2022\/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E\/","datePublished": "2022-10-20T19:36:20+08:00","dateModified": "2022-10-20T19:36:20+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -137,14 +137,26 @@
         <li><a href="#缺少初始化器">缺少初始化器</a></li>
       </ul>
     </li>
+    <li><a href="#推断类型auto和decltype">推断类型：auto和decltype()</a>
+      <ul>
+        <li><a href="#auto类型修饰符">auto类型修饰符</a></li>
+        <li><a href="#decltype修饰符">decltype修饰符</a></li>
+      </ul>
+    </li>
+    <li><a href="#对象和值">对象和值</a>
+      <ul>
+        <li><a href="#左值和右值">左值和右值</a></li>
+      </ul>
+    </li>
+    <li><a href="#类型别名">类型别名</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;类型与声明</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-20">10-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-20">10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1889 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-20">10-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-20">10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3105 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -180,6 +192,18 @@
         <li><a href="#缺少初始化器">缺少初始化器</a></li>
       </ul>
     </li>
+    <li><a href="#推断类型auto和decltype">推断类型：auto和decltype()</a>
+      <ul>
+        <li><a href="#auto类型修饰符">auto类型修饰符</a></li>
+        <li><a href="#decltype修饰符">decltype修饰符</a></li>
+      </ul>
+    </li>
+    <li><a href="#对象和值">对象和值</a>
+      <ul>
+        <li><a href="#左值和右值">左值和右值</a></li>
+      </ul>
+    </li>
+    <li><a href="#类型别名">类型别名</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="类型" class="headerLink">
@@ -389,7 +413,184 @@ signed char存放-127~127之间的值；unsigned char存放0~255之间的值。<
 </div>
 </div><p>因此在使用auto时应该选择=的初始化方式。</p>
 <h3 id="缺少初始化器" class="headerLink">
-    <a href="#%e7%bc%ba%e5%b0%91%e5%88%9d%e5%a7%8b%e5%8c%96%e5%99%a8" class="header-mark"></a>缺少初始化器</h3></div>
+    <a href="#%e7%bc%ba%e5%b0%91%e5%88%9d%e5%a7%8b%e5%8c%96%e5%99%a8" class="header-mark"></a>缺少初始化器</h3><p>如果没有指定初始化器，则全局变量、名字空间变量、局部static变量和static成员(统称为静态对象)将会执行相应的数据类型的列表{}初始化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">a</span><span class="p">;</span> <span class="c1">//等同于‘int a{}’，a为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span> <span class="n">d</span><span class="p">;</span> <span class="c1">//等同于‘double d{}’, d为0.0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于局部变量和自由存储上的对象来说，除非它恩无畏于用户自定义类型的默认构造函数中，否则不会执行默认初始化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span> <span class="c1">//x没有一个定义良好的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span> <span class="c1">//buf[i]没有一个定义良好的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p</span><span class="p">{</span><span class="k">new</span> <span class="kt">int</span><span class="p">};</span> <span class="c1">//*p没有一个定义良好的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">char</span><span class="o">*</span> <span class="n">q</span><span class="p">{</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="mi">1024</span><span class="p">]};</span><span class="c1">//q[i]没有一个定义良好的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">s</span><span class="p">;</span> <span class="c1">//s==&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span> <span class="c1">//v =={}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span><span class="o">*</span> <span class="n">ps</span><span class="p">{</span><span class="k">new</span> <span class="n">string</span><span class="p">};</span> <span class="c1">//*ps是“”
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果想对内置类型的局部变量或者用new创建的内置类型的对象执行初始化，使用{}形式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span><span class="p">{};</span> <span class="c1">//x==0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">chat</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1024</span><span class="p">]{};</span> <span class="c1">//buf[i]==0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p</span><span class="p">{</span><span class="k">new</span> <span class="kt">int</span><span class="p">{</span><span class="mi">10</span><span class="p">}};</span> <span class="c1">//*p为10
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">char</span><span class="o">*</span> <span class="n">q</span><span class="p">{</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="mi">1024</span><span class="p">]{}}</span> <span class="c1">//q[i]==0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="推断类型auto和decltype" class="headerLink">
+    <a href="#%e6%8e%a8%e6%96%ad%e7%b1%bb%e5%9e%8bauto%e5%92%8cdecltype" class="header-mark"></a>推断类型：auto和decltype()</h2><ul>
+<li>auto根据对象的初始化器推断对象的数据类型，可能是变量、const、或constexpr类型。</li>
+<li>decltype(expr)推断的对象不是一个简单的初始化器，有可能是函数的返回类型或者成员的类型。</li>
+</ul>
+<h3 id="auto类型修饰符" class="headerLink">
+    <a href="#auto%e7%b1%bb%e5%9e%8b%e4%bf%ae%e9%a5%b0%e7%ac%a6" class="header-mark"></a>auto类型修饰符</h3><p>表达式的类型越难懂、越难书写，auto就越有用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">f1</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">terator</span> <span class="n">p</span><span class="o">=</span> <span class="n">arg</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">arg</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">P</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">arg</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">arg</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">P</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对上面的程序来说，使用auto显然是更好地选择。<br>
+与使用明确的类型名相比，使用auto可能会使得定位类型错误的难度增大，为了解决auto可能造成的影响，最常规的方法就是保持函数的规模较小。<br>
+我们可以推断出类型添加修饰符或说明符，比如const或&amp;：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span><span class="nl">x</span><span class="p">:</span><span class="n">v</span><span class="p">){</span><span class="c1">//x类型是const int&amp;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表达式的类型永远不会是引用类型，因为表达式回隐式的执行解引用操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="c1">//x类型是int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span><span class="o">&amp;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="c1">//y类型是int&amp;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="decltype修饰符" class="headerLink">
+    <a href="#decltype%e4%bf%ae%e9%a5%b0%e7%ac%a6" class="header-mark"></a>decltype修饰符</h3><p>很多时候我们既想推断得到类型，又不想在此过程中定义一个初始化的变量，此时，应该使用声明类型修饰符decltype(expr)。其中，所推得的结果是expr的声明类型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">U</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">Matrix</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">T</span><span class="p">{}</span> <span class="o">+</span> <span class="n">U</span><span class="p">{})</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="对象和值" class="headerLink">
+    <a href="#%e5%af%b9%e8%b1%a1%e5%92%8c%e5%80%bc" class="header-mark"></a>对象和值</h2><p>对象是指一块连续的存储区域，左值是指向对象的一条表达式。<br>
+“左值”的字面意思是“能用在赋值运算符左侧的东西”，但其实不是所有左值都嫩用在赋值运算符的左侧，左值有可能指某个常量。</p>
+<h3 id="左值和右值" class="headerLink">
+    <a href="#%e5%b7%a6%e5%80%bc%e5%92%8c%e5%8f%b3%e5%80%bc" class="header-mark"></a>左值和右值</h3><p>当考虑对象的寻址、拷贝、移动等操作时，有两种属性非常关键。</p>
+<ul>
+<li>有身份：在程序中有对象的名字，或指向该对象的指针，或该对象的引用，这样我们就能判断两个对象是否相等或对象的值是否发生改变。</li>
+<li>可移动：能把对象的内容移动出来。</li>
+</ul>
+<h2 id="类型别名" class="headerLink">
+    <a href="#%e7%b1%bb%e5%9e%8b%e5%88%ab%e5%90%8d" class="header-mark"></a>类型别名</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">Pchar</span> <span class="o">=</span> <span class="kt">char</span><span class="o">*</span><span class="p">;</span> <span class="c1">//字符串指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">using</span> <span class="n">Pf</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">double</span><span class="p">);</span> <span class="c1">//函数指针，接受一个double返回一个int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Pchar</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">// p1类型是char*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span><span class="o">*</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span> <span class="c1">//正确
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>不孕须在类型别名前加修饰符（如unsigned）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">Char</span> <span class="o">=</span> <span class="kt">char</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">Uchar</span> <span class="o">=</span> <span class="kt">unsigned</span> <span class="n">Char</span><span class="p">;</span> <span class="c1">//错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">using</span> <span class="n">Uchar</span> <span class="o">=</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="p">;</span> <span class="c1">//正确
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
