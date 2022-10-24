@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">C&#43;&#43;指针与引用 - Dling</title><meta name="Description" content="Dling | 煜江的个人博客"><meta property="og:title" content="C&#43;&#43;指针与引用" />
+<meta property="og:description" content="指针对于类型T来说，T是表示“指向T的指针”的；类型。换句话说，T类型的变量能存放T类型对象的地址： 1 2 char c = &#39;a&#39;; char* p = &amp;c; //p存放c的地址 对" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" /><meta property="og:image" content="http://example.org/logo.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-24T19:23:55+08:00" />
+<meta property="article:modified_time" content="2022-10-24T19:23:55+08:00" /><meta property="og:site_name" content="Dling | 煜江的个人博客" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.jpg"/>
+
+<meta name="twitter:title" content="C&#43;&#43;指针与引用"/>
+<meta name="twitter:description" content="指针对于类型T来说，T是表示“指向T的指针”的；类型。换句话说，T类型的变量能存放T类型对象的地址： 1 2 char c = &#39;a&#39;; char* p = &amp;c; //p存放c的地址 对"/>
+<meta name="application-name" content="Dling">
+<meta name="apple-mobile-web-app-title" content="Dling">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" /><link rel="prev" href="http://example.org/2022/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.1d6e6517c44074bf1c692657d249d106a5e98bb9db25f7773715b24eda7aa575354611c095c23092aa17916f1b5be527.css" integrity="sha384-HW5lF8RAdL8caSZX0knRBqXpi7nbJfd3NxWyTtp6pXU1RhHAlcIwkqoXkW8bW&#43;Un"><link rel="stylesheet" href="/css/style.min.8540842213936bd2a523af7a572a979f0061839c28d9f3f25e5edb76d34b76136170ccd1a71501f0ecc51daadc867cb2.css" integrity="sha384-hUCEIhOTa9KlI696VyqXnwBhg5wo2fPyXl7bdtNLdhNhcMzRpxUB8OzFHarchnyy"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC"></noscript>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "C++指针与引用",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/2022\/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8\/"
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  3899 ,
+        "url": "http:\/\/example.org\/2022\/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8\/","datePublished": "2022-10-24T19:23:55+08:00","dateModified": "2022-10-24T19:23:55+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "煜江叔叔"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('light' === 'light' || 'light' === 'dark' || 'light' === 'black') setTheme('light'), saveTheme('light'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/series/"><i class="fas fa-object-group"></i> 系列 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/link/"><i class="fas fa-link"></i> 友链 </a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/series/" title=""><i class="fas fa-object-group"></i>系列</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/link/" title=""><i class="fas fa-link"></i>友链</a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#指针">指针</a>
+      <ul>
+        <li><a href="#void">void*</a></li>
+        <li><a href="#nullptr">nullptr</a></li>
+      </ul>
+    </li>
+    <li><a href="#数组">数组</a>
+      <ul>
+        <li><a href="#数组初始化器">数组初始化器</a></li>
+        <li><a href="#字符串字面值常量">字符串字面值常量</a></li>
+        <li><a href="#数组中的指针">数组中的指针</a></li>
+        <li><a href="#数组漫游">数组漫游</a></li>
+        <li><a href="#传递数组">传递数组</a></li>
+      </ul>
+    </li>
+    <li><a href="#指针与const">指针与const</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;指针与引用</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-24">10-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-24">10-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3899 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details series-nav open">
+                                <div class="details-summary series-title">
+                                    <span>系列 - C&#43;&#43;程序设计语言</span>
+                                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                                </div>
+                                <div class="details-content series-content">
+                                    <nav>
+                                        <ul><li><span class="active">C&#43;&#43;指针与引用</span></li>
+                                                    <li><a href="/2022/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E/">C&#43;&#43;类型与声明</a></li>
+                                                    <li><a href="/2022/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6/">C&#43;&#43;概览抽象机制</a></li>
+                                                    <li><a href="/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">C&#43;&#43;概览基础知识</a></li></ul>
+                                    </nav>
+                                </div>
+                            </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#指针">指针</a>
+      <ul>
+        <li><a href="#void">void*</a></li>
+        <li><a href="#nullptr">nullptr</a></li>
+      </ul>
+    </li>
+    <li><a href="#数组">数组</a>
+      <ul>
+        <li><a href="#数组初始化器">数组初始化器</a></li>
+        <li><a href="#字符串字面值常量">字符串字面值常量</a></li>
+        <li><a href="#数组中的指针">数组中的指针</a></li>
+        <li><a href="#数组漫游">数组漫游</a></li>
+        <li><a href="#传递数组">传递数组</a></li>
+      </ul>
+    </li>
+    <li><a href="#指针与const">指针与const</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="指针" class="headerLink">
+    <a href="#%e6%8c%87%e9%92%88" class="header-mark"></a>指针</h2><p>对于类型T来说，T<em>是表示“指向T的指针”的；类型。换句话说，T</em>类型的变量能存放T类型对象的地址：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span> <span class="c1">//p存放c的地址
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对指针的一个基本操作是解引用，即引用指针所指的对象。这个操作也称为间接取值。解引用运算符是个前置一元运算符，对应的符号是*：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span> <span class="c1">//p存放c的地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">c2</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span> <span class="c1">// c2==&#39;a&#39;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当指针指向数组中的元素时，C++允许对这类指针执行某些算数运算。<br>
+符号*在用作类型名的的后缀时表示“指向”的含义。如果想表示指向数组的指针或指向函数的指针，需要使用稍微复杂一点的形式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">//指向int的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span><span class="o">**</span> <span class="n">ppc</span><span class="p">;</span> <span class="c1">//指向字符指针的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="o">*</span> <span class="n">ap</span><span class="p">[</span><span class="mi">15</span><span class="p">];</span> <span class="c1">//ap是一个指针，包含15个指向int的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">fp</span><span class="p">)(</span><span class="kt">char</span><span class="o">*</span><span class="p">);</span> <span class="c1">//指向函数的指针，该函数接受一个char*实参，返回一个int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="o">*</span> <span class="nf">f</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">);</span> <span class="c1">//该函数接受一个char*实参，返回一个指向int的指针
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="void" class="headerLink">
+    <a href="#void" class="header-mark"></a>void*</h3><p>void*的含义是“指向未知类型对象的指针”。<br>
+除了函数指针和指向类成员的指针，指向其他任意类型对象的指针都能被赋给一个void*类型的变量。要想使用void*，必须将其显式的转换成某一特定类型的指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">pi</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span><span class="o">*</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">//OK,int*到void*的隐式转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">*</span><span class="n">pv</span><span class="p">;</span> <span class="c1">//错误,不允许解引用void*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">++</span><span class="n">pv</span><span class="p">;</span> <span class="c1">//错误,不允许对void*执行递增操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">pi2</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">pv</span><span class="p">);</span> <span class="c1">// 显式转换回int*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span><span class="o">*</span> <span class="n">pd1</span> <span class="o">=</span> <span class="n">pv</span><span class="p">;</span> <span class="c1">//错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">double</span><span class="o">*</span> <span class="n">pd2</span> <span class="o">=</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">//错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">double</span><span class="o">*</span> <span class="n">pd3</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">pv</span><span class="p">);</span> <span class="c1">//不安全
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一般情况下,如果某个指针已经被转换成指向一种与实际所指对象类型完全不同的新类型,则使用转换后的指针是不安全的行为。<br>
+void最主要的用途是当我们无法假定对象的类型时,向函数传递指向该对象的指针;他用与从函数返回未知类型的对象.要使用这样的对象,必须先进行显式类型转换。</p>
+<h3 id="nullptr" class="headerLink">
+    <a href="#nullptr" class="header-mark"></a>nullptr</h3><p>字面值常量nullptr表示空指针,即不指向任何对象的指针.我们可以将nullptr赋给其他任意指针类型,但是不能赋给其他内置类型:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pi</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">pd</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">// 错误,i不是指针
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>nullptr只有一个,它可以用于任意指针类型。</p>
+<h2 id="数组" class="headerLink">
+    <a href="#%e6%95%b0%e7%bb%84" class="header-mark"></a>数组</h2><p>数组中元素的数量<strong>必须</strong>是常量表达式.如果你希望边界可变,最好使用vector:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">voif</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">v1</span><span class="p">[</span><span class="n">n</span><span class="p">];</span> <span class="c1">//错误,数组的大小不是常量表达式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">(</span><span class="n">n</span><span class="p">);</span> <span class="c1">//OK,包含n个int元素vector
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>C++允许静态的分配数组空间,也允许在栈上或在自由存储上分配数组空间:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">a1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// 静态存储中的10个int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a2</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// 栈上的20个int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">40</span><span class="p">];</span> <span class="c1">// 自由存储上的40个int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="数组初始化器" class="headerLink">
+    <a href="#%e6%95%b0%e7%bb%84%e5%88%9d%e5%a7%8b%e5%8c%96%e5%99%a8" class="header-mark"></a>数组初始化器</h3><p>如果初始化器提供的元素数量不足,则系统自动把剩余的元素赋值为0:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">v5</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="err">等价于</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">v5</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不允许用一个数组初始化另一个数组,因为数组不支持赋值操作:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">v6</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">//错误,不允许拷贝数组(不允许把int*赋给数组)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">v6</span> <span class="o">=</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">//错误,不存在数组的赋值操作
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样,不允许以传值方式传递数组。<br>
+如果想给一组对象赋值,可以使用vector,array或valarry。可以只用字符串字面值常量初始化字符的数组。</p>
+<h3 id="字符串字面值常量" class="headerLink">
+    <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%ad%97%e9%9d%a2%e5%80%bc%e5%b8%b8%e9%87%8f" class="header-mark"></a>字符串字面值常量</h3><p>字符串字面值常量是指双引号内的字符序列:&ldquo;this is a string&rdquo;<br>
+字符串字面值常量实际包含的字符数量比它表现出来的样子多一个,它以一个取值为0的空字符&rsquo;\0&rsquo;结尾。<br>
+字符串字面值常量的类型是&quot;若干个const字符组成的数组&quot;。<br>
+如果希望字符串能被修改，最好把字符放在一个非常量的数组中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">p</span> <span class="o">=</span> <span class="s">&#34;Zeno&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;R&#39;</span><span class="p">;</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当符号==作用于指针时，比较的是地址而非指针所指的值。</p>
+<h3 id="数组中的指针" class="headerLink">
+    <a href="#%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e6%8c%87%e9%92%88" class="header-mark"></a>数组中的指针</h3><p>数组名可以看成是指向数组首元素的指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">v</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="c1">//指向数组首元素的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">//指向数组首元素的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="o">*</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">v</span><span class="o">+</span><span class="mi">4</span><span class="p">;</span> <span class="c1">//指向数组尾后元素的指针
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>令指针指向数组的最后一个元素的下一个位置是有效的，不过，因为该指针事实上指向的并不是数组中的任何一个元素，所以不能对它进行读写操作。试图获取和使用数组首元素之前或尾元素之后的地址都是未定义的行为，应尽量避免：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p4</span> <span class="o">=</span> <span class="n">v</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p5</span> <span class="o">=</span> <span class="n">v</span><span class="o">+</span><span class="mi">7</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="数组漫游" class="headerLink">
+    <a href="#%e6%95%b0%e7%bb%84%e6%bc%ab%e6%b8%b8" class="header-mark"></a>数组漫游</h3><p>可以通过指向数组的指针加上一个索引值访问数组元素，也可以通过直接指向数组元素的指针进行访问：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fi</span><span class="p">(</span><span class="kt">char</span> <span class="n">v</span><span class="p">[]){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">use</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fp</span><span class="p">(</span><span class="kt">char</span> <span class="n">v</span><span class="p">[]){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">++</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">use</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前置<em>运算符执行解引用预算，因此</em>p是指针p所指的字符，++元素按令p指向数组的下一个元素。<br>
+把+、-、++、&ndash;、等算数运算符用在指针上得到的结果依赖于指针所指对象的数据类型。当我们对T*类型的指针p执行算数运算时，p指向T类型的数组元素，p+1指向数组的下一个元素，p-1指向数组的上一个元素，上述规则意味着p+1对应的整数值比p对应的整数值大sizeof(T)。<br>
+指针的减法只有当参与运算的两个指针指向的是同一数组的元素时才有效，如果指针指向的位置既不是原数组中的元素，也不是尾后元素，那我们不能使用它，否则会产生未定义行为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">v1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">v2</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">v1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">-&amp;</span><span class="n">v1</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span> <span class="c1">//i1 = 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">i2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">v1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">-&amp;</span><span class="n">v2</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span> <span class="c1">// 结果是未定义的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">v2</span><span class="o">+</span><span class="mi">2</span><span class="p">;</span> <span class="c1">//p1=&amp;v2[2]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">v2</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="c1">//*p2是未定义的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为数组的元素数量不一定能与数组本身存储在一起，所以数组不具有自解释性。当我们需要遍历一个数组，必须以某种方式提供元素的数量：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fp</span><span class="p">(</span><span class="kt">char</span> <span class="n">v</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">use</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">x</span><span class="p">:</span><span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">use</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">//错误，范围for循环对指针无效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">v2</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">use</span><span class="p">(</span><span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">x</span><span class="p">:</span><span class="n">v2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">use</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">// 当已知数组的大小时，可以使用范围for循环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="传递数组" class="headerLink">
+    <a href="#%e4%bc%a0%e9%80%92%e6%95%b0%e7%bb%84" class="header-mark"></a>传递数组</h3><p>不能以值传递的方式直接把数组传给函数，通常传递的是指向数组首元素的指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">comp</span><span class="p">(</span><span class="kt">double</span> <span class="n">arg</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">arg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">99</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">a1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">a2</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">a3</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">comp</span><span class="p">(</span><span class="n">a1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comp</span><span class="p">(</span><span class="n">a2</span><span class="p">);</span> <span class="c1">//严重错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">comp</span><span class="p">(</span><span class="n">a3</span><span class="p">);</span> <span class="c1">//只用到前十个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>comp()函数的等价形式是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">comp</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">arg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">99</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果想在给函数传入一组元素的同时不丢掉数组的大小，就不能使用内置数组类型。可以将数组放在类中作为类的成员，或者直接定义一个句柄类。<br>
+使用内置数组有百弊而无一利。当需要一个接受二维矩阵的函数时，如果编译时知道数组的具体唯独当然没有问题。
+数组的第一个维度与定位元素无关，只负责指明当前类型（int[5]）包含几个元素(3)，只要知道第二个维度sec，就能定义任意的ma[i][sec]，此时，可以把数组的第一个唯独当成实参传入函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_mi5</span><span class="p">(</span><span class="kt">int</span> <span class="n">m</span><span class="p">[][</span><span class="mi">5</span><span class="p">],</span> <span class="kt">int</span> <span class="n">dim1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">dim</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是当需要传入两个维度时，“显而易见的解决方案”并不有效：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_mij</span><span class="p">(</span><span class="kt">int</span> <span class="n">m</span><span class="p">[][],</span> <span class="kt">int</span> <span class="n">dim1</span><span class="err">，</span> <span class="kt">int</span> <span class="n">dim2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">dim1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">dim2</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为多为数组的第二个维度必须是已知的，这样才能准确定位其中的元素。一种正确的解决方案是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_mij</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dim1</span><span class="err">，</span> <span class="kt">int</span> <span class="n">dim2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">dim1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">dim2</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">dim2</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要想使用该函数，我们只需传入一个代表矩阵的指针即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">test</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">},{</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">},{</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">24</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print_m35</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print_mi5</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print_mij</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在最后一个调用中使用v[0][0]，此处使用v[0]也可以，因为它与v[0][0]等价，但是直接用传入v会引发类型错误。</p>
+<h2 id="指针与const" class="headerLink">
+    <a href="#%e6%8c%87%e9%92%88%e4%b8%8econst" class="header-mark"></a>指针与const</h2><p>很多对象的值一旦初始化就不会再改动：</p>
+<ul>
+<li>使用符号化常量的代码比直接使用字面值常量的代码更易维护。</li>
+<li>我们经常通过指针读取数据，但是很少通过指针写入数据。</li>
+<li>绝大多数函数的参数值负责读取数据，很少写入数据。<br>
+为了表达一经初始化就不可修改的特性，可以在对象的定义中加上const关键字：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">cinst</span> <span class="kt">int</span> <span class="n">model</span> <span class="o">=</span> <span class="mi">90</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">v</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">x</span><span class="p">;</span> <span class="c1">//错误，缺少初始化器
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>一旦把某物声明成const，就确保它的值再作用域内不会发生改变：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">model</span> <span class="o">=</span> <span class="mi">99</span><span class="p">;</span> <span class="c1">//错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span> <span class="c1">//错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用const会改变一种类型，所谓的改变不是改变常量的分配方式，而是限制它的使用方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="k">const</span> <span class="n">X</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//此处无权修改*p
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个指针牵扯到两个对象：指针本身以及指针所指的对象。在指针的声明语句中“前置”const关键字将令所指的对象而非指针本身称为常量。要领指针本身成为常量，应该用*const代替普通的*：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">s</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;Grom&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="c1">//指向常量的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pc</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;g&#39;</span><span class="p">;</span> <span class="c1">//错误，pc指向常量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pc</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="c1">//常量指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cp</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span> <span class="c1">//错误，cp是一个常量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">cpc</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// 指向常量的常量指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cpc</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span> <span class="c1">//错误：cpc指向常量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cpc</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span> <span class="c1">//错误：cpc本身是一个常量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>声明运算符*const的作用是令指针本身成为常量，出现在*前边的const是基本类型的一部分。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">cp</span><span class="p">;</span> <span class="c1">//指向char的常量指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">pc</span><span class="p">;</span> <span class="c1">//指向常量const的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">pc2</span><span class="p">;</span> <span class="c1">//指向常量char的指针
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>从右向左的顺序读，例如，“cp是指向char的const指针”，而“pc2是指向const char的指针”。<br>
+对于同一个对象来说，通过一个指针访问它时是常量并不妨碍在其他情况下它是变量。这一点在涉及函数的实参时特别有用。可以把指针类型的实参声明成const，这样就能组织函数修改该指针所指的对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">strchr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c</span><span class="p">);</span> <span class="c1">//找到在字符串p中zifuc第一次出现的位置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span><span class="o">*</span> <span class="nf">strchr</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c</span><span class="p">);</span> <span class="c1">//找到在字符串p中zifuc第一次出现的位置
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一个函数的参数是常量字符串，函数无权修改其中的元素；它的返回值是指向const的指针，也不允许修改其所指的变量。第二个函数则没有这些限制。<br>
+C++允许把非const变量的地址赋给指向常量的指针，这样不会造成什么不可接受的后果。相反，常量的地址不能赋给某个不受限的指针，如果这样的话，用户有可能通过该指针修改对象的值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f4</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">p1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span> <span class="c1">//错误，用const int*初始化int*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">*</span><span class="n">p3</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c1">//试图改变C
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 10-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-hashtags="函数,形参,实参"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-hashtag="函数"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-skype fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%87%BD%E6%95%B0/">函数</a>,&nbsp;<a href="/tags/%E5%BD%A2%E5%8F%82/">形参</a>,&nbsp;<a href="/tags/%E5%AE%9E%E5%8F%82/">实参</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2022/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E/" class="prev" rel="prev" title="C&#43;&#43;类型与声明"><i class="fas fa-angle-left fa-fw"></i>C&#43;&#43;类型与声明</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.94.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">煜江叔叔</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div><script>
+                    if('serviceWorker' in navigator) {
+                        navigator.serviceWorker
+                            .register('/sw.min.js', { scope: '/' })
+                            .then(function(registration) {
+                            });
+                
+                        navigator.serviceWorker
+                            .ready
+                            .then(function(registration) {
+                            });
+                    }
+                </script></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.dd4cfdb9c1bcaa687c9794e0620c478af43dec711c465b0560c274a0c20d6023bc183b8817015eb778ab746927905d6e.js" integrity="sha384-3Uz9ucG8qmh8l5TgYgxHivQ97HEcRlsFYMJ0oMINYCO8GDuIFwFet3irdGknkF1u"></script><script type="text/javascript" src="/lib/fuse/fuse.min.48c164d6be2fb1688f4fe95c476118b3a5dbda2aad6b2cd12c8ccb959d37db926987c59fdc9338e377b745807f0c06b0.js" integrity="sha384-SMFk1r4vsWiPT&#43;lcR2EYs6Xb2iqtayzRLIzLlZ0325Jph8Wf3JM443e3RYB/DAaw"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.de04ffbec7a95a47f3fdf7fb3e958d51e333796a07ddc0e19bf03c8ccee8ba800ad3f7cfffd6dc1c7479907ab69dff9e.js" integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e"></script><script type="text/javascript" src="/lib/topbar/topbar.min.1c26dd3f83978c568ee1c91cb7c6f1e397518b40c73c772d534ff3f3bb81cae306c6b7e8ee2275017e43fe0c0ed56822.js" integrity="sha384-HCbdP4OXjFaO4ckct8bx45dRi0DHPHctU0/z87uByuMGxrfo7iJ1AX5D/gwO1Wgi"></script><script type="text/javascript" src="/lib/pjax/pjax.min.811be7fbe3806492067fb1a7b4488f825fae80cc1d97e76064e8db943473e99ba8cb53fc73cd34a2cd2de52f2548f677.js" integrity="sha384-gRvn&#43;&#43;OAZJIGf7GntEiPgl&#43;ugMwdl&#43;dgZOjblDRz6Zuoy1P8c800os0t5S8lSPZ3"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["Treamn"],"clientID":"12d9838c8dc0fc1529e1","clientSecret":"ecfdb88bf5980b6312b96a4b40344fe630029771","id":"2022-10-24T19:23:55+08:00","owner":"Treamn","repo":"Treamn.github.io","title":"C++指针与引用"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":true,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":true,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><script type="text/javascript" src="/lib/gitalk/gitalk.min.1420a0c0459673bc6824e7ba713f1e0ec1540e86491daf1b6149a7af9cd3f396c86b9182d03e4c727faefae17b746033.js" integrity="sha384-FCCgwEWWc7xoJOe6cT8eDsFUDoZJHa8bYUmnr5zT85bIa5GC0D5Mcn&#43;u&#43;uF7dGAz"></script><script type="text/javascript" src="/js/gitalk.min.js" defer></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.094758c1816ef1698123c876e7b739ac27751905f428bfb349857a93244d636b615bb42a43298a19f4c2235587c33bf2.js" integrity="sha384-CUdYwYFu8WmBI8h257c5rCd1GQX0KL&#43;zSYV6kyRNY2thW7QqQymKGfTCI1WHwzvy"></script><script type="text/javascript" src="/lib/sharer/sharer.min.0097b33812ac4873e9a2e0813de400c9ea9b07e223998d3cbc38a89bdfa3f45cc344689061a836fcd6f4c120eed429b4.js" integrity="sha384-AJezOBKsSHPpouCBPeQAyeqbB&#43;IjmY08vDiom9&#43;j9FzDRGiQYag2/Nb0wSDu1Cm0"></script><script type="text/javascript" src="/lib/katex/katex.min.cf57c90eac3c640a6318edffba73d650fb08ca67ec266cab0d5582f13bff6b51de3ad1a693035dffbc544b45dc9efb31.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.f970658d73cf8aff8ecdf6c1ddc5662c77f885d5051e558d64de6ca4d43bae61d35e977b5af26e9ba7c8002a4d35f211.js" integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.129f44b345428d59fd74579a376b90c6019c1a61bea5f678781687c54a715c3391aeb54009954ea72c32cef15119b9af.js" integrity="sha384-Ep9Es0VCjVn9dFeaN2uQxgGcGmG&#43;pfZ4eBaHxUpxXDORrrVACZVOpywyzvFRGbmv" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.50463d2113e457e4d34d8ee72b5c12adf8563c3272f70af83e6620dc32cf70de45e0d0e5230199916b56bde291ff8e5c.js" integrity="sha384-UEY9IRPkV&#43;TTTY7nK1wSrfhWPDJy9wr4PmYg3DLPcN5F4NDlIwGZkWtWveKR/45c" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/gitalk/gitalk.min.b250718923eb2b3c2ba2de589fcc7f623ebf3efa17f0e501e7de204156024b108524ffafaf0958fd09d3b68cf0412999.css" integrity="sha384-slBxiSPrKzwrot5Yn8x/Yj6/PvoX8OUB594gQVYCSxCFJP&#43;vrwlY/QnTtozwQSmZ"><link rel="stylesheet" href="/lib/katex/katex.min.c1295c9b11c1c40c96352d034d67fdec66a788f699f663cc2bd92b0081cb3f444ae3739dcd761e19ee5b23006356ac7d.css" integrity="sha384-wSlcmxHBxAyWNS0DTWf97GaniPaZ9mPMK9krAIHLP0RK43OdzXYeGe5bIwBjVqx9"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK"></noscript></div>
+</body>
+
+</html>
