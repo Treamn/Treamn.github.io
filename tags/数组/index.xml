@@ -4,7 +4,14 @@
         <link>http://example.org/tags/%E6%95%B0%E7%BB%84/</link>
         <description>数组 - 标签 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 19 Mar 2022 17:43:16 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%95%B0%E7%BB%84/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 24 Oct 2022 19:23:55 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%95%B0%E7%BB%84/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;指针与引用</title>
+    <link>http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/</link>
+    <pubDate>Mon, 24 Oct 2022 19:23:55 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/</guid>
+    <description><![CDATA[指针对于类型T来说，T是表示“指向T的指针”的；类型。换句话说，T类型的变量能存放T类型对象的地址： 1 2 char c = &#39;a&#39;; char* p = &amp;c; //p存放c的地址 对]]></description>
+</item><item>
     <title>C&#43;&#43;学习之string、vector、迭代器和数组</title>
     <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/</link>
     <pubDate>Sat, 19 Mar 2022 17:43:16 &#43;0800</pubDate><author>

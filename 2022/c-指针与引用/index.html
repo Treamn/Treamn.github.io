@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 形参, 实参","wordcount":  3899 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "指针, 数组, 引用","wordcount":  5743 ,
         "url": "http:\/\/example.org\/2022\/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8\/","datePublished": "2022-10-24T19:23:55+08:00","dateModified": "2022-10-24T19:23:55+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -137,14 +137,22 @@
       </ul>
     </li>
     <li><a href="#指针与const">指针与const</a></li>
+    <li><a href="#引用">引用</a>
+      <ul>
+        <li><a href="#左值引用">左值引用</a></li>
+        <li><a href="#右值引用">右值引用</a></li>
+        <li><a href="#引用的引用">引用的引用</a></li>
+        <li><a href="#指针与引用">指针与引用</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;指针与引用</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-24">10-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-24">10-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3899 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-24">10-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-24">10-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5743 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -181,6 +189,14 @@
       </ul>
     </li>
     <li><a href="#指针与const">指针与const</a></li>
+    <li><a href="#引用">引用</a>
+      <ul>
+        <li><a href="#左值引用">左值引用</a></li>
+        <li><a href="#右值引用">右值引用</a></li>
+        <li><a href="#引用的引用">引用的引用</a></li>
+        <li><a href="#指针与引用">指针与引用</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="指针" class="headerLink">
@@ -413,8 +429,8 @@ void最主要的用途是当我们无法假定对象的类型时,向函数传递
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>前置<em>运算符执行解引用预算，因此</em>p是指针p所指的字符，++元素按令p指向数组的下一个元素。<br>
-把+、-、++、&ndash;、等算数运算符用在指针上得到的结果依赖于指针所指对象的数据类型。当我们对T*类型的指针p执行算数运算时，p指向T类型的数组元素，p+1指向数组的下一个元素，p-1指向数组的上一个元素，上述规则意味着p+1对应的整数值比p对应的整数值大sizeof(T)。<br>
+</div><p>前置*运算符执行解引用预算，因此<em>p是指针p所指的字符，++元素按令p指向数组的下一个元素。<br>
+把+、-、++、&ndash;、等算数运算符用在指针上得到的结果依赖于指针所指对象的数据类型。当我们对T</em>类型的指针p执行算数运算时，p指向T类型的数组元素，p+1指向数组的下一个元素，p-1指向数组的上一个元素，上述规则意味着p+1对应的整数值比p对应的整数值大sizeof(T)。<br>
 指针的减法只有当参与运算的两个指针指向的是同一数组的元素时才有效，如果指针指向的位置既不是原数组中的元素，也不是尾后元素，那我们不能使用它，否则会产生未定义行为：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -630,9 +646,9 @@ void最主要的用途是当我们无法假定对象的类型时,向函数传递
 <ul>
 <li>使用符号化常量的代码比直接使用字面值常量的代码更易维护。</li>
 <li>我们经常通过指针读取数据，但是很少通过指针写入数据。</li>
-<li>绝大多数函数的参数值负责读取数据，很少写入数据。<br>
-为了表达一经初始化就不可修改的特性，可以在对象的定义中加上const关键字：</li>
+<li>绝大多数函数的参数值负责读取数据，很少写入数据。</li>
 </ul>
+<p>为了表达一经初始化就不可修改的特性，可以在对象的定义中加上const关键字：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -761,6 +777,326 @@ C++允许把非const变量的地址赋给指向常量的指针，这样不会造
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="引用" class="headerLink">
+    <a href="#%e5%bc%95%e7%94%a8" class="header-mark"></a>引用</h2><p>使用指针和使用对象名存在以下差别：</p>
+<ul>
+<li>语法形式不同，*p和p-&gt;m分别取代了obj和obj.m。</li>
+<li>同一个指针可以在不同时刻指向不同的对象。</li>
+<li>指针的值可能是nullptr，使用时要小心。</li>
+</ul>
+<p>引用和指针类似，作为对象的别名存放对象的机器地址。与指针相比，不会带来额外的开销。与指针的区别主要包括：</p>
+<ul>
+<li>访问引用与访问对象本身从语法形式上看是一样的。</li>
+<li>引用所引的永远是一开始初始化的那个对象。</li>
+<li>不存在“空引用”，引用一定对应着某个对象。<br>
+引用实际上是对象的别名，最重要的用途就是作为函数的实参或返回值。</li>
+</ul>
+<p>为了体现左值/右值以及const/非const的区别，存在三种形式的引用：</p>
+<ul>
+<li>左值引用：引用那些我们希望改变值的对象。</li>
+<li>const引用：引用那些我们不希望改变值的对象(如常量)。</li>
+<li>右值引用：所引用的值在使用之后就无须保留(如临时变量)。</li>
+</ul>
+<p>着三种形式统称为引用，前两种自宁国市都是左值引用。</p>
+<h3 id="左值引用" class="headerLink">
+    <a href="#%e5%b7%a6%e5%80%bc%e5%bc%95%e7%94%a8" class="header-mark"></a>左值引用</h3><p>X&amp;的意思是“X的引用”：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">&amp;</span> <span class="n">r</span> <span class="p">{</span><span class="n">var</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span> <span class="c1">//x =1 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">r</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">//var = 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为确保引用对应某个对象，必须初始化引用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">&amp;</span> <span class="n">r1</span> <span class="p">{</span><span class="n">var</span><span class="p">};</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">r2</span><span class="p">;</span> <span class="c1">//错误，缺少初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">r3</span><span class="p">;</span> <span class="c1">//OK，r3在别处初始化
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>初始化引用和给引用赋值是完全不同的操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">var</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">&amp;</span> <span class="n">rr</span><span class="p">{</span><span class="n">var</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="o">++</span><span class="n">rr</span><span class="p">;</span> <span class="c1">//rr值加1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span><span class="o">*</span> <span class="n">pp</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">rr</span><span class="p">;</span> <span class="c1">//pp指向var
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>++rr的含义不是递增引用rr，而是给rr所指的int（var）加1。引用本身的值一旦经过初始化就不能再改变了；他用冤兜指向一开始指定的对象。可以使用&amp;rr得到一个指向rr所引对象的指针，但是不能令某个指针指向引用，也不能定义引用的数组。<br>
+引用的实现方式类似常量指针，每次引用实际上是对指针执行解引用。<br>
+当初始值是左值是，提供给“普通”T&amp;的初始值必须是T类型的左值。<br>
+const T&amp;的初始值不一定非得是左值，甚至可以不是T类型的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span><span class="o">&amp;</span> <span class="n">dr</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">//错误，此处需要左值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">cdr</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span> <span class="c1">//OK
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>后一条语句可以理解为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">temp</span> <span class="o">=</span> <span class="kt">double</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span> <span class="c1">//先用给定值创建临时变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">cdr</span> <span class="p">{</span><span class="n">temp</span><span class="p">};</span> <span class="c1">//再将临时变量作为cdr的初始值
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>用于存放初始值的临时变量的生命周期从它创建之处开始，到它的作用域结束为止。<br>
+普通变量的引用和常量的引用必须分开来。<br>
+将引用作为函数的实参类型，这样函数就能修改传入其中的对象的值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">increment</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">aa</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="o">++</span><span class="n">aa</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">increment</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">// x=2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>尽量避免函数修改它的实参值，可以让函数显式的返回一个值达到同样地目的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">next</span><span class="p">(</span><span class="kt">int</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">increment</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">//x=2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">x</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">//x=3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>除非函数名能明显的表达修改实参的意思，否则不要轻易使用“普通”引用。<br>
+引用还能作为函数返回值类型，此时，该函数既能作为赋值运算符的左侧运算对象，也能作为赋值运算符的右侧运算对象。</p>
+<h3 id="右值引用" class="headerLink">
+    <a href="#%e5%8f%b3%e5%80%bc%e5%bc%95%e7%94%a8" class="header-mark"></a>右值引用</h3><p>为支持对象的不同用法：</p>
+<ul>
+<li>非const左值引用所引的对象可以由用户写入内容。</li>
+<li>const左值引用所引的对象从用户角度来看是不可修改的。</li>
+<li>右值引用对应一个临时对象，用户可以修改这个对象，并认定该对象以后不会用到了。</li>
+</ul>
+<p>右值引用可以绑定到右值，但不能绑定到左值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="n">var</span><span class="p">{</span><span class="s">&#34;Cambridge&#34;</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">f</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">string</span><span class="o">&amp;</span> <span class="n">r1</span><span class="p">{</span><span class="n">var</span><span class="p">};</span> <span class="c1">//左值引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">&amp;</span> <span class="n">r2</span><span class="p">{</span><span class="n">f</span><span class="p">()};</span> <span class="c1">//左值引用，错误，f()是右值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">&amp;</span> <span class="n">r3</span><span class="p">{</span><span class="s">&#34;Princeton&#34;</span><span class="p">};</span> <span class="c1">//左值引用，错误，不允许绑定到临时变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">&amp;&amp;</span> <span class="n">rr1</span><span class="p">{</span><span class="n">f</span><span class="p">()};</span> <span class="c1">//右值引用，正确，rr1绑定到一个右值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">&amp;&amp;</span> <span class="n">rr2</span><span class="p">{</span><span class="n">var</span><span class="p">};</span> <span class="c1">//右值引用，错误，var是左值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">&amp;&amp;</span> <span class="n">rr3</span><span class="p">{</span><span class="s">&#34;Oxford&#34;</span><span class="p">};</span> <span class="c1">//rr3医用一个临时变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">string</span> <span class="n">cr1</span><span class="o">&amp;</span><span class="p">{</span><span class="s">&#34;Harvard&#34;</span><span class="p">};</span> <span class="c1">//OK
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>声明符&amp;&amp;表示“右值引用”，const左值引用和右值引用都绑定右值，但是它们的目标完全不同：</p>
+<ul>
+<li>右值引用实现一种“破坏性读取”。</li>
+<li>const左值引用的作用是保护参数内容不被修改。</li>
+</ul>
+<p>右值引用使用方式基本等同于左值引用的方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">f</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;&amp;</span> <span class="n">s</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">toupper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="引用的引用" class="headerLink">
+    <a href="#%e5%bc%95%e7%94%a8%e7%9a%84%e5%bc%95%e7%94%a8" class="header-mark"></a>引用的引用</h3><p>永远是左值引用优先。<br>
+引用的引用指针只能作为别名的结果或者模板类型的参数。</p>
+<h3 id="指针与引用" class="headerLink">
+    <a href="#%e6%8c%87%e9%92%88%e4%b8%8e%e5%bc%95%e7%94%a8" class="header-mark"></a>指针与引用</h3><p>指针与引用各有优势，也都存在不足：<br>
+如果需要更换所指对象，应该使用指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fp</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">++*</span><span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fr</span><span class="p">(</span><span class="kt">char</span><span class="o">&amp;</span> <span class="n">r</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">++</span><span class="n">r</span><span class="p">;</span><span class="c1">//增加的是引用的char的值，不是引用本身
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fr2</span><span class="p">(</span><span class="kt">char</span><span class="o">&amp;</span> <span class="n">r</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="o">*</span><span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">++</span><span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>反之，如果想让某个名字永远对应同一对象，应该使用引用。
+如果要自定义一个运算符，使之用于指向对象的某物，应该使用引用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Matrix</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">Matrix</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix</span><span class="o">&amp;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Matrix</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">Matrix</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix</span><span class="o">*</span><span class="p">)</span> <span class="c1">//错误，不是用户自定义类型参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">Matrix</span> <span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Matrix</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Matrix</span> <span class="n">x2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">y</span> <span class="o">-</span> <span class="o">&amp;</span><span class="n">z</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果想让一个集合中的元素指向对象，应该使用指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span><span class="o">&amp;</span> <span class="n">a1</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">};</span> <span class="c1">//错误，引用的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">*</span> <span class="n">a2</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">&amp;</span><span class="n">x</span><span class="p">,</span><span class="o">&amp;</span><span class="n">y</span><span class="p">};</span> 
+</span></span><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&amp;&gt;</span> <span class="n">s1</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">};</span> <span class="c1">//错误，引用的向量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">*&gt;</span> <span class="n">s2</span> <span class="o">=</span> <span class="p">{</span><span class="o">&amp;</span><span class="n">x</span><span class="p">,</span><span class="o">&amp;</span><span class="n">y</span><span class="p">};</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果需要表示值空缺，应该使用指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fp</span><span class="p">(</span><span class="n">X</span><span class="o">*</span> <span class="n">p</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fr2</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span> <span class="n">r</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
 </div></div>
 
         <div class="post-footer" id="post-footer">
@@ -775,13 +1111,13 @@ C++允许把非const变量的地址赋给指向常量的指针，这样不会造
             <div class="post-info-md"><span><a class="link-to-mardown" href=/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
                     </span></div>
             <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-hashtags="函数,形参,实参"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-hashtag="函数"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-skype fa-fw"></i></a></span>
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-hashtags="指针,数组,引用"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-hashtag="指针"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" data-title="C&#43;&#43;指针与引用"><i class="fab fa-skype fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%87%BD%E6%95%B0/">函数</a>,&nbsp;<a href="/tags/%E5%BD%A2%E5%8F%82/">形参</a>,&nbsp;<a href="/tags/%E5%AE%9E%E5%8F%82/">实参</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%8C%87%E9%92%88/">指针</a>,&nbsp;<a href="/tags/%E6%95%B0%E7%BB%84/">数组</a>,&nbsp;<a href="/tags/%E5%BC%95%E7%94%A8/">引用</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
