@@ -4,7 +4,14 @@
         <link>http://example.org/tags/%E8%AF%AD%E5%8F%A5/</link>
         <description>语句 - 标签 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 20 Mar 2022 16:29:22 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E8%AF%AD%E5%8F%A5/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 27 Oct 2022 19:32:24 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E8%AF%AD%E5%8F%A5/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;语句</title>
+    <link>http://example.org/2022/c-%E8%AF%AD%E5%8F%A5/</link>
+    <pubDate>Thu, 27 Oct 2022 19:32:24 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E8%AF%AD%E5%8F%A5/</guid>
+    <description><![CDATA[选择语句switch语句case分支中的声明C++允许在switch语句的块内声明变量，但是不能不初始化： 1 2 3 4 5 6 7 8 void f(int i){ switch(i){ case 0: int x; /]]></description>
+</item><item>
     <title>C&#43;&#43;学习之语句及异常</title>
     <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/</link>
     <pubDate>Sun, 20 Mar 2022 16:29:22 &#43;0800</pubDate><author>

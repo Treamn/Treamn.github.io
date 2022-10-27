@@ -4,7 +4,21 @@
         <link>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</link>
         <description>C&#43;&#43;学习 - 分类 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 24 Oct 2022 19:23:55 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 27 Oct 2022 19:58:33 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;结构联合与枚举</title>
+    <link>http://example.org/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/</link>
+    <pubDate>Thu, 27 Oct 2022 19:58:33 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/</guid>
+    <description><![CDATA[结构数组是相同类型的集合，相反，struct是任意类型元素的集合： 1 2 3 4 5 6 7 8 struct Address{ const char* name; int number; const char* street; const char* town; char state[2]; const char* zip; }; 声明Address类]]></description>
+</item><item>
+    <title>C&#43;&#43;语句</title>
+    <link>http://example.org/2022/c-%E8%AF%AD%E5%8F%A5/</link>
+    <pubDate>Thu, 27 Oct 2022 19:32:24 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E8%AF%AD%E5%8F%A5/</guid>
+    <description><![CDATA[选择语句switch语句case分支中的声明C++允许在switch语句的块内声明变量，但是不能不初始化： 1 2 3 4 5 6 7 8 void f(int i){ switch(i){ case 0: int x; /]]></description>
+</item><item>
     <title>C&#43;&#43;指针与引用</title>
     <link>http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/</link>
     <pubDate>Mon, 24 Oct 2022 19:23:55 &#43;0800</pubDate><author>
@@ -60,19 +74,5 @@
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0/</guid>
     <description><![CDATA[函数基础典型的函数定义包括以下部分：返回类型、函数名、形参列表和函数体。 形参列表中形参用逗号隔开，其中每个形参都是一个含有声明符的声明。即使]]></description>
-</item><item>
-    <title>C&#43;&#43;学习之语句及异常</title>
-    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/</link>
-    <pubDate>Sun, 20 Mar 2022 16:29:22 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AF%AD%E5%8F%A5%E5%8F%8A%E5%BC%82%E5%B8%B8/</guid>
-    <description><![CDATA[简单语句 空语句 空语句中只含有一个单独的分号。 1 ; //空语句 如果程序的某个地方，语法上需要一条语句，但是逻辑上不需要，此时应该使用空语句。 例如]]></description>
-</item><item>
-    <title>C&#43;&#43;学习之运算符</title>
-    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/</link>
-    <pubDate>Sun, 20 Mar 2022 14:38:41 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/</guid>
-    <description><![CDATA[优先级与结合律 优先级会影响程序的正确性，这一点也适用于解引用和指针运算。 1 2 3 int ia[] = {0,2,4,6,8}; int last = *(ia + 4); //此时last值为ia[4]的值 last = *ia +]]></description>
 </item></channel>
 </rss>
