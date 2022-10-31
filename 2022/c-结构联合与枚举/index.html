@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "结构, 联合, 枚举","wordcount":  1662 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "结构, 联合, 枚举","wordcount":  3505 ,
         "url": "http:\/\/example.org\/2022\/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE\/","datePublished": "2022-10-27T19:58:33+08:00","dateModified": "2022-10-27T19:58:33+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -132,6 +132,9 @@
     <li><a href="#联合">联合</a>
       <ul>
         <li><a href="#枚举">枚举</a></li>
+        <li><a href="#enum-class">enum class</a></li>
+        <li><a href="#普通的enum">普通的enum</a></li>
+        <li><a href="#未命名的enum">未命名的enum</a></li>
       </ul>
     </li>
   </ul>
@@ -140,8 +143,8 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-27">10-27</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-27">10-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1662 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-27">10-27</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-27">10-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3505 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -175,6 +178,9 @@
     <li><a href="#联合">联合</a>
       <ul>
         <li><a href="#枚举">枚举</a></li>
+        <li><a href="#enum-class">enum class</a></li>
+        <li><a href="#普通的enum">普通的enum</a></li>
+        <li><a href="#未命名的enum">未命名的enum</a></li>
       </ul>
     </li>
   </ul>
@@ -553,6 +559,343 @@
 <li>”普通的enum“，它的枚举值名字与枚举类型本身位于同一个作用域中，枚举值隐式的转换成整数。</li>
 </ol>
 <p>通常情况下，建议使用enum class，它很少会产生意料之外的结果。</p>
+<h3 id="enum-class" class="headerLink">
+    <a href="#enum-class" class="header-mark"></a>enum class</h3><p>enum class是一种限定了作用域的强类型枚举：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Traffic_light</span><span class="p">{</span><span class="n">red</span><span class="p">,</span> <span class="n">yellow</span><span class="p">,</span> <span class="n">green</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Warning</span><span class="p">{</span><span class="n">green</span><span class="p">,</span><span class="n">yellow</span><span class="p">,</span><span class="n">orange</span><span class="p">,</span><span class="n">red</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Warning</span> <span class="n">a1</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c1">//错误：不存在int向Warning的类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">green</span><span class="p">;</span> <span class="c1">//错误：green位于它的作用域之外
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">Warning</span><span class="o">::</span><span class="n">green</span><span class="p">;</span> <span class="c1">//错误：不存在Warning向int的类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Warning</span> <span class="n">a4</span> <span class="o">=</span> <span class="n">Warning</span><span class="o">::</span><span class="n">green</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Traffic_light</span> <span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">9</span><span class="p">)</span> <span class="c1">//错误，9不是一个Traffic_light
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">red</span><span class="p">)</span> <span class="c1">//错误，当前作用域中没有red
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">Warning</span><span class="o">::</span><span class="n">red</span><span class="p">)</span> <span class="c1">//错误：x不是一个Warning
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">Traffic_light</span><span class="o">::</span><span class="n">red</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>两个enum的枚举值不会互相冲突，它们位于各自enum class的作用域中。<br>
+枚举常用一些整数类型表示，每个枚举值是一个整数。我们把用于某个枚举的类型称为它的基础类型。基础类型必须是一种带符号或无符号的整数类型，默认是int，可以显式的指定：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Warning</span><span class="o">:</span><span class="kt">int</span><span class="p">{</span><span class="n">green</span><span class="p">,</span><span class="n">yellow</span><span class="p">,</span><span class="n">orange</span><span class="p">,</span><span class="n">red</span><span class="p">};</span> <span class="c1">//sizeof(Warning) == sizeof(int)
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果认为上述定义太浪费空间，可以用char代替int：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Warning</span><span class="o">:</span><span class="kt">char</span><span class="p">{</span><span class="n">green</span><span class="p">,</span><span class="n">yellow</span><span class="p">,</span><span class="n">orange</span><span class="p">,</span><span class="n">red</span><span class="p">};</span> <span class="c1">//sizeof(Warning) == 1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，枚举值从0开始，依次递增：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Warning</span><span class="o">::</span><span class="n">green</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Warning</span><span class="o">::</span><span class="n">yellow</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Warning</span><span class="o">::</span><span class="n">orange</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Warning</span><span class="o">::</span><span class="n">red</span><span class="p">)</span><span class="o">==</span><span class="mi">3</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有了Warning之后，用Warning变量代替普通的int变量使得用户和编译器都能更好地了解该变量的真正用途：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Warning</span> <span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">key</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="n">Warning</span><span class="o">::</span><span class="nl">green</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">case</span> <span class="nl">Warning</span><span class="p">:</span><span class="err">🍊</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">case</span> <span class="n">Warning</span><span class="o">::</span><span class="nl">red</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以用整型常量表达式初始化枚举值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Print_flags</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ackonwledge</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">paper_empty</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">busy</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out_of_black</span><span class="o">=</span><span class="mi">8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out_of_color</span><span class="o">=</span><span class="mi">16</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>enum属于用户自定义的类型，因此可以为它定义|和&amp;运算符：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">constexpr</span> <span class="n">Printer_flags</span> <span class="k">operator</span><span class="o">|</span><span class="p">(</span><span class="n">Print_flags</span> <span class="n">a</span><span class="p">,</span> <span class="n">Print_flags</span> <span class="n">b</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Print_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">|</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">constexpr</span> <span class="n">Printer_flags</span> <span class="k">operator</span><span class="o">&amp;</span><span class="p">(</span><span class="n">Print_flags</span> <span class="n">a</span><span class="p">,</span> <span class="n">Print_flags</span> <span class="n">b</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Print_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">&amp;</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为enum class不知吃隐式类型转换，所以必须在这里使用显式的类型转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">try_to_print</span><span class="p">(</span><span class="n">Printer_flags</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">&amp;</span><span class="n">Printer_flags</span><span class="o">::</span><span class="n">ackonwledge</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">&amp;</span><span class="n">Printer_flags</span><span class="o">::</span><span class="n">busy</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">&amp;</span><span class="p">(</span><span class="n">Printer_flags</span><span class="o">::</span><span class="n">out_of_black</span> <span class="o">|</span> <span class="n">Printer_flags</span><span class="o">::</span><span class="n">out_of_color</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将operator}()和operator&amp;()定义成constexpr函数，这样就能用于常量表达式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="n">Printer_flags</span> <span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">casse</span> <span class="n">Printer_flags</span><span class="o">::</span><span class="n">out_of_black</span> <span class="o">|</span> <span class="n">Printer_flags</span><span class="o">::</span><span class="nl">out_of_color</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>C++允许先声明一个enum class，稍后再给出定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Color_code</span><span class="o">:</span><span class="kt">char</span><span class="p">;</span> <span class="c1">//声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">foobar</span><span class="p">(</span><span class="n">Color_code</span><span class="o">*</span> <span class="n">p</span><span class="p">);</span> <span class="c1">//使用声明
+</span></span></span><span class="line"><span class="cl"><span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">enum</span> <span class="k">class</span> <span class="nc">Color_code</span><span class="o">:</span><span class="kt">char</span><span class="p">{</span> <span class="c1">//定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">ren</span><span class="p">,</span><span class="n">yellow</span><span class="p">,</span><span class="n">green</span><span class="p">,</span><span class="n">blue</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个整数类型的值可以显式的转换成枚举类型。如果这个值属于枚举的基础类型的取值范围，则转换是有效的；否则，如果超出了合理的表示范围，则转换的结果是未定义的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Flag</span><span class="o">:</span><span class="kt">char</span><span class="p">{</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">e</span><span class="o">=</span><span class="mi">8</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Flag</span> <span class="n">f0</span><span class="p">{};</span> <span class="c1">//f0默认值是0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Flag</span> <span class="n">f1</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">//类型错误，5不属于Flag
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Flag</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">Flag</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span> <span class="c1">//错误。不许窄化成enum class
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Flag</span> <span class="n">f3</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Flag</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">//不近人情的转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Flag</span> <span class="n">f4</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Flag</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">999</span><span class="p">);</span> <span class="c1">//错误，999不是一个char类型的值
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为绝大多数整数值根本不再某一枚举类型的合理表示范围之内，因此不允许从整数到枚举类型的隐式转换。<br>
+每个枚举值对应一个整数，我们可以显式的把整数抽取出来：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Flag</span><span class="o">::</span><span class="n">y</span><span class="p">);</span> <span class="c1">//i==2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Flag</span><span class="o">::</span><span class="n">e</span><span class="p">);</span> <span class="c1">//c == 8
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对enum class执行sizeof的结果是对其基础类型执行sizeof的结果，如果没有显式的指定基础类型，则枚举类型的尺寸等于sizeof(int)。</p>
+<h3 id="普通的enum" class="headerLink">
+    <a href="#%e6%99%ae%e9%80%9a%e7%9a%84enum" class="header-mark"></a>普通的enum</h3><p>“普通的enum”是指C++在提出enum class之前提供的枚举类型。普通的enum的枚举值位于enum本身所在的作用域中，它们隐式的转换成某些整数类型的值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">Traffic_light</span><span class="p">{</span><span class="n">red</span><span class="p">,</span> <span class="n">yellow</span><span class="p">,</span> <span class="n">green</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">Warning</span><span class="p">{</span><span class="n">green</span><span class="p">,</span><span class="n">yellow</span><span class="p">,</span><span class="n">orange</span><span class="p">,</span><span class="n">red</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//错误：yellow被重复定义(取值相同)
+</span></span></span><span class="line"><span class="cl"><span class="c1">//错误：red被重复定义(取值不同)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">Warning</span> <span class="n">a1</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c1">//错误：不存在int向Warning的类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">green</span><span class="p">;</span> <span class="c1">//ok：green位于其作用域中，隐式转换成int类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">Warning</span><span class="o">::</span><span class="n">green</span><span class="p">;</span> <span class="c1">//OK：Warning向int的类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Warning</span> <span class="n">a4</span> <span class="o">=</span> <span class="n">Warning</span><span class="o">::</span><span class="n">green</span><span class="p">;</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Traffic_light</span> <span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">9</span><span class="p">)</span> <span class="c1">//OK(d但是Traffic_light不包含枚举值9)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">red</span><span class="p">)</span> <span class="c1">//错误，当前作用域中有两个red
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">Warning</span><span class="o">::</span><span class="n">red</span><span class="p">)</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">Traffic_light</span><span class="o">::</span><span class="n">red</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们在同一个作用域的两个普通枚举中都定义了red，从而避免一个难以发现的错误。可以人为地消除枚举值的二义性，以实现对于普通enum的“清理”：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">Traffic_light</span><span class="p">{</span><span class="n">tl_red</span><span class="p">,</span> <span class="n">tl_yellow</span><span class="p">,</span> <span class="n">tl_green</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">Warning</span><span class="p">{</span><span class="n">green</span><span class="p">,</span><span class="n">yellow</span><span class="p">,</span><span class="n">orange</span><span class="p">,</span><span class="n">red</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Traffic_light</span> <span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">9</span><span class="p">)</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">red</span><span class="p">)</span> <span class="c1">//OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">Traffic_light</span><span class="o">::</span><span class="n">red</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="c1">//错误：red不是一个Traffic_light类型的值   
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>从编译器角度来看，x==red是合法的，但它几乎肯定是一个程序缺陷。把名字注入外层作用域(当使用enum时会发生这种情况，但是使用enum class和class不会)的行为称为名字空间污染，在规模较大的程序中应避免这么做。<br>
+可以为普通的枚举指定基础类型，就像对enum class所做的一样。此时，允许先声明枚举类型，稍后再给出定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">Traffic_light</span><span class="o">:</span><span class="kt">char</span><span class="p">{</span><span class="n">tl_red</span><span class="p">,</span> <span class="n">tl_yellow</span><span class="p">,</span> <span class="n">tl_green</span><span class="p">};</span> <span class="c1">//基础类型是char
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">enum</span> <span class="nc">Color_code</span><span class="o">:</span><span class="kt">char</span><span class="p">;</span> <span class="c1">//声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">foobar</span><span class="p">(</span><span class="n">Color_code</span><span class="o">*</span> <span class="n">p</span><span class="p">);</span> <span class="c1">//使用声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">enum</span> <span class="nc">Color_code</span><span class="o">:</span><span class="kt">char</span><span class="p">{</span><span class="n">green</span><span class="p">,</span><span class="n">yellow</span><span class="p">,</span><span class="n">orange</span><span class="p">,</span><span class="n">red</span><span class="p">};</span> <span class="c1">//定义  
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果没有指定枚举的基础类型，则不能把它的声明和定义分开。</p>
+<h3 id="未命名的enum" class="headerLink">
+    <a href="#%e6%9c%aa%e5%91%bd%e5%90%8d%e7%9a%84enum" class="header-mark"></a>未命名的enum</h3><p>一个普通的enum可以是未命名的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span><span class="p">{</span><span class="n">arrow_up</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">arrow_down</span><span class="p">,</span> <span class="n">arrow_sideways</span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果只需要一组整型变量，而不是用于声明变量的类型，则可以使用未命名的enum。</p>
 </div>
 
         <div class="post-footer" id="post-footer">
