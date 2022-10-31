@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">C&#43;&#43;表达式 - Dling</title><meta name="Description" content="Dling | 煜江的个人博客"><meta property="og:title" content="C&#43;&#43;表达式" />
+<meta property="og:description" content="桌面计算器实例计算器包含四个部分：分析器、输入函数、符号表和驱动。实际上，它的功能类似一个微型编译器：其中分析器负责分析语法，输入函数负责处" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" /><meta property="og:image" content="http://example.org/logo.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-31T19:31:31+08:00" />
+<meta property="article:modified_time" content="2022-10-31T19:31:31+08:00" /><meta property="og:site_name" content="Dling | 煜江的个人博客" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.jpg"/>
+
+<meta name="twitter:title" content="C&#43;&#43;表达式"/>
+<meta name="twitter:description" content="桌面计算器实例计算器包含四个部分：分析器、输入函数、符号表和驱动。实际上，它的功能类似一个微型编译器：其中分析器负责分析语法，输入函数负责处"/>
+<meta name="application-name" content="Dling">
+<meta name="apple-mobile-web-app-title" content="Dling">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" /><link rel="prev" href="http://example.org/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.1d6e6517c44074bf1c692657d249d106a5e98bb9db25f7773715b24eda7aa575354611c095c23092aa17916f1b5be527.css" integrity="sha384-HW5lF8RAdL8caSZX0knRBqXpi7nbJfd3NxWyTtp6pXU1RhHAlcIwkqoXkW8bW&#43;Un"><link rel="stylesheet" href="/css/style.min.8540842213936bd2a523af7a572a979f0061839c28d9f3f25e5edb76d34b76136170ccd1a71501f0ecc51daadc867cb2.css" integrity="sha384-hUCEIhOTa9KlI696VyqXnwBhg5wo2fPyXl7bdtNLdhNhcMzRpxUB8OzFHarchnyy"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC"></noscript>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "C++表达式",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/2022\/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F\/"
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "表达式, 联合, 枚举","wordcount":  2590 ,
+        "url": "http:\/\/example.org\/2022\/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F\/","datePublished": "2022-10-31T19:31:31+08:00","dateModified": "2022-10-31T19:31:31+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "煜江叔叔"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('light' === 'light' || 'light' === 'dark' || 'light' === 'black') setTheme('light'), saveTheme('light'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/series/"><i class="fas fa-object-group"></i> 系列 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/link/"><i class="fas fa-link"></i> 友链 </a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/series/" title=""><i class="fas fa-object-group"></i>系列</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/link/" title=""><i class="fas fa-link"></i>友链</a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#桌面计算器实例">桌面计算器实例</a>
+      <ul>
+        <li><a href="#分析器">分析器</a></li>
+        <li><a href="#输入">输入</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;表达式</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="10-31">10-31</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="10-31">10-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2590 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details series-nav open">
+                                <div class="details-summary series-title">
+                                    <span>系列 - C&#43;&#43;程序设计语言</span>
+                                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                                </div>
+                                <div class="details-content series-content">
+                                    <nav>
+                                        <ul><li><span class="active">C&#43;&#43;表达式</span></li>
+                                                    <li><a href="/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/">C&#43;&#43;结构联合与枚举</a></li>
+                                                    <li><a href="/2022/c-%E8%AF%AD%E5%8F%A5/">C&#43;&#43;语句</a></li>
+                                                    <li><a href="/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/">C&#43;&#43;指针与引用</a></li>
+                                                    <li><a href="/2022/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E/">C&#43;&#43;类型与声明</a></li>
+                                                    <li><a href="/2022/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6/">C&#43;&#43;概览抽象机制</a></li>
+                                                    <li><a href="/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">C&#43;&#43;概览基础知识</a></li></ul>
+                                    </nav>
+                                </div>
+                            </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#桌面计算器实例">桌面计算器实例</a>
+      <ul>
+        <li><a href="#分析器">分析器</a></li>
+        <li><a href="#输入">输入</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="桌面计算器实例" class="headerLink">
+    <a href="#%e6%a1%8c%e9%9d%a2%e8%ae%a1%e7%ae%97%e5%99%a8%e5%ae%9e%e4%be%8b" class="header-mark"></a>桌面计算器实例</h2><p>计算器包含四个部分：分析器、输入函数、符号表和驱动。实际上，它的功能类似一个微型编译器：其中分析器负责分析语法，输入函数负责处理输入及词法分析，符号表存放永久信息，驱动处理初始化、输出和错误。</p>
+<h3 id="分析器" class="headerLink">
+    <a href="#%e5%88%86%e6%9e%90%e5%99%a8" class="header-mark"></a>分析器</h3><p>下面是计算器程序遵循的一套语法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="nl">program</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end</span>  <span class="c1">//end是输入的结束
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">expr_list</span> <span class="n">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">expr_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expression</span> <span class="n">print</span> <span class="c1">//print是换行或分号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">expression</span> <span class="n">print</span> <span class="n">expr_list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">expression</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expression</span> <span class="o">+</span> <span class="n">term</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expression</span> <span class="o">-</span> <span class="n">term</span>
+</span></span><span class="line"><span class="cl">    <span class="n">term</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">term</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">term</span> <span class="o">/</span> <span class="n">primary</span>
+</span></span><span class="line"><span class="cl">    <span class="n">term</span> <span class="o">*</span> <span class="n">primary</span>
+</span></span><span class="line"><span class="cl">    <span class="n">primary</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">primary</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">number</span> <span class="c1">//number是一个浮点型字面值常量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">name</span>   <span class="c1">//name是一个标识符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">nae</span><span class="o">=</span><span class="n">expression</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">primary</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>换句话说，程序就是以分号隔开的一段表达式序列。表达式的基本单元是数字，名字以及运算符等。其中，名字不需要在使用之前提前声明。<br>
+此处使用的是递归下降语法分析机制，这是一种被广泛接受且含义明确的自顶向下技术。<br>
+在处理输入的环节，分析器使用Token_stream，它负责把读入字符的过程以及字符的组成情况封装到Token中。也就是说Token_stream的作用是“单词化”，负责把字符流转换成Token。其中Token是一个形如{单词类型，值}的对，在{数字，123.45}的例子中，123.45被转换成浮点数值。<br>
+Token的定义如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Kind</span><span class="o">:</span><span class="kt">char</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">end</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plus</span><span class="o">=</span><span class="sc">&#39;+&#39;</span><span class="p">,</span> <span class="n">minus</span><span class="o">=</span><span class="sc">&#39;-&#39;</span><span class="p">,</span> <span class="n">mul</span><span class="o">=</span><span class="sc">&#39;*&#39;</span><span class="p">,</span><span class="n">div</span><span class="o">=</span><span class="sc">&#39;/&#39;</span><span class="p">,</span> <span class="n">print</span><span class="o">=</span><span class="sc">&#39;;&#39;</span><span class="p">,</span> <span class="n">assign</span><span class="o">=</span><span class="sc">&#39;=&#39;</span><span class="p">,</span><span class="n">lp</span><span class="o">=</span><span class="sc">&#39;(&#39;</span><span class="p">,</span> <span class="n">rp</span><span class="o">=</span><span class="sc">&#39;)&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Token</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Kind</span> <span class="n">kind</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">srting</span> <span class="n">string_value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">number_value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>把每个单词表示成字符对应的整数形式是一种便捷有效的手段，有助于进行调试。<br>
+Token_stream接口的形式是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Token_stream</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Token</span> <span class="n">get</span><span class="p">();</span> <span class="c1">//读取并返回下一单词
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">const</span> <span class="n">Token</span><span class="o">&amp;</span> <span class="n">current</span><span class="p">();</span> <span class="c1">//刚刚读入的单词
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个分析函数接受一个名为get的bool类型实参，它指明函数是否需要调用Token_stream::get()以获取下一个单词。每个分析函数求值“它的”表达式并返回相应的值。函数expr()处理加法和减法，它包含一个循环，依次寻找加法和减法所需的项：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span> <span class="nf">expr</span><span class="p">(</span><span class="kt">bool</span> <span class="n">get</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">left</span> <span class="o">=</span> <span class="n">term</span><span class="p">(</span><span class="n">get</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(;;){</span> <span class="c1">//读作forever
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">switch</span><span class="p">(</span><span class="n">ts</span><span class="p">.</span><span class="n">current</span><span class="p">().</span><span class="n">kind</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="nl">Kind</span><span class="p">:</span><span class="err">➕</span>
+</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">+=</span> <span class="n">term</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="nl">Kind</span><span class="p">:</span><span class="err">➕</span>
+</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">-=</span> <span class="n">term</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>C++规定赋值运算符可与下面的二元运算符一起使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="o">+</span> <span class="o">-</span> <span class="o">*</span> <span class="o">/</span> <span class="o">%</span> <span class="o">&amp;</span> <span class="o">|</span> <span class="o">^</span> <span class="o">&lt;&lt;</span> <span class="o">&gt;&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因此，下面的赋值运算符都是合法的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="o">=</span> <span class="o">+=</span> <span class="o">-=</span> <span class="o">*=</span> <span class="o">/=</span> <span class="o">%=</span> <span class="o">&amp;=</span> <span class="o">|=</span> <span class="o">^=</span> <span class="o">&lt;&lt;=</span> <span class="o">&gt;&gt;=</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中，^是异或运算符，&laquo;和&raquo;分别是左移和右移运算符。<br>
+函数term执行乘法和除法操作，其方式与expr()处理加法和减法的方式一样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span> <span class="nf">term</span><span class="p">(</span><span class="kt">bool</span> <span class="n">get</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">left</span> <span class="o">=</span> <span class="n">prim</span><span class="p">(</span><span class="n">get</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(;;){</span> <span class="c1">//读作forever
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">switch</span><span class="p">(</span><span class="n">ts</span><span class="p">.</span><span class="n">current</span><span class="p">().</span><span class="n">kind</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="n">Kind</span><span class="o">::</span><span class="nl">nul</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">*=</span> <span class="n">term</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="n">Kind</span><span class="o">::</span><span class="nl">div</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="n">prim</span><span class="p">(</span><span class="nb">true</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">left</span> <span class="o">/=</span> <span class="n">term</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">error</span><span class="p">(</span><span class="s">&#34;divide by 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>除数为0的除法其结果是未定义的，通常会依法严重的程序错误。<br>
+当确实需要使用变量d并且立即对它进行初始化时，才会把该变量引入程序中。因此，仅当d不等于0时执行除法赋值语句left/=d。<br>
+函数prim()处理初等项的方式很像expr()和term()。因为需要进入调用层次的狭义层，所以在这里需要多做一点事情，而且不必使用循环：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span> <span class="nf">term</span><span class="p">(</span><span class="kt">bool</span> <span class="n">get</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">get</span><span class="p">)</span> <span class="n">ts</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">ts</span><span class="p">.</span><span class="n">current</span><span class="p">().</span><span class="n">kind</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="n">Kind</span><span class="o">::</span><span class="nl">number</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">double</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ts</span><span class="p">.</span><span class="n">current</span><span class="p">().</span><span class="n">number_value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ts</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="n">Kind</span><span class="o">::</span><span class="nl">name</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">double</span><span class="o">&amp;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">tabel</span><span class="p">[</span><span class="n">ts</span><span class="p">.</span><span class="n">current</span><span class="p">().</span><span class="n">string_value</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">ts</span><span class="p">.</span><span class="n">get</span><span class="p">().</span><span class="n">kind</span> <span class="o">==</span> <span class="n">Kind</span><span class="o">::</span><span class="n">assign</span><span class="p">)</span> <span class="n">v</span> <span class="o">=</span> <span class="n">expr</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="nl">Kind</span><span class="p">:</span><span class="err">➖</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="o">-</span><span class="n">prim</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="n">kind</span><span class="o">::</span><span class="nl">lp</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="n">expr</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">ts</span><span class="p">.</span><span class="n">get</span><span class="p">().</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">Kind</span><span class="o">::</span><span class="n">rp</span><span class="p">)</span> <span class="k">return</span> <span class="n">error</span><span class="p">(</span><span class="s">&#34;&#39;)&#39;expected&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ts</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">error</span><span class="p">(</span><span class="s">&#34;primary expected&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当发现Token是一个number时，它的值被置于它的number_value中。与之类似，当发现Token十一个name时，它的值被置于对应的string_value中。<br>
+相对于分析初等项表达式所需实际的Token数量来说，prim永远多读取一个。这是因为在某些情况下它必须这么做，因此从一致性的考虑除法，它干脆在所有的情况下都统一了起来。当分析函数只想移动到下一个Token时，它不需要使用ts.get()的返回值。此时，可以从ts.current获取结果。<br>
+在对某个名字执行具体操作前，计算器受限向前查看该名字是否被赋值或者只是从中读取了内容。两种情况下都要用到符号表，符号表的类型是map：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">table</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是说，当table以string作为索引时，所得到的结果值是与该string对应的double。例如，假定用户的输入是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">radius</span> <span class="o">=</span> <span class="mf">6378.388</span><span class="err">；</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>则计算器将进入case Kind::name并且执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span><span class="o">&amp;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s">&#34;radius&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="n">v</span> <span class="o">=</span> <span class="mf">6378.388</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>引用v用于保存与radius关联的double，expr()从输入的字符序列计算得到值。</p>
+<h3 id="输入" class="headerLink">
+    <a href="#%e8%be%93%e5%85%a5" class="header-mark"></a>输入</h3><p>首先，给出Token_stream的完整定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Token_stream</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Token_stream</span><span class="p">(</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span><span class="o">:</span><span class="n">ip</span><span class="p">{</span><span class="o">&amp;</span><span class="n">s</span><span class="p">},</span><span class="n">owns</span><span class="p">{</span><span class="nb">false</span><span class="p">}{}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Token_stream</span><span class="p">(</span><span class="n">istream</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span><span class="o">:</span><span class="n">ip</span><span class="p">{</span><span class="n">p</span><span class="p">},</span><span class="n">owns</span><span class="p">{</span><span class="nb">true</span><span class="p">}{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Token_stream</span><span class="p">(){</span><span class="n">close</span><span class="p">();}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Token</span> <span class="nf">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Token</span><span class="o">&amp;</span> <span class="n">current</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">set_input</span><span class="p">(</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">){</span><span class="n">close</span><span class="p">();</span> <span class="n">ip</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="n">owns</span><span class="o">=</span><span class="nb">false</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">set_input</span><span class="p">(</span><span class="n">istream</span><span class="o">*</span> <span class="n">p</span><span class="p">){</span><span class="n">close</span><span class="p">();</span> <span class="n">ip</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span> <span class="n">owns</span><span class="o">=</span><span class="nb">true</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">close</span><span class="p">(){</span><span class="k">if</span><span class="p">(</span><span class="n">owns</span><span class="p">)</span> <span class="k">delete</span> <span class="n">ip</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">istream</span><span class="o">*</span> <span class="n">ip</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="n">owns</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Token</span> <span class="n">ct</span><span class="p">{</span><span class="n">Kind</span><span class="o">::</span><span class="n">end</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们用一个输入流初始化Token_stream，从该输入流中获取它的字符。Token_stream占有一个以指针方式传递的istream，而不是以引用的方式传递istream。当指针指向需要析构的资源，而这样的指针被包含在类的内部。<br>
+Token_stream保存三个值：一个指向其输入流的指针(ip)、一个用于指示输入流所有权的布尔值(ows)和当前的单词(gt)。<br>
+一开始的语句从*ip读取第一个非空白字符到ch，并且检查读取的操作是否成功：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Token</span> <span class="n">Token_stream</span><span class="o">::</span><span class="n">get</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">ip</span> <span class="o">&gt;&gt;</span> <span class="n">ch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">ch</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">ct</span><span class="o">=</span><span class="p">{</span><span class="n">Kind</span><span class="o">::</span><span class="n">end</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，&raquo;运算符会跳过空白，并当输入操作失败时不更改ch的值。<br>
+表达式终结符、括号和匀速阿福的处理方式很简单，直接返回它们的值即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;*&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;+&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;-&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;(&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;=&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ct</span> <span class="o">=</span> <span class="p">{</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Kind</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ch</span><span class="p">)};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为在char和kind之间没有隐式类型转换规则，所以必须使用static_cast。<br>
+数字的处理方式是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">case</span> <span class="sc">&#39;0&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;1&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;2&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;3&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;4&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;5&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;6&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;7&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;8&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;9&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;.&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="n">ip</span> <span class="o">-&gt;</span> <span class="n">putback</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span><span class="n">ip</span><span class="o">-&gt;</span><span class="n">ct</span><span class="p">.</span><span class="n">number_value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">ct</span><span class="p">.</span><span class="n">kind</span><span class="o">-</span><span class="n">Kind</span><span class="o">::</span><span class="n">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">ct</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果单词不是输入结束符、运算符、变电符号或者数字，则它必然是一个名字。处理名字的方式与数字类似：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">isalpha</span><span class="p">(</span><span class="n">ch</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ip</span> <span class="o">-&gt;</span> <span class="n">putback</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">*</span><span class="n">ip</span> <span class="o">&gt;&gt;</span> <span class="n">ct</span><span class="p">.</span><span class="n">string_value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ct</span><span class="p">,</span><span class="n">kind</span> <span class="o">=</span> <span class="n">Kind</span><span class="o">::</span><span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ct</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后，可嗯会得到一个错误。处理错误的一种简单但是有效的方法是调用error函数，然后返回一个print单词：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">error</span><span class="p">(</span><span class="s">&#34;bad token&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">ct</span> <span class="o">=</span> <span class="p">{</span><span class="n">Kind</span><span class="o">::</span><span class="n">print</span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>标准库函数isalpha()可以令我们不必把每个字符作为一个单独的case标签。&raquo;运算符在字符串内连续读取直到遇到一个空白符时停止。因此，在运算符使用某个名字作为它的运算对象之前，用户必须加上一个空白符表示名字的结束。<br>
+下面是完整的输入函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Token</span> <span class="n">Token_stream</span><span class="o">::</span><span class="n">get</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">ip</span><span class="o">&gt;&gt;</span><span class="n">ch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">ch</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">ct</span> <span class="o">=</span> <span class="p">{</span><span class="n">Kind</span><span class="o">::</span><span class="n">end</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;*&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;+&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;-&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;(&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;=&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ct</span> <span class="o">=</span> <span class="p">{</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Kind</span><span class="o">&gt;</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;0&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;1&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;2&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;3&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;4&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;5&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;6&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;7&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;8&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;9&#39;</span><span class="o">:</span><span class="k">case</span> <span class="sc">&#39;.&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ip</span> <span class="o">-&gt;</span> <span class="n">putback</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">*</span><span class="n">ip</span><span class="o">-&gt;</span><span class="n">ct</span><span class="p">.</span><span class="n">number_value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ct</span><span class="p">.</span><span class="n">kind</span><span class="o">-</span><span class="n">Kind</span><span class="o">::</span><span class="n">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ct</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">isalpha</span><span class="p">(</span><span class="n">ch</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ip</span> <span class="o">-&gt;</span> <span class="n">putback</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">*</span><span class="n">ip</span> <span class="o">&gt;&gt;</span> <span class="n">ct</span><span class="p">.</span><span class="n">string_value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ct</span><span class="p">,</span><span class="n">kind</span> <span class="o">=</span> <span class="n">Kind</span><span class="o">::</span><span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ct</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">error</span><span class="p">(</span><span class="s">&#34;bad token&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ct</span> <span class="o">=</span> <span class="p">{</span><span class="n">Kind</span><span class="o">::</span><span class="n">print</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 10-31</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="C&#43;&#43;表达式" data-hashtags="表达式,联合,枚举"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-hashtag="表达式"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="C&#43;&#43;表达式" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="C&#43;&#43;表达式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="C&#43;&#43;表达式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="C&#43;&#43;表达式"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="C&#43;&#43;表达式" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="C&#43;&#43;表达式"><i class="fab fa-skype fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F/">表达式</a>,&nbsp;<a href="/tags/%E8%81%94%E5%90%88/">联合</a>,&nbsp;<a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/" class="prev" rel="prev" title="C&#43;&#43;结构联合与枚举"><i class="fas fa-angle-left fa-fw"></i>C&#43;&#43;结构联合与枚举</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.94.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">煜江叔叔</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div><script>
+                    if('serviceWorker' in navigator) {
+                        navigator.serviceWorker
+                            .register('/sw.min.js', { scope: '/' })
+                            .then(function(registration) {
+                            });
+                
+                        navigator.serviceWorker
+                            .ready
+                            .then(function(registration) {
+                            });
+                    }
+                </script></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.dd4cfdb9c1bcaa687c9794e0620c478af43dec711c465b0560c274a0c20d6023bc183b8817015eb778ab746927905d6e.js" integrity="sha384-3Uz9ucG8qmh8l5TgYgxHivQ97HEcRlsFYMJ0oMINYCO8GDuIFwFet3irdGknkF1u"></script><script type="text/javascript" src="/lib/fuse/fuse.min.48c164d6be2fb1688f4fe95c476118b3a5dbda2aad6b2cd12c8ccb959d37db926987c59fdc9338e377b745807f0c06b0.js" integrity="sha384-SMFk1r4vsWiPT&#43;lcR2EYs6Xb2iqtayzRLIzLlZ0325Jph8Wf3JM443e3RYB/DAaw"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.de04ffbec7a95a47f3fdf7fb3e958d51e333796a07ddc0e19bf03c8ccee8ba800ad3f7cfffd6dc1c7479907ab69dff9e.js" integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e"></script><script type="text/javascript" src="/lib/topbar/topbar.min.1c26dd3f83978c568ee1c91cb7c6f1e397518b40c73c772d534ff3f3bb81cae306c6b7e8ee2275017e43fe0c0ed56822.js" integrity="sha384-HCbdP4OXjFaO4ckct8bx45dRi0DHPHctU0/z87uByuMGxrfo7iJ1AX5D/gwO1Wgi"></script><script type="text/javascript" src="/lib/pjax/pjax.min.811be7fbe3806492067fb1a7b4488f825fae80cc1d97e76064e8db943473e99ba8cb53fc73cd34a2cd2de52f2548f677.js" integrity="sha384-gRvn&#43;&#43;OAZJIGf7GntEiPgl&#43;ugMwdl&#43;dgZOjblDRz6Zuoy1P8c800os0t5S8lSPZ3"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["Treamn"],"clientID":"12d9838c8dc0fc1529e1","clientSecret":"ecfdb88bf5980b6312b96a4b40344fe630029771","id":"2022-10-31T19:31:31+08:00","owner":"Treamn","repo":"Treamn.github.io","title":"C++表达式"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":true,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":true,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><script type="text/javascript" src="/lib/gitalk/gitalk.min.1420a0c0459673bc6824e7ba713f1e0ec1540e86491daf1b6149a7af9cd3f396c86b9182d03e4c727faefae17b746033.js" integrity="sha384-FCCgwEWWc7xoJOe6cT8eDsFUDoZJHa8bYUmnr5zT85bIa5GC0D5Mcn&#43;u&#43;uF7dGAz"></script><script type="text/javascript" src="/js/gitalk.min.js" defer></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.094758c1816ef1698123c876e7b739ac27751905f428bfb349857a93244d636b615bb42a43298a19f4c2235587c33bf2.js" integrity="sha384-CUdYwYFu8WmBI8h257c5rCd1GQX0KL&#43;zSYV6kyRNY2thW7QqQymKGfTCI1WHwzvy"></script><script type="text/javascript" src="/lib/sharer/sharer.min.0097b33812ac4873e9a2e0813de400c9ea9b07e223998d3cbc38a89bdfa3f45cc344689061a836fcd6f4c120eed429b4.js" integrity="sha384-AJezOBKsSHPpouCBPeQAyeqbB&#43;IjmY08vDiom9&#43;j9FzDRGiQYag2/Nb0wSDu1Cm0"></script><script type="text/javascript" src="/lib/katex/katex.min.cf57c90eac3c640a6318edffba73d650fb08ca67ec266cab0d5582f13bff6b51de3ad1a693035dffbc544b45dc9efb31.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.f970658d73cf8aff8ecdf6c1ddc5662c77f885d5051e558d64de6ca4d43bae61d35e977b5af26e9ba7c8002a4d35f211.js" integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.129f44b345428d59fd74579a376b90c6019c1a61bea5f678781687c54a715c3391aeb54009954ea72c32cef15119b9af.js" integrity="sha384-Ep9Es0VCjVn9dFeaN2uQxgGcGmG&#43;pfZ4eBaHxUpxXDORrrVACZVOpywyzvFRGbmv" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.50463d2113e457e4d34d8ee72b5c12adf8563c3272f70af83e6620dc32cf70de45e0d0e5230199916b56bde291ff8e5c.js" integrity="sha384-UEY9IRPkV&#43;TTTY7nK1wSrfhWPDJy9wr4PmYg3DLPcN5F4NDlIwGZkWtWveKR/45c" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/gitalk/gitalk.min.b250718923eb2b3c2ba2de589fcc7f623ebf3efa17f0e501e7de204156024b108524ffafaf0958fd09d3b68cf0412999.css" integrity="sha384-slBxiSPrKzwrot5Yn8x/Yj6/PvoX8OUB594gQVYCSxCFJP&#43;vrwlY/QnTtozwQSmZ"><link rel="stylesheet" href="/lib/katex/katex.min.c1295c9b11c1c40c96352d034d67fdec66a788f699f663cc2bd92b0081cb3f444ae3739dcd761e19ee5b23006356ac7d.css" integrity="sha384-wSlcmxHBxAyWNS0DTWf97GaniPaZ9mPMK9krAIHLP0RK43OdzXYeGe5bIwBjVqx9"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK"></noscript></div>
+</body>
+
+</html>

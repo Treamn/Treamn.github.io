@@ -4,7 +4,14 @@
         <link>http://example.org/tags/%E6%9E%9A%E4%B8%BE/</link>
         <description>枚举 - 标签 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 27 Oct 2022 19:58:33 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%9E%9A%E4%B8%BE/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 31 Oct 2022 19:31:31 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%9E%9A%E4%B8%BE/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;表达式</title>
+    <link>http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+    <pubDate>Mon, 31 Oct 2022 19:31:31 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+    <description><![CDATA[桌面计算器实例计算器包含四个部分：分析器、输入函数、符号表和驱动。实际上，它的功能类似一个微型编译器：其中分析器负责分析语法，输入函数负责处]]></description>
+</item><item>
     <title>C&#43;&#43;结构联合与枚举</title>
     <link>http://example.org/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/</link>
     <pubDate>Thu, 27 Oct 2022 19:58:33 &#43;0800</pubDate><author>
