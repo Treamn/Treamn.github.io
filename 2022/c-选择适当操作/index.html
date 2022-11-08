@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">C&#43;&#43;选择适当操作 - Dling</title><meta name="Description" content="Dling | 煜江的个人博客"><meta property="og:title" content="C&#43;&#43;选择适当操作" />
+<meta property="og:description" content="其他运算符逻辑运算符逻辑运算符&amp;&amp;、||和！接受算数类型以及指针类型的运算对象。将其转换成bool类型。最后返回一个bool" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" /><meta property="og:image" content="http://example.org/logo.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-07T15:55:29+08:00" />
+<meta property="article:modified_time" content="2022-11-07T15:55:29+08:00" /><meta property="og:site_name" content="Dling | 煜江的个人博客" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.jpg"/>
+
+<meta name="twitter:title" content="C&#43;&#43;选择适当操作"/>
+<meta name="twitter:description" content="其他运算符逻辑运算符逻辑运算符&amp;&amp;、||和！接受算数类型以及指针类型的运算对象。将其转换成bool类型。最后返回一个bool"/>
+<meta name="application-name" content="Dling">
+<meta name="apple-mobile-web-app-title" content="Dling">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" /><link rel="prev" href="http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.1d6e6517c44074bf1c692657d249d106a5e98bb9db25f7773715b24eda7aa575354611c095c23092aa17916f1b5be527.css" integrity="sha384-HW5lF8RAdL8caSZX0knRBqXpi7nbJfd3NxWyTtp6pXU1RhHAlcIwkqoXkW8bW&#43;Un"><link rel="stylesheet" href="/css/style.min.8540842213936bd2a523af7a572a979f0061839c28d9f3f25e5edb76d34b76136170ccd1a71501f0ecc51daadc867cb2.css" integrity="sha384-hUCEIhOTa9KlI696VyqXnwBhg5wo2fPyXl7bdtNLdhNhcMzRpxUB8OzFHarchnyy"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.2cba216129d7b04299cad0e4a8bb0eb317de61d6e2489778de53950bfcb59fa58d01a258c9e2675ffa3c07c058996f2d.css" integrity="sha384-LLohYSnXsEKZytDkqLsOsxfeYdbiSJd43lOVC/y1n6WNAaJYyeJnX/o8B8BYmW8t"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.1aedca555d87f5dfb2038403a5507b55c3b284994056b717774b61123af82b39df6853cb7b4c50272a2757138d6b8642.css" integrity="sha384-Gu3KVV2H9d&#43;yA4QDpVB7VcOyhJlAVrcXd0thEjr4KznfaFPLe0xQJyonVxONa4ZC"></noscript>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "C++选择适当操作",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/2022\/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C\/"
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "表达式, 联合, 枚举","wordcount":  5187 ,
+        "url": "http:\/\/example.org\/2022\/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C\/","datePublished": "2022-11-07T15:55:29+08:00","dateModified": "2022-11-07T15:55:29+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "煜江叔叔"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('light' === 'light' || 'light' === 'dark' || 'light' === 'black') setTheme('light'), saveTheme('light'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/series/"><i class="fas fa-object-group"></i> 系列 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/link/"><i class="fas fa-link"></i> 友链 </a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dling"><span class="header-title-pre"><i class="fas fa-terminal"></i></span>Dling</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/series/" title=""><i class="fas fa-object-group"></i>系列</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/link/" title=""><i class="fas fa-link"></i>友链</a><a class="menu-item" href="https://github.com/Treamn" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#其他运算符">其他运算符</a>
+      <ul>
+        <li><a href="#逻辑运算符">逻辑运算符</a></li>
+        <li><a href="#位逻辑运算符">位逻辑运算符</a></li>
+        <li><a href="#条件表达式">条件表达式</a></li>
+        <li><a href="#递增与递减">递增与递减</a></li>
+      </ul>
+    </li>
+    <li><a href="#自由存储">自由存储</a>
+      <ul>
+        <li><a href="#内存管理">内存管理</a></li>
+        <li><a href="#数组">数组</a></li>
+        <li><a href="#获取内存空间">获取内存空间</a></li>
+        <li><a href="#重载new">重载new</a>
+          <ul>
+            <li><a href="#nothrow-new">nothrow new</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#列表">列表</a>
+      <ul>
+        <li><a href="#实现模型">实现模型</a></li>
+        <li><a href="#限定列表">限定列表</a></li>
+        <li><a href="#未限定列表">未限定列表</a></li>
+      </ul>
+    </li>
+    <li><a href="#lambda表达式">lambda表达式</a>
+      <ul>
+        <li><a href="#实现模型-1">实现模型</a></li>
+        <li><a href="#lambda的替代品">lambda的替代品</a></li>
+        <li><a href="#捕获">捕获</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;选择适当操作</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-07">11-07</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-07">11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5187 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+        </div><div class="details series-nav open">
+                                <div class="details-summary series-title">
+                                    <span>系列 - C&#43;&#43;程序设计语言</span>
+                                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                                </div>
+                                <div class="details-content series-content">
+                                    <nav>
+                                        <ul><li><span class="active">C&#43;&#43;选择适当操作</span></li>
+                                                    <li><a href="/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C&#43;&#43;表达式</a></li>
+                                                    <li><a href="/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/">C&#43;&#43;结构联合与枚举</a></li>
+                                                    <li><a href="/2022/c-%E8%AF%AD%E5%8F%A5/">C&#43;&#43;语句</a></li>
+                                                    <li><a href="/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/">C&#43;&#43;指针与引用</a></li>
+                                                    <li><a href="/2022/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E/">C&#43;&#43;类型与声明</a></li>
+                                                    <li><a href="/2022/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6/">C&#43;&#43;概览抽象机制</a></li>
+                                                    <li><a href="/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">C&#43;&#43;概览基础知识</a></li></ul>
+                                    </nav>
+                                </div>
+                            </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#其他运算符">其他运算符</a>
+      <ul>
+        <li><a href="#逻辑运算符">逻辑运算符</a></li>
+        <li><a href="#位逻辑运算符">位逻辑运算符</a></li>
+        <li><a href="#条件表达式">条件表达式</a></li>
+        <li><a href="#递增与递减">递增与递减</a></li>
+      </ul>
+    </li>
+    <li><a href="#自由存储">自由存储</a>
+      <ul>
+        <li><a href="#内存管理">内存管理</a></li>
+        <li><a href="#数组">数组</a></li>
+        <li><a href="#获取内存空间">获取内存空间</a></li>
+        <li><a href="#重载new">重载new</a>
+          <ul>
+            <li><a href="#nothrow-new">nothrow new</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#列表">列表</a>
+      <ul>
+        <li><a href="#实现模型">实现模型</a></li>
+        <li><a href="#限定列表">限定列表</a></li>
+        <li><a href="#未限定列表">未限定列表</a></li>
+      </ul>
+    </li>
+    <li><a href="#lambda表达式">lambda表达式</a>
+      <ul>
+        <li><a href="#实现模型-1">实现模型</a></li>
+        <li><a href="#lambda的替代品">lambda的替代品</a></li>
+        <li><a href="#捕获">捕获</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="其他运算符" class="headerLink">
+    <a href="#%e5%85%b6%e4%bb%96%e8%bf%90%e7%ae%97%e7%ac%a6" class="header-mark"></a>其他运算符</h2><h3 id="逻辑运算符" class="headerLink">
+    <a href="#%e9%80%bb%e8%be%91%e8%bf%90%e7%ae%97%e7%ac%a6" class="header-mark"></a>逻辑运算符</h3><p>逻辑运算符&amp;&amp;、||和！接受算数类型以及指针类型的运算对象。将其转换成bool类型。最后返回一个bool类型的结果。只有当逻辑上确实需要时，&amp;&amp;和||才会对第二个实参求值。</p>
+<h3 id="位逻辑运算符" class="headerLink">
+    <a href="#%e4%bd%8d%e9%80%bb%e8%be%91%e8%bf%90%e7%ae%97%e7%ac%a6" class="header-mark"></a>位逻辑运算符</h3><p>位逻辑运算符&amp;,|,^,~,&raquo;,&laquo;作用域整型对象，即char、short、int、long、long long以及对应的unsigned版本，以及bool、wchar_t、char16_t和char32_t等类型。一个普通的enum(非enum class)可被隐式的转换成整数类型，从而作为位逻辑运算符的运算对象。算数类型转换决定了结果的类型。</p>
+<h3 id="条件表达式" class="headerLink">
+    <a href="#%e6%9d%a1%e4%bb%b6%e8%a1%a8%e8%be%be%e5%bc%8f" class="header-mark"></a>条件表达式</h3><p>某些if语句可以改写成条件表达式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以改写为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">max</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span> <span class="o">?</span> <span class="nl">b</span> <span class="p">:</span> <span class="n">a</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>条件表达式能用在常量表达式中。<br>
+在条件表达式c?e1:e2中使用一堆可选的表达式e1和e2，这对表达式的类型必须相同，或者它们都能一是的转换成同一种类型T。对于算数类型来说，可使用常规的算数类型转换和规则找到公共类型T；对于其他表达式，要求e1能隐式转换成e2的类型，或者e2能隐式转换成e1的类型。此外，throw表达式也能作为条件表达式的一个分支：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fct</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">?</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">{</span><span class="s">&#34;unexpected nullptr};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="递增与递减" class="headerLink">
+    <a href="#%e9%80%92%e5%a2%9e%e4%b8%8e%e9%80%92%e5%87%8f" class="header-mark"></a>递增与递减</h3><p>++和&ndash;既可以作为前缀运算符，也可以作为后缀运算符。++x的值时x的新值(递增后的值)，y=++x等价于y=(x=x+1)。相反，x++是x的旧值，y=x++等价于y=(t=x,x=x+a,t)。<br>
+当++和&ndash;作用于指针时，将会直接操作指针所指数组中的元素，p++令p指向下一个元素。</p>
+<h2 id="自由存储" class="headerLink">
+    <a href="#%e8%87%aa%e7%94%b1%e5%ad%98%e5%82%a8" class="header-mark"></a>自由存储</h2><p>new分配的对象“位于自由存储之上”。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Enode</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Token_value</span> <span class="n">oper</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Enode</span><span class="o">*</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Enode</span><span class="o">*</span> <span class="n">right</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">Enode</span><span class="o">*</span> <span class="nf">expr</span><span class="p">(</span><span class="kt">bool</span> <span class="n">get</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Enode</span><span class="o">*</span> <span class="n">left</span> <span class="o">=</span> <span class="n">term</span><span class="p">(</span><span class="n">get</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(;;){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">switch</span><span class="p">(</span><span class="n">ts</span><span class="p">.</span><span class="n">current</span><span class="p">().</span><span class="n">kind</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="nl">Kind</span><span class="p">:</span><span class="err">➕</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="nl">Kind</span><span class="p">:</span><span class="err">➖</span>
+</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Enode</span><span class="p">{</span><span class="n">ts</span><span class="p">.</span><span class="n">currert</span><span class="p">().</span><span class="n">kind</span><span class="p">,</span><span class="n">left</span><span class="p">,</span><span class="n">term</span><span class="p">(</span><span class="nb">true</span><span class="p">)};</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在Kind::plus和Kind::minus分支中，在自由存储上新建一个Enode并将其初始化为{ts.currert().kind,left,term(true)}。所得的指针赋给left并最终从expr()返回回来。<br>
+使用{}列表的形式传递实参，也可以使用传统的()列表形式指定初始化器。但是，如果使用符号=初始化一个用new创建的对象，会引发程序错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果某一类型含有默认构造函数，则可以省略掉初始化器。但是如果对内置类型这么做，变量就会处于未初始化的状态：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">pc</span> <span class="k">new</span> <span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">//初始化为{0,0}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">pi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">//未被初始化
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最好使用{}，这样可以确保变量执行默认初始化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">pc</span> <span class="k">new</span> <span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">{};</span> <span class="c1">//初始化为{0,0}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">pi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">pi</span><span class="p">{};</span> <span class="c1">//初始化为0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码生成器先使用expr()创建的Enode，然后将其删除：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">generate</span><span class="p">(</span><span class="n">Enode</span><span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">oper</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="nl">Kind</span><span class="p">:</span><span class="err">➕</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//..
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">delete</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于一个用new创建的对象来说，必须使用delete显式的将它销毁，只有将其销毁，它占用的空间才能被其他new使用。<br>
+delete运算符只能作用于new返回的指针或nullptr。</p>
+<h3 id="内存管理" class="headerLink">
+    <a href="#%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86" class="header-mark"></a>内存管理</h3><p>自由存储的问题包括：</p>
+<ul>
+<li>对象泄漏：使用new，但是忘了用delete释放掉。</li>
+<li>提前释放：在尚有其他指针指向该对象并且后续仍会使用对象的情况下过早的delete。</li>
+<li>重复释放：同一对象被释放两次。<br>
+提前释放可能造成难以想象的影响：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">{</span><span class="mi">99</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">delete</span> <span class="n">p1</span><span class="p">;</span> <span class="c1">//此时p2所指的不是有效对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">p1</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">p3</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">{</span><span class="sc">&#39;x&#39;</span><span class="p">};</span> <span class="c1">//此时p3可能指向p2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">*</span><span class="n">p2</span> <span class="o">=</span> <span class="mi">999</span><span class="p">;</span> <span class="c1">// 该行可能错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">p3</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">//输出内容不是x
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>重复释放的问题在于资源管理器通常无法追踪资源的所有者：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">sloppy</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span><span class="p">[]</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span><span class="p">[]</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在第二的delete时，*p的内存区域可能被重新分配，此时重新分配的内容可能受到影响。<br>
+有两种方法可以避免上述问题：</p>
+<ol>
+<li>除非万不得已不要把对象放在自由存储上，优先使用作用域内的变量。</li>
+<li>在自由存储上构建对象时，把它的指针放在一个管理器对象中，此类对象通常含有一个析构函数，可以确保释放资源。如string，vector等标准库容器。</li>
+</ol>
+<h3 id="数组" class="headerLink">
+    <a href="#%e6%95%b0%e7%bb%84" class="header-mark"></a>数组</h3><p>new还能用来创建对象的数组：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="nf">save_string</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span><span class="o">*</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">strcpy</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">save_string</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span><span class="p">[]</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>普通的delete用于删除单个对象，delete[]负责删除数组。<br>
+除非必须直接使用char*，否则一般情况下，标准库string是更好地选择，它可以简化save_string():</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">save_string</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">string</span><span class="p">{</span><span class="n">p</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">save_string</span><span class="p">(</span><span class="n">argvp</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不必再纠结new[]和delete[]。<br>
+delete和delete[]必须清楚分配的对象有多大，才能准确释放new分配的空间。这意味着用new的标准实现分配的对象要比静态对象所占的空间稍大一点。超出的部分至少要容的下对象的尺寸。<br>
+vector本身就是一个对象，因此可以使用普通的new和delete分配和释放vector：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="mi">1</span> <span class="o">=</span> <span class="n">mew</span> <span class="kt">int</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span><span class="p">[]</span> <span class="n">q</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>delete[]只能用于两种情况，一种是指向由new创建的数组的指针，另一种是空指针。<br>
+不要用new创建局部对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f1</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">X</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="获取内存空间" class="headerLink">
+    <a href="#%e8%8e%b7%e5%8f%96%e5%86%85%e5%ad%98%e7%a9%ba%e9%97%b4" class="header-mark"></a>获取内存空间</h3><p>自由存储运算符new、delete、new[]和delete[]的实现位于&lt;new&gt;头文件中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">size_t</span><span class="p">);</span> <span class="c1">//为单个对象分配空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">);</span> <span class="c1">//如果p为真，释放new()分配的全部空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span><span class="p">[](</span><span class="n">size_t</span><span class="p">);</span> <span class="c1">//为数组分配空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="k">operator</span> <span class="k">delete</span><span class="p">[](</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">);</span> <span class="c1">//如果p为真，释放new[]()分配的所有空间
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当运算符new需要为对象分配空间时，调用operator new()分配适量的字节。</p>
+<h3 id="重载new" class="headerLink">
+    <a href="#%e9%87%8d%e8%bd%bdnew" class="header-mark"></a>重载new</h3><p>默认情况下，new运算符在自由存储上创建它的对象。如果想在别的地方分配对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">X</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果想把对象放置在别的地方，可以提供一个含有额外实参的分配函数，然后在使用new的时候传入指定的额外实参：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">size_t</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">){</span><span class="k">return</span> <span class="n">p</span><span class="p">;}</span> <span class="c1">//显式运算符，将对象置于别处
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">(</span><span class="mh">0xF00F</span><span class="p">);</span> <span class="c1">//一个明确的地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">X</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="n">X</span><span class="p">;</span> <span class="c1">//在buf处构建X
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通常把提供额外的实参给operator new()的new(buf) X语法称为放置语法。每个operator new()都接受一个尺寸作为它的第一个实参，而该尺寸的对象时隐式提供的。每个perator new()都以size_t作为它的第一个实参：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">size_t</span> <span class="n">sz</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span> <span class="c1">//将大小为sz的对象置于p处
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span><span class="p">[](</span><span class="n">size_t</span> <span class="n">sz</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span> <span class="c1">//将大小为sz的对象置于p处
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span> <span class="c1">//若p为真，令*p无效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">delete</span><span class="p">[](</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span> <span class="c1">//若p为真，令*p无效
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>放置式new还能从某一特定区域分配内存：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Arena</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span><span class="o">*</span> <span class="n">alloc</span><span class="p">(</span><span class="n">size_t</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">free</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">size_t</span> <span class="n">sz</span><span class="p">,</span> <span class="n">Arena</span><span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">alloc</span><span class="p">(</span><span class="n">sz</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在能在不同的Arena里分配任意类型的对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">extern</span> <span class="n">Arena</span><span class="o">*</span> <span class="n">Persistent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">extern</span> <span class="n">Arena</span><span class="o">*</span> <span class="n">Shared</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">Persistent</span><span class="p">)</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">//在某持续性存储上分配X
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">X</span><span class="o">*</span> <span class="mi">1</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">Shared</span><span class="p">)</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">//在共享内存上分配X
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="nothrow-new" class="headerLink">
+    <a href="#nothrow-new" class="header-mark"></a>nothrow new</h4><p>有的程序不允许出现异常，此时，可以使用nothrow的new和delete：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">nothrow</span><span class="p">)</span> <span class="kt">int</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">operator</span> <span class="k">delete</span><span class="p">(</span><span class="n">nothrow</span><span class="p">,</span><span class="n">p</span><span class="p">);</span> <span class="c1">//释放*p
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果没能分配到有效的内存，上面的operator new不会抛出bad_alloc，而是返回一个nullptr。</p>
+<h2 id="列表" class="headerLink">
+    <a href="#%e5%88%97%e8%a1%a8" class="header-mark"></a>列表</h2><p>{}列表的表现形式有两种：</p>
+<ol>
+<li>限定为某种类型，形如T{&hellip;}，意为创建一个T类型的对象并用T{&hellip;}初始化它。</li>
+<li>未限定的{&hellip;}，类型根据上下文确定。</li>
+</ol>
+<h3 id="实现模型" class="headerLink">
+    <a href="#%e5%ae%9e%e7%8e%b0%e6%a8%a1%e5%9e%8b" class="header-mark"></a>实现模型</h3><p>{}列表的实现模型由三部分组成：</p>
+<ul>
+<li>如果{}列表被用作构造函数的实参，则其实现过程与使用()列表类似。</li>
+<li>如果{}列表被用于初始化一个聚合体(一个数组或一个为提供构造函数的类)的元素，则列表的每个元素分别初始化聚合体中的一个元素。</li>
+<li>如果{}列表被用于构建一个initializer_list对象，则列表的每个元素分别初始化initializer_list的底层数组的一个元素。</li>
+</ul>
+<h3 id="限定列表" class="headerLink">
+    <a href="#%e9%99%90%e5%ae%9a%e5%88%97%e8%a1%a8" class="header-mark"></a>限定列表</h3><p>把初始化器列表用作表达式的基本思想是：如果能用T x{v};初始化一个变量x，那么也能用T{v}或new T{v}的形式创建一个对象并将其当成一条表达式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">S</span><span class="p">{</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">;};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">S</span> <span class="n">v</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">};</span> <span class="c1">//直接初始化一个变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">v</span> <span class="o">=</span> <span class="n">S</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">};</span> <span class="c1">//用限定列表进行赋值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">S</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">S</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">};</span> <span class="c1">//使用限定列表在自由存储上构建对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用限定列表构建对象与直接初始化的规则相同。</p>
+<h3 id="未限定列表" class="headerLink">
+    <a href="#%e6%9c%aa%e9%99%90%e5%ae%9a%e5%88%97%e8%a1%a8" class="header-mark"></a>未限定列表</h3><p>当我们明确知道所用类型时，可以使用未限定列表。它只能被用作一条表达式，并且仅限于以下场景：</p>
+<ul>
+<li>函数实参</li>
+<li>返回值</li>
+<li>赋值运算符的右侧运算对象</li>
+<li>下标
+例如：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">d</span><span class="p">,</span> <span class="n">Matrix</span><span class="o">&amp;</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">v</span><span class="p">{</span><span class="mi">7</span><span class="p">};</span> <span class="c1">//直接初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">v2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">7</span><span class="p">};</span> <span class="c1">//拷贝初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">v3</span> <span class="o">=</span> <span class="n">m</span><span class="p">[{</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}];</span> <span class="c1">//假设m接受一个值作为其下标
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="mi">8</span><span class="p">};</span> <span class="c1">//赋值运算的右侧运算对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">v</span> <span class="o">+=</span> <span class="p">{</span><span class="mi">88</span><span class="p">};</span> <span class="c1">//赋值运算的右侧运算对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">{</span><span class="n">v</span><span class="p">}</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span> <span class="c1">//错误，不能作为赋值运算的左侧运算对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">v</span> <span class="o">=</span> <span class="mi">7</span><span class="o">+</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span> <span class="c1">//错误，不能作为赋值运算的左侧运算对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">({</span><span class="mf">10.0</span><span class="p">});</span> <span class="c1">//函数实参
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="p">{</span><span class="mi">11</span><span class="p">};</span> <span class="c1">//返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>{}列表是处理同质、变长列表最简单的方法，但是注意0个元素的情况是例外。此时，应该使用默认的构造函数。<br>
+只有当{}列表的所有元素类型相同时，才能推断该列表的类型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">x0</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">//错误，缺少元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">x1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span> <span class="c1">//initializer_list&lt;int&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">x2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span> <span class="c1">//initializer_list&lt;int&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">x3</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span> <span class="c1">//initializer_list&lt;int&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">x4</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.0</span><span class="p">};</span> <span class="c1">//错误，元素类型不相同
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="lambda表达式" class="headerLink">
+    <a href="#lambda%e8%a1%a8%e8%be%be%e5%bc%8f" class="header-mark"></a>lambda表达式</h2><p>lambda表达式也称未lambda函数。是定义和使用匿名函数的一种简便方式。<br>
+一条lambda表达式包含以下组成要件：</p>
+<ul>
+<li>一个可能为空的捕获列表，指明定义环境中哪些名字能被用在lambda表达式内，以及这些名字的访问方式是拷贝还是引用。</li>
+<li>一个可选的参数列表，指明lamdba表达式所需的参数。</li>
+<li>一个可选的mutable修饰符，指明该lamdba表达式可能会修改它自身的状态。</li>
+<li>一个可选的noexcept修饰符。</li>
+<li>一个可选的-&gt;形式的返回类型声明。</li>
+<li>一个表达式体，指明要执行的代码。</li>
+</ul>
+<h3 id="实现模型-1" class="headerLink">
+    <a href="#%e5%ae%9e%e7%8e%b0%e6%a8%a1%e5%9e%8b-1" class="header-mark"></a>实现模型</h3><p>如果把lambda表达式看成是一种定义并使用函数对象的便捷方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_modulo</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">,</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">for_each</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">&amp;</span><span class="n">os</span><span class="p">,</span><span class="n">m</span><span class="p">](</span><span class="kt">int</span> <span class="n">x</span><span class="p">){</span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">%</span><span class="n">m</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上述函数等价于</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Modulo_print</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Modulo_print</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="nl">mm</span><span class="p">:</span><span class="n">os</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="n">m</span><span class="p">(</span><span class="n">mm</span><span class="p">)){}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">operator</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span><span class="k">const</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">%</span><span class="n">m</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>lambda的主体部分变为了operator()()的函数体。因为lambda并不返回值，所以operator()()是void。默认情况下，operator()()是const，因此在lambda内部无法修改捕获的变量。<br>
+把由lambda生成的类的对象称为闭包对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_modulo</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">,</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">for_each</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">Modulo_print</span><span class="p">{</span><span class="n">os</span><span class="p">,</span><span class="n">m</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果lambda通过引用捕获它的每个局部变量，则其闭包对象可以油画成简单地包含一个指向外层栈框架的指针。</p>
+<h3 id="lambda的替代品" class="headerLink">
+    <a href="#lambda%e7%9a%84%e6%9b%bf%e4%bb%a3%e5%93%81" class="header-mark"></a>lambda的替代品</h3><p>很多lambda表达式很小且只用一次。此时，最一种比较现实的做法是定义一个局部类，并且定义的位置就在使用之前：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_modulo</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">,</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Modulo_print</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Modulo_print</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="nl">mm</span><span class="p">:</span><span class="n">os</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="n">m</span><span class="p">(</span><span class="n">mm</span><span class="p">)){}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="k">operator</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span><span class="k">const</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">%</span><span class="n">m</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">for_each</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">Modulo_print</span><span class="p">{</span><span class="n">os</span><span class="p">,</span><span class="n">m</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>与之相比，使用lambda明显更优，如果确需一个名字，就命名为lambda：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_modulo</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">,</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">Modulo_print</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">os</span><span class="p">,</span><span class="n">m</span><span class="p">](</span><span class="kt">int</span> <span class="n">x</span><span class="p">){</span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">%</span><span class="n">m</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">for_each</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">Modulo_print</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可泛化print_modulo()，令其可以处理更多的容器类型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">C</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">print_modulo</span><span class="p">(</span><span class="k">const</span> <span class="n">C</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">x</span><span class="p">:</span><span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span><span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="捕获" class="headerLink">
+    <a href="#%e6%8d%95%e8%8e%b7" class="header-mark"></a>捕获</h3><p>lambda的主要用途是封装一部分代码以便将其用作参数。lambda允许我们“内联的”这么做，而无须命名一个函数然后在别处使用它。有些lambda无须访问它的局部环境，这样的lambda使用空引入符[]定义:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">algo</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sort</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">());</span> <span class="c1">//排列值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sort</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),[](</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="kt">int</span> <span class="n">y</span><span class="p">){</span><span class="k">return</span> <span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ans</span><span class="p">(</span><span class="n">y</span><span class="p">);});</span> <span class="c1">//排列绝对值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果需要访问局部名字，就必须明确指出，否则会产生错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="n">sensitive</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sort</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[](</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="kt">int</span> <span class="n">y</span><span class="p">){</span><span class="k">return</span> <span class="n">sensitive</span> <span class="o">?</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="nl">y</span> <span class="p">:</span> <span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ans</span><span class="p">(</span><span class="n">y</span><span class="p">);}</span>  <span class="c1">// 错误，无权访问
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于一条lambda表达式来说，它的第一个字符永远是[。lambda引入符的形式有很多种：</p>
+<ul>
+<li>[]：空捕获列表。lambda内部无法使用其外层上下文中的任何局部名字。</li>
+<li>[&amp;]：通过引用隐式捕获。所有局部名字都能使用，所有局部变量都通过引用访问。</li>
+<li>[=]：通过值隐式捕获。所有局部名字都能使用，所有名字都指向局部变量的副本。</li>
+<li>[捕获列表]：显式捕获；捕获列表是通过值或引用的方式捕获的局部变量的名字列表。以&amp;为前缀的变量名字通过引用捕获，其他变量通过值捕获，捕获列表中可以出现this，或紧跟&hellip;的名字以表示元素。</li>
+<li>[&amp;,捕获列表]：对于名字没有出现在捕获列表中的局部变量，通过引用隐式捕获。捕获列表中可以出现this。列出的名字不能以&amp;为前缀。捕获列表中的变量名通过值的方式捕获。</li>
+<li>[=,捕获列表]：对于名字没有出现在捕获列表中的局部变量，通过值隐式捕获。捕获列表中可以出现this。列出的名字不能以&amp;为前缀。捕获列表中的变量名通过值的方式捕获。</li>
+</ul>
+<p>以&amp;为前缀的局部名字总是通过引用捕获，相反，不义&amp;为前缀的局部名字总是通过值捕获。只有通过引用的捕获允许修改调用环境中的变量。<br>
+有时候，会指定捕获列表，</p>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 11-07</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-hashtags="表达式,联合,枚举"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-hashtag="表达式"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-skype fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F/">表达式</a>,&nbsp;<a href="/tags/%E8%81%94%E5%90%88/">联合</a>,&nbsp;<a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="prev" rel="prev" title="C&#43;&#43;表达式"><i class="fas fa-angle-left fa-fw"></i>C&#43;&#43;表达式</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.94.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">煜江叔叔</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div><script>
+                    if('serviceWorker' in navigator) {
+                        navigator.serviceWorker
+                            .register('/sw.min.js', { scope: '/' })
+                            .then(function(registration) {
+                            });
+                
+                        navigator.serviceWorker
+                            .ready
+                            .then(function(registration) {
+                            });
+                    }
+                </script></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.dd4cfdb9c1bcaa687c9794e0620c478af43dec711c465b0560c274a0c20d6023bc183b8817015eb778ab746927905d6e.js" integrity="sha384-3Uz9ucG8qmh8l5TgYgxHivQ97HEcRlsFYMJ0oMINYCO8GDuIFwFet3irdGknkF1u"></script><script type="text/javascript" src="/lib/fuse/fuse.min.48c164d6be2fb1688f4fe95c476118b3a5dbda2aad6b2cd12c8ccb959d37db926987c59fdc9338e377b745807f0c06b0.js" integrity="sha384-SMFk1r4vsWiPT&#43;lcR2EYs6Xb2iqtayzRLIzLlZ0325Jph8Wf3JM443e3RYB/DAaw"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.de04ffbec7a95a47f3fdf7fb3e958d51e333796a07ddc0e19bf03c8ccee8ba800ad3f7cfffd6dc1c7479907ab69dff9e.js" integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e"></script><script type="text/javascript" src="/lib/topbar/topbar.min.1c26dd3f83978c568ee1c91cb7c6f1e397518b40c73c772d534ff3f3bb81cae306c6b7e8ee2275017e43fe0c0ed56822.js" integrity="sha384-HCbdP4OXjFaO4ckct8bx45dRi0DHPHctU0/z87uByuMGxrfo7iJ1AX5D/gwO1Wgi"></script><script type="text/javascript" src="/lib/pjax/pjax.min.811be7fbe3806492067fb1a7b4488f825fae80cc1d97e76064e8db943473e99ba8cb53fc73cd34a2cd2de52f2548f677.js" integrity="sha384-gRvn&#43;&#43;OAZJIGf7GntEiPgl&#43;ugMwdl&#43;dgZOjblDRz6Zuoy1P8c800os0t5S8lSPZ3"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["Treamn"],"clientID":"12d9838c8dc0fc1529e1","clientSecret":"ecfdb88bf5980b6312b96a4b40344fe630029771","id":"2022-11-07T15:55:29+08:00","owner":"Treamn","repo":"Treamn.github.io","title":"C++选择适当操作"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":true,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":true,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><script type="text/javascript" src="/lib/gitalk/gitalk.min.1420a0c0459673bc6824e7ba713f1e0ec1540e86491daf1b6149a7af9cd3f396c86b9182d03e4c727faefae17b746033.js" integrity="sha384-FCCgwEWWc7xoJOe6cT8eDsFUDoZJHa8bYUmnr5zT85bIa5GC0D5Mcn&#43;u&#43;uF7dGAz"></script><script type="text/javascript" src="/js/gitalk.min.js" defer></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.094758c1816ef1698123c876e7b739ac27751905f428bfb349857a93244d636b615bb42a43298a19f4c2235587c33bf2.js" integrity="sha384-CUdYwYFu8WmBI8h257c5rCd1GQX0KL&#43;zSYV6kyRNY2thW7QqQymKGfTCI1WHwzvy"></script><script type="text/javascript" src="/lib/sharer/sharer.min.0097b33812ac4873e9a2e0813de400c9ea9b07e223998d3cbc38a89bdfa3f45cc344689061a836fcd6f4c120eed429b4.js" integrity="sha384-AJezOBKsSHPpouCBPeQAyeqbB&#43;IjmY08vDiom9&#43;j9FzDRGiQYag2/Nb0wSDu1Cm0"></script><script type="text/javascript" src="/lib/katex/katex.min.cf57c90eac3c640a6318edffba73d650fb08ca67ec266cab0d5582f13bff6b51de3ad1a693035dffbc544b45dc9efb31.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.f970658d73cf8aff8ecdf6c1ddc5662c77f885d5051e558d64de6ca4d43bae61d35e977b5af26e9ba7c8002a4d35f211.js" integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.129f44b345428d59fd74579a376b90c6019c1a61bea5f678781687c54a715c3391aeb54009954ea72c32cef15119b9af.js" integrity="sha384-Ep9Es0VCjVn9dFeaN2uQxgGcGmG&#43;pfZ4eBaHxUpxXDORrrVACZVOpywyzvFRGbmv" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.50463d2113e457e4d34d8ee72b5c12adf8563c3272f70af83e6620dc32cf70de45e0d0e5230199916b56bde291ff8e5c.js" integrity="sha384-UEY9IRPkV&#43;TTTY7nK1wSrfhWPDJy9wr4PmYg3DLPcN5F4NDlIwGZkWtWveKR/45c" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/gitalk/gitalk.min.b250718923eb2b3c2ba2de589fcc7f623ebf3efa17f0e501e7de204156024b108524ffafaf0958fd09d3b68cf0412999.css" integrity="sha384-slBxiSPrKzwrot5Yn8x/Yj6/PvoX8OUB594gQVYCSxCFJP&#43;vrwlY/QnTtozwQSmZ"><link rel="stylesheet" href="/lib/katex/katex.min.c1295c9b11c1c40c96352d034d67fdec66a788f699f663cc2bd92b0081cb3f444ae3739dcd761e19ee5b23006356ac7d.css" integrity="sha384-wSlcmxHBxAyWNS0DTWf97GaniPaZ9mPMK9krAIHLP0RK43OdzXYeGe5bIwBjVqx9"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.1f5388069d157848068f2228e33a72016ef3233cfb0afc2940343e446a708357e5b391b470f94c0e1c80745c331651ca.css" integrity="sha384-H1OIBp0VeEgGjyIo4zpyAW7zIzz7CvwpQDQ&#43;RGpwg1fls5G0cPlMDhyAdFwzFlHK"></noscript></div>
+</body>
+
+</html>

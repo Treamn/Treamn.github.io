@@ -4,7 +4,14 @@
         <link>http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/</link>
         <description>C&#43;&#43;学习 - 分类 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 31 Oct 2022 19:31:31 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 07 Nov 2022 15:55:29 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/c&#43;&#43;%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;选择适当操作</title>
+    <link>http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/</link>
+    <pubDate>Mon, 07 Nov 2022 15:55:29 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/</guid>
+    <description><![CDATA[其他运算符逻辑运算符逻辑运算符&amp;&amp;、||和！接受算数类型以及指针类型的运算对象。将其转换成bool类型。最后返回一个bool]]></description>
+</item><item>
     <title>C&#43;&#43;表达式</title>
     <link>http://example.org/2022/c-%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
     <pubDate>Mon, 31 Oct 2022 19:31:31 &#43;0800</pubDate><author>
@@ -67,12 +74,5 @@
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/review/</guid>
     <description><![CDATA[cin.get()在接收到任意输入后再执行下一条语句。 声明语句使用变量前必须声明它。 尽可能在首次使用变量前声明它。 要将信息项存储在计算机中，]]></description>
-</item><item>
-    <title>C&#43;&#43;学习之类</title>
-    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</link>
-    <pubDate>Tue, 05 Apr 2022 19:36:03 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</guid>
-    <description><![CDATA[构造函数 类通过一个或几个特殊的成员函数来控制其对象的初始化过程，这些函数叫构造函数。构造函数的任务是初始化类对象的数据成员。 构造函数没有返回]]></description>
 </item></channel>
 </rss>
