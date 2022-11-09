@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>显式类型转换 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</link>
+        <description>显式类型转换 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 07 Nov 2022 15:55:29 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;选择适当操作</title>
+    <link>http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/</link>
+    <pubDate>Mon, 07 Nov 2022 15:55:29 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/</guid>
+    <description><![CDATA[其他运算符逻辑运算符逻辑运算符&amp;&amp;、||和！接受算数类型以及指针类型的运算对象。将其转换成bool类型。最后返回一个bool]]></description>
+</item></channel>
+</rss>

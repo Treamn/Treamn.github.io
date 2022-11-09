@@ -399,4 +399,193 @@ void f(vector<int>& v)
 - [=,捕获列表]：对于名字没有出现在捕获列表中的局部变量，通过值隐式捕获。捕获列表中可以出现this。列出的名字不能以&为前缀。捕获列表中的变量名通过值的方式捕获。  
 
 以&为前缀的局部名字总是通过引用捕获，相反，不义&为前缀的局部名字总是通过值捕获。只有通过引用的捕获允许修改调用环境中的变量。  
-有时候，会指定捕获列表，
+
+
+#### lambda与生命周期  
+lambda的生命周期可能比它的调用者长。当把lambda传递给另外一个线程或者被调用者把lambda存在别处以供后续使用时，这种情况就会发生：  
+```cpp
+void setup(Menu& m)
+{
+    Point p1,p2,p3;
+    m.add("draw triangle",[&]{m.draw(p1,p2,p3)};); 
+}
+```
+如果lambda的生命周期可能比调用者长，就必须确保所有局部信息都被拷贝到闭包对象中，并且这些值应该通过return机制或者适当的实参返回：
+```cpp
+m.add("draw triangle",[=]{m.draw(p1,p2,p3)};);
+```
+
+#### 名字空间名字  
+因为名字空间变量(包括全局变量)永远是可访问的，所以无须“捕获”它们。
+
+#### lambda与this  
+当lambda被用在成员函数中时，我们将this添加到捕获列表中，这样类的成员就位于可被捕获的名字集合中了：
+```cpp
+class Request{
+    function<map<string,string>(const map<string,string>&)> oper; //操作
+    map<string,string> values; //参数
+    map<string,strign> results; //结果
+public:
+    Request(const string& s);
+    void execute()
+    {
+        [this](){return=oper(values);} //根据结果执行相应操作
+    }
+};
+```
+成员通过引用的方式捕获。也就是说，[this]意味着成员是通过this访问，而非拷贝到lambda中。  
+
+#### mutable的lambda  
+生成的函数对象的operator()()是一个const成员函数。只有在极少数情况下，如果确实希望修改状态，则可以把lambda声明成mutable的：
+```cpp
+void algo(vector<int>& v)
+{
+    int count = v.size();
+    std::generate(v.begin(),v.end(),
+        [count]()mutable{return --count;}
+    );
+}
+```
+
+### 调用和返回  
+向lambda传递参数的规则和向函数传递参数是一样的，从lambda返回结果也是如此。有两点需要注意：
+1. 如果一条lambda表达式不接任何参数，则其参数列表可以被忽略。因此，lambda表达式的最简形式是[]{}。  
+2. lambda表达式的返回类型能由lambda表达式本身推断得到。  
+
+如果在lambda的主体部分不包含return语句，则该lambda的返回类型是void。如果lambda的主体部分只包含一条return语句，则该lambda的返回类型宁国市该return表达式的类型。其他情况下，必须显式的提供一个返回类型：
+```cpp
+void g(double y)
+{
+    [&]{f(y);} //返回类型是void
+    auto z1 = [=](int x){return x+y;} //返回类型是double
+    auto z2 = [=,y]{if (y) return 1;else return 2;} //错误，lambda主体部分过于复杂，无法推断其类型
+    auto z3 = [y](){return 1:2;} // 返回类型是int
+    auto z4 = [=,y]()->int{if (y) return 1;else return 2;} //OK，显式的返回类型
+}
+```
+
+### lambda的类型  
+任意两个lambda类型都不相同，一旦两个lambda具有相同的类型，模板实例化机制就无法辨识它们了。lambda是一种局部类类型，含有一个构造函数以及一个const成员函数operator()()。lambda除了能作为参数外，还能用于初始化一个声明为auto或std::function<R(AL)>的变量。其中R是lambda的返回类型，AL是它的类型参数列表。  
+例如，编写一个能更改C风格字符串中字符的lambda：
+```cpp
+auto rev = [&rev](char* b, char* e){
+    if(1<e-b){swap(*b,*--e);rev(++b,e);}
+};
+```
+然而，由于无法推断出一个auto变量的类型之前使用它，因此上面的写法行不通。相反，应该先引入一个新名字，然后使用它：
+```cpp
+void f(string& s1, string& s2)
+{
+    function<void(char* b,char* e)> rev = [&](char* b,char* e){
+    if(1<e-b){swap(*b,*--e);rev(++b,e);}};
+    rev(&s1[0],&s1[0]+s1.size());
+    rev(&s2[0],&s2[0]+s2.size());
+}
+```
+这样就可以确保在使用rev之前知道它的类型。  
+如果只想给lambda起个名字，而不递归的使用它，则可以考虑使用auto：
+```cpp
+void f(vector<string>& vs1, vector<string>& vs2)
+{
+    auto rev = [&](char* b,char* e){
+    if(1<e-b){swap(*b,*--e);rev(++b,e);}};
+    rev(&s1[0],&s1[0]+s1.size());
+    rev(&s2[0],&s2[0]+s2.size());
+}
+```
+如果一个lambda什么也不捕获，则可以将它赋值给一个指向正确类型的指针：
+```cpp
+double(*p1)(double) = [](double a){return sqrt(a);};
+double(*p2)(double) = [&](double a){return sqrt(a);}; //错误，lambda捕获了内容
+double(*p3)(int) = [](int a){return sqrt(a);}; //错误，参数类型不匹配
+```
+
+
+## 显式类型转换
+C++提供多种显式类型转换的操作，这些操作在便利程度以及安全性上都有所不同：
+- 构造，使用{}符号提供对新值类型安全的构造。 
+- 命名的转换，提供不同等级的类型转换：
+> - const_cast,对某些声明为const的对象获得写入的权利
+> - static_cast，反转一个定义良好的隐式类型转换
+> - reinterpret_cast，改变位模式的含义
+> - dynamic_cast，动态的检查类层次的关系
+- C风格的转换，提供命名的类型转换或其组合
+- 函数化符号，提供C风格转换的另一种形式 
+
+
+### 构造  
+用值e构建一个类型为T的值可以表示为T{e}：
+```cpp
+auto d1 = double{2};
+double d2 {double{2}/4};
+```
+符号T{v}有一个好处是，它只执行“行为良好的”；类型转换：
+```cpp
+void f(int);
+void f(double);
+
+void g(int i, double d)
+{
+    f(i); //调用f(int)
+    f(double{i}); //错误，{}拒绝执行整数向浮点数的类型转换
+
+    f(d); //调用f(double)
+    f(int{d}); //错误，{}拒绝截断的行为
+    f(static_cast<int>(d)); //调用f(int)，传入的是个截断的值
+
+    f(round(d)); //调用f(double)，传入的是个四舍五入的值
+    f(static_cast<int>(lround(d))); //调用f(int)，传入的是个四舍五入的值
+    // 如果round(d)溢出int的范围，它仍会被截断
+}
+```
+一旦在程序中使用目标类型作为显式的限定，则在这种情况下就不允许行为不正常的类型转换：
+```cpp
+void g2(char* p)
+{
+    int x = int{p}; //错误，不存在char*向int的类型转换
+    using Pint = int*;
+    int* p2 = Pint{p}; //错误，不存在char*向int*的类型转换
+}
+```
+对T{v}来说，“行为非常良好”的含义是存在v向T的“非窄化”类型转换或者有一个T的类型正确的构造函数。   
+构造函数符号T{}用于表示类型T的默认值：
+```cpp
+template<class T> void f(const T&);
+
+void g3()
+{
+    f(int{}); //默认的int值
+    f(complex<double>{}); 默认的complex值
+}
+```
+对于内置类型来说，显式的使用其构造函数得到的值是该类型对应的0值。因此，int{}可以看成是0的另一种写法。对用户自定义类型T来说，如果含有默认构造函数，则T{}的结果由默认构造函数定义；否则，由每个成员的默认构造函数MT{}定义。
+
+### 命名转换  
+- static_cast执行关联类型之间的转换，比如一种指针类型向同一个类层次中其他指针类型的转换，或者整数类型向枚举类型的转换，或浮点类型向整数类型的转换。还能执行构造函数和转换运算符定义的类型转换。
+- reinterpret_cast处理非关联类型之间的转换，比如整数向指针的转换以及指针向另一个非关联指针类型的转换。
+- const_cast，参与转换的类型尽在const修饰符及volstile修饰符上有所区别。
+- dynamic_cast执行指针或者引用向类层次体系的类型转换，并在运行时检查。
+
+**在决定使用显式类型转换之前，清华时间仔细考虑一下是否真的必须这么做。**
+
+### 函数形式的转换  
+用值e构建类型T的值的过程可以表示为函数形式的符号T(e):
+```cpp
+void f(double d)
+{
+    int i = int(d); //截断
+    complex z = complex(d); //从d构建一个coplex
+}
+```
+T(e)有时称为函数形式的转换，不幸的是，对于内置类型T来说，T(e)等价于(T)e，这意味着对大多数内置类型来说，T(e)并不安全：
+```cpp
+void f(double d, char* p)
+{
+    int a = int(d); //截断
+    int b = int(p); //不可移植
+}
+``
+即使是从一种较长的整数类型向较短的整数类型的显式转换也会导致不可移植的依赖于实现的行为。
+
+
+

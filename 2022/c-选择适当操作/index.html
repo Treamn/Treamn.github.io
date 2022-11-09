@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "表达式, 联合, 枚举","wordcount":  5187 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "运算符, lambda表达式, 显式类型转换","wordcount":  7849 ,
         "url": "http:\/\/example.org\/2022\/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C\/","datePublished": "2022-11-07T15:55:29+08:00","dateModified": "2022-11-07T15:55:29+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -152,7 +152,23 @@
       <ul>
         <li><a href="#实现模型-1">实现模型</a></li>
         <li><a href="#lambda的替代品">lambda的替代品</a></li>
-        <li><a href="#捕获">捕获</a></li>
+        <li><a href="#捕获">捕获</a>
+          <ul>
+            <li><a href="#lambda与生命周期">lambda与生命周期</a></li>
+            <li><a href="#名字空间名字">名字空间名字</a></li>
+            <li><a href="#lambda与this">lambda与this</a></li>
+            <li><a href="#mutable的lambda">mutable的lambda</a></li>
+          </ul>
+        </li>
+        <li><a href="#调用和返回">调用和返回</a></li>
+        <li><a href="#lambda的类型">lambda的类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#显式类型转换">显式类型转换</a>
+      <ul>
+        <li><a href="#构造">构造</a></li>
+        <li><a href="#命名转换">命名转换</a></li>
+        <li><a href="#函数形式的转换">函数形式的转换</a></li>
       </ul>
     </li>
   </ul>
@@ -161,8 +177,8 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-07">11-07</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-07">11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5187 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-07">11-07</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-07">11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7849 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 16 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -218,7 +234,23 @@
       <ul>
         <li><a href="#实现模型-1">实现模型</a></li>
         <li><a href="#lambda的替代品">lambda的替代品</a></li>
-        <li><a href="#捕获">捕获</a></li>
+        <li><a href="#捕获">捕获</a>
+          <ul>
+            <li><a href="#lambda与生命周期">lambda与生命周期</a></li>
+            <li><a href="#名字空间名字">名字空间名字</a></li>
+            <li><a href="#lambda与this">lambda与this</a></li>
+            <li><a href="#mutable的lambda">mutable的lambda</a></li>
+          </ul>
+        </li>
+        <li><a href="#调用和返回">调用和返回</a></li>
+        <li><a href="#lambda的类型">lambda的类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#显式类型转换">显式类型转换</a>
+      <ul>
+        <li><a href="#构造">构造</a></li>
+        <li><a href="#命名转换">命名转换</a></li>
+        <li><a href="#函数形式的转换">函数形式的转换</a></li>
       </ul>
     </li>
   </ul>
@@ -947,9 +979,348 @@ vector本身就是一个对象，因此可以使用普通的new和delete分配�
 <li>[&amp;,捕获列表]：对于名字没有出现在捕获列表中的局部变量，通过引用隐式捕获。捕获列表中可以出现this。列出的名字不能以&amp;为前缀。捕获列表中的变量名通过值的方式捕获。</li>
 <li>[=,捕获列表]：对于名字没有出现在捕获列表中的局部变量，通过值隐式捕获。捕获列表中可以出现this。列出的名字不能以&amp;为前缀。捕获列表中的变量名通过值的方式捕获。</li>
 </ul>
-<p>以&amp;为前缀的局部名字总是通过引用捕获，相反，不义&amp;为前缀的局部名字总是通过值捕获。只有通过引用的捕获允许修改调用环境中的变量。<br>
-有时候，会指定捕获列表，</p>
+<p>以&amp;为前缀的局部名字总是通过引用捕获，相反，不义&amp;为前缀的局部名字总是通过值捕获。只有通过引用的捕获允许修改调用环境中的变量。</p>
+<h4 id="lambda与生命周期" class="headerLink">
+    <a href="#lambda%e4%b8%8e%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f" class="header-mark"></a>lambda与生命周期</h4><p>lambda的生命周期可能比它的调用者长。当把lambda传递给另外一个线程或者被调用者把lambda存在别处以供后续使用时，这种情况就会发生：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">setup</span><span class="p">(</span><span class="n">Menu</span><span class="o">&amp;</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Point</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#34;draw triangle&#34;</span><span class="p">,[</span><span class="o">&amp;</span><span class="p">]{</span><span class="n">m</span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">)};);</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>如果lambda的生命周期可能比调用者长，就必须确保所有局部信息都被拷贝到闭包对象中，并且这些值应该通过return机制或者适当的实参返回：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">m</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#34;draw triangle&#34;</span><span class="p">,[</span><span class="o">=</span><span class="p">]{</span><span class="n">m</span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">)};);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="名字空间名字" class="headerLink">
+    <a href="#%e5%90%8d%e5%ad%97%e7%a9%ba%e9%97%b4%e5%90%8d%e5%ad%97" class="header-mark"></a>名字空间名字</h4><p>因为名字空间变量(包括全局变量)永远是可访问的，所以无须“捕获”它们。</p>
+<h4 id="lambda与this" class="headerLink">
+    <a href="#lambda%e4%b8%8ethis" class="header-mark"></a>lambda与this</h4><p>当lambda被用在成员函数中时，我们将this添加到捕获列表中，这样类的成员就位于可被捕获的名字集合中了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Request</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">function</span><span class="o">&lt;</span><span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">oper</span><span class="p">;</span> <span class="c1">//操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">values</span><span class="p">;</span> <span class="c1">//参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">strign</span><span class="o">&gt;</span> <span class="n">results</span><span class="p">;</span> <span class="c1">//结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Request</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">execute</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="k">this</span><span class="p">](){</span><span class="k">return</span><span class="o">=</span><span class="n">oper</span><span class="p">(</span><span class="n">values</span><span class="p">);}</span> <span class="c1">//根据结果执行相应操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>成员通过引用的方式捕获。也就是说，[this]意味着成员是通过this访问，而非拷贝到lambda中。</p>
+<h4 id="mutable的lambda" class="headerLink">
+    <a href="#mutable%e7%9a%84lambda" class="header-mark"></a>mutable的lambda</h4><p>生成的函数对象的operator()()是一个const成员函数。只有在极少数情况下，如果确实希望修改状态，则可以把lambda声明成mutable的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">algo</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="n">count</span><span class="p">]()</span><span class="k">mutable</span><span class="p">{</span><span class="k">return</span> <span class="o">--</span><span class="n">count</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="调用和返回" class="headerLink">
+    <a href="#%e8%b0%83%e7%94%a8%e5%92%8c%e8%bf%94%e5%9b%9e" class="header-mark"></a>调用和返回</h3><p>向lambda传递参数的规则和向函数传递参数是一样的，从lambda返回结果也是如此。有两点需要注意：</p>
+<ol>
+<li>如果一条lambda表达式不接任何参数，则其参数列表可以被忽略。因此，lambda表达式的最简形式是[]{}。</li>
+<li>lambda表达式的返回类型能由lambda表达式本身推断得到。</li>
+</ol>
+<p>如果在lambda的主体部分不包含return语句，则该lambda的返回类型是void。如果lambda的主体部分只包含一条return语句，则该lambda的返回类型宁国市该return表达式的类型。其他情况下，必须显式的提供一个返回类型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="kt">double</span> <span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="o">&amp;</span><span class="p">]{</span><span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">);}</span> <span class="c1">//返回类型是void
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">z1</span> <span class="o">=</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="kt">int</span> <span class="n">x</span><span class="p">){</span><span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">;}</span> <span class="c1">//返回类型是double
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">z2</span> <span class="o">=</span> <span class="p">[</span><span class="o">=</span><span class="p">,</span><span class="n">y</span><span class="p">]{</span><span class="k">if</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span><span class="k">else</span> <span class="k">return</span> <span class="mi">2</span><span class="p">;}</span> <span class="c1">//错误，lambda主体部分过于复杂，无法推断其类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">z3</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">](){</span><span class="k">return</span> <span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">;}</span> <span class="c1">// 返回类型是int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">z4</span> <span class="o">=</span> <span class="p">[</span><span class="o">=</span><span class="p">,</span><span class="n">y</span><span class="p">]()</span><span class="o">-&gt;</span><span class="kt">int</span><span class="p">{</span><span class="k">if</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span><span class="k">else</span> <span class="k">return</span> <span class="mi">2</span><span class="p">;}</span> <span class="c1">//OK，显式的返回类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="lambda的类型" class="headerLink">
+    <a href="#lambda%e7%9a%84%e7%b1%bb%e5%9e%8b" class="header-mark"></a>lambda的类型</h3><p>任意两个lambda类型都不相同，一旦两个lambda具有相同的类型，模板实例化机制就无法辨识它们了。lambda是一种局部类类型，含有一个构造函数以及一个const成员函数operator()()。lambda除了能作为参数外，还能用于初始化一个声明为auto或std::function&lt;R(AL)&gt;的变量。其中R是lambda的返回类型，AL是它的类型参数列表。<br>
+例如，编写一个能更改C风格字符串中字符的lambda：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">rev</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">rev</span><span class="p">](</span><span class="kt">char</span><span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">e</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">e</span><span class="o">-</span><span class="n">b</span><span class="p">){</span><span class="n">swap</span><span class="p">(</span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="o">*--</span><span class="n">e</span><span class="p">);</span><span class="n">rev</span><span class="p">(</span><span class="o">++</span><span class="n">b</span><span class="p">,</span><span class="n">e</span><span class="p">);}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然而，由于无法推断出一个auto变量的类型之前使用它，因此上面的写法行不通。相反，应该先引入一个新名字，然后使用它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s1</span><span class="p">,</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">b</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span> <span class="n">e</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">rev</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="kt">char</span><span class="o">*</span> <span class="n">b</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span> <span class="n">e</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">e</span><span class="o">-</span><span class="n">b</span><span class="p">){</span><span class="n">swap</span><span class="p">(</span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="o">*--</span><span class="n">e</span><span class="p">);</span><span class="n">rev</span><span class="p">(</span><span class="o">++</span><span class="n">b</span><span class="p">,</span><span class="n">e</span><span class="p">);}};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rev</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rev</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样就可以确保在使用rev之前知道它的类型。<br>
+如果只想给lambda起个名字，而不递归的使用它，则可以考虑使用auto：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">vs2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">rev</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="kt">char</span><span class="o">*</span> <span class="n">b</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span> <span class="n">e</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">e</span><span class="o">-</span><span class="n">b</span><span class="p">){</span><span class="n">swap</span><span class="p">(</span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="o">*--</span><span class="n">e</span><span class="p">);</span><span class="n">rev</span><span class="p">(</span><span class="o">++</span><span class="n">b</span><span class="p">,</span><span class="n">e</span><span class="p">);}};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rev</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rev</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果一个lambda什么也不捕获，则可以将它赋值给一个指向正确类型的指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span><span class="p">(</span><span class="o">*</span><span class="n">p1</span><span class="p">)(</span><span class="kt">double</span><span class="p">)</span> <span class="o">=</span> <span class="p">[](</span><span class="kt">double</span> <span class="n">a</span><span class="p">){</span><span class="k">return</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">);};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="p">(</span><span class="o">*</span><span class="n">p2</span><span class="p">)(</span><span class="kt">double</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="kt">double</span> <span class="n">a</span><span class="p">){</span><span class="k">return</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">);};</span> <span class="c1">//错误，lambda捕获了内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span><span class="p">(</span><span class="o">*</span><span class="n">p3</span><span class="p">)(</span><span class="kt">int</span><span class="p">)</span> <span class="o">=</span> <span class="p">[](</span><span class="kt">int</span> <span class="n">a</span><span class="p">){</span><span class="k">return</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">);};</span> <span class="c1">//错误，参数类型不匹配
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="显式类型转换" class="headerLink">
+    <a href="#%e6%98%be%e5%bc%8f%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2" class="header-mark"></a>显式类型转换</h2><p>C++提供多种显式类型转换的操作，这些操作在便利程度以及安全性上都有所不同：</p>
+<ul>
+<li>构造，使用{}符号提供对新值类型安全的构造。</li>
+<li>命名的转换，提供不同等级的类型转换：</li>
+</ul>
+<blockquote>
+<ul>
+<li>const_cast,对某些声明为const的对象获得写入的权利</li>
+<li>static_cast，反转一个定义良好的隐式类型转换</li>
+<li>reinterpret_cast，改变位模式的含义</li>
+<li>dynamic_cast，动态的检查类层次的关系</li>
+</ul>
+</blockquote>
+<ul>
+<li>C风格的转换，提供命名的类型转换或其组合</li>
+<li>函数化符号，提供C风格转换的另一种形式</li>
+</ul>
+<h3 id="构造" class="headerLink">
+    <a href="#%e6%9e%84%e9%80%a0" class="header-mark"></a>构造</h3><p>用值e构建一个类型为T的值可以表示为T{e}：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">d1</span> <span class="o">=</span> <span class="kt">double</span><span class="p">{</span><span class="mi">2</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">d2</span> <span class="p">{</span><span class="kt">double</span><span class="p">{</span><span class="mi">2</span><span class="p">}</span><span class="o">/</span><span class="mi">4</span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>符号T{v}有一个好处是，它只执行“行为良好的”；类型转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">double</span> <span class="n">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">//调用f(int)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">(</span><span class="kt">double</span><span class="p">{</span><span class="n">i</span><span class="p">});</span> <span class="c1">//错误，{}拒绝执行整数向浮点数的类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="c1">//调用f(double)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">(</span><span class="kt">int</span><span class="p">{</span><span class="n">d</span><span class="p">});</span> <span class="c1">//错误，{}拒绝截断的行为
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span><span class="p">));</span> <span class="c1">//调用f(int)，传入的是个截断的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="n">round</span><span class="p">(</span><span class="n">d</span><span class="p">));</span> <span class="c1">//调用f(double)，传入的是个四舍五入的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lround</span><span class="p">(</span><span class="n">d</span><span class="p">)));</span> <span class="c1">//调用f(int)，传入的是个四舍五入的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果round(d)溢出int的范围，它仍会被截断
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一旦在程序中使用目标类型作为显式的限定，则在这种情况下就不允许行为不正常的类型转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g2</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="kt">int</span><span class="p">{</span><span class="n">p</span><span class="p">};</span> <span class="c1">//错误，不存在char*向int的类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">using</span> <span class="n">Pint</span> <span class="o">=</span> <span class="kt">int</span><span class="o">*</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">Pint</span><span class="p">{</span><span class="n">p</span><span class="p">};</span> <span class="c1">//错误，不存在char*向int*的类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对T{v}来说，“行为非常良好”的含义是存在v向T的“非窄化”类型转换或者有一个T的类型正确的构造函数。<br>
+构造函数符号T{}用于表示类型T的默认值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g3</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="kt">int</span><span class="p">{});</span> <span class="c1">//默认的int值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">(</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">{});</span> <span class="err">默认的</span><span class="n">complex值</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于内置类型来说，显式的使用其构造函数得到的值是该类型对应的0值。因此，int{}可以看成是0的另一种写法。对用户自定义类型T来说，如果含有默认构造函数，则T{}的结果由默认构造函数定义；否则，由每个成员的默认构造函数MT{}定义。</p>
+<h3 id="命名转换" class="headerLink">
+    <a href="#%e5%91%bd%e5%90%8d%e8%bd%ac%e6%8d%a2" class="header-mark"></a>命名转换</h3><ul>
+<li>static_cast执行关联类型之间的转换，比如一种指针类型向同一个类层次中其他指针类型的转换，或者整数类型向枚举类型的转换，或浮点类型向整数类型的转换。还能执行构造函数和转换运算符定义的类型转换。</li>
+<li>reinterpret_cast处理非关联类型之间的转换，比如整数向指针的转换以及指针向另一个非关联指针类型的转换。</li>
+<li>const_cast，参与转换的类型尽在const修饰符及volstile修饰符上有所区别。</li>
+<li>dynamic_cast执行指针或者引用向类层次体系的类型转换，并在运行时检查。</li>
+</ul>
+<p><strong>在决定使用显式类型转换之前，清华时间仔细考虑一下是否真的必须这么做。</strong></p>
+<h3 id="函数形式的转换" class="headerLink">
+    <a href="#%e5%87%bd%e6%95%b0%e5%bd%a2%e5%bc%8f%e7%9a%84%e8%bd%ac%e6%8d%a2" class="header-mark"></a>函数形式的转换</h3><p>用值e构建类型T的值的过程可以表示为函数形式的符号T(e):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="c1">//截断
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">complex</span> <span class="n">z</span> <span class="o">=</span> <span class="n">complex</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="c1">//从d构建一个coplex
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>T(e)有时称为函数形式的转换，不幸的是，对于内置类型T来说，T(e)等价于(T)e，这意味着对大多数内置类型来说，T(e)并不安全：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">d</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="c1">//截断
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">p</span><span class="p">);</span> <span class="c1">//不可移植
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">``</span>
+</span></span><span class="line"><span class="cl"><span class="err">即使是从一种较长的整数类型向较短的整数类型的显式转换也会导致不可移植的依赖于实现的行为。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -963,13 +1334,13 @@ vector本身就是一个对象，因此可以使用普通的new和delete分配�
             <div class="post-info-md"><span><a class="link-to-mardown" href=/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
                     </span></div>
             <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-hashtags="表达式,联合,枚举"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-hashtag="表达式"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-skype fa-fw"></i></a></span>
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-hashtags="运算符,lambda表达式,显式类型转换"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-hashtag="运算符"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/" data-title="C&#43;&#43;选择适当操作"><i class="fab fa-skype fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F/">表达式</a>,&nbsp;<a href="/tags/%E8%81%94%E5%90%88/">联合</a>,&nbsp;<a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6/">运算符</a>,&nbsp;<a href="/tags/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">lambda表达式</a>,&nbsp;<a href="/tags/%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">显式类型转换</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
