@@ -4,9 +4,16 @@
         <link>http://example.org/</link>
         <description>Dling | 煜江的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 07 Nov 2022 15:55:29 &#43;0800</lastBuildDate>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</lastBuildDate>
             <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>C&#43;&#43;函数</title>
+    <link>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</link>
+    <pubDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</guid>
+    <description><![CDATA[函数声明函数声明负责指定函数的名字、返回值的类型以及调用该函数所需的参数数量和类型： 1 2 3 Elem* next_elem(); //无须参数，返回Elem* void exit(int); //int类型]]></description>
+</item><item>
     <title>C&#43;&#43;选择适当操作</title>
     <link>http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/</link>
     <pubDate>Mon, 07 Nov 2022 15:55:29 &#43;0800</pubDate><author>
@@ -83,12 +90,5 @@
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/review/</guid>
     <description><![CDATA[cin.get()在接收到任意输入后再执行下一条语句。 声明语句使用变量前必须声明它。 尽可能在首次使用变量前声明它。 要将信息项存储在计算机中，]]></description>
-</item><item>
-    <title>C&#43;&#43;学习之类</title>
-    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</link>
-    <pubDate>Tue, 05 Apr 2022 19:36:03 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB/</guid>
-    <description><![CDATA[构造函数 类通过一个或几个特殊的成员函数来控制其对象的初始化过程，这些函数叫构造函数。构造函数的任务是初始化类对象的数据成员。 构造函数没有返回]]></description>
 </item></channel>
 </rss>
