@@ -373,3 +373,101 @@ const char* day[] = {
 ```
 一如既往，vector即类似类型比内置的底层数组和指针更好。
 
+### 列表参数  
+一个由{}限定的列表可以作为下述形参的实参：  
+1. 类型std::initialize_list<T>，其中列表的值能隐式的转换成T  
+2. 能用列表中的值初始化的类型  
+3. T类型数组的引用，其中列表的值能隐式的转换成T  
+```cpp
+template<class T>
+void f1(initialize_list<T>);
+
+struct S{
+    int a;
+    string s;
+};
+void f2(S);
+
+template<class T,int N>
+void f3(T(&r)[N]);
+
+void f4(int);
+
+void g()
+{
+    f1({1,2,3,4}); //T是int，initialize_list的大小是4
+    f2({1,"MKS"}); //f2(S{1,"MKS"});
+    f3({1,2,3,4}); //T是int，N是4
+    f4({1}); //f4(int{1});
+}
+```
+如果存在二义性，则initialize_list参数的函数会被优先考虑。
+
+
+### 数量未定的参数  
+```cpp
+int print(const char* ...);
+```
+这条语句规定对标准库函数printf()的调用必须至少有一个C风格字符串的参数，同时也可以有也可以没有其他参数：  
+```cpp
+printf("Hello world!\n");
+printf("My name is %s %s",first_name, second_name);
+printtf("%d + %d = %d",2,3,5);
+```
+想使用未限定类型的参数时，应该优先考虑使用重载函数、带默认参数的函数、接受initializer_list参数的函数或者可变参数模板。只有当参数数量和参数类型都不确定且可变模板也不适用时，才考虑使用省略号参数。
+
+### 默认参数  
+```cpp
+class complex{
+    double re,im;
+public:
+    coplex(double r,double i):re{r},im{i}{}
+    complex(double r):re{r},im{0}{}
+    complex():re{0},im{0}{}
+};
+```
+如果想在complex中加入一些调试、跟踪和统计的代码。只要加在一个地方就可以了：
+```cpp
+complex(double r={}, double i={}):re{r},im{i}{}
+```
+如果用户提供的参数数量不足，则使用预置的默认参数。  
+默认参数在函数声明时执行类型检查，在调用函数时求值：
+```cpp
+class X{
+public:
+    static int def_arg;
+    void f(int = def_arg);
+};
+int X::def_arg = 7;
+
+void g(X& a)
+{
+    a.f(); //maybe f(7)
+    a.def_arg = 9;
+    a.f(); //f(9)
+}
+```
+最好避免使用值可能发生改变的默认参数。  
+只能为参数列表中位置靠后的参数提供默认值：
+```cpp
+int f(int, int =0, char* =nullptr);
+int g(int =0, int =0,char*); //错误
+int h(int =0,int,char* =nullptr) //错误
+```
+在同一作用域的一系列声明语句中，默认参数不能重复或者改变：
+```cpp
+void f(int x=7);
+void f(int =7); //错误，不允许重复默认参数
+void f(int =8); //错误，默认参数不一致
+void g()
+{
+    void f(int x=9);
+}
+```
+
+## 重载函数  
+
+
+
+
+

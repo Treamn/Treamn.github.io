@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 常量表达式","wordcount":  4389 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 常量表达式","wordcount":  5112 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/","datePublished": "2022-11-09T15:53:25+08:00","dateModified": "2022-11-09T15:53:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -145,16 +145,20 @@
       <ul>
         <li><a href="#引用参数">引用参数</a></li>
         <li><a href="#数组参数">数组参数</a></li>
+        <li><a href="#列表参数">列表参数</a></li>
+        <li><a href="#数量未定的参数">数量未定的参数</a></li>
+        <li><a href="#默认参数">默认参数</a></li>
       </ul>
     </li>
+    <li><a href="#重载函数">重载函数</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;函数</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4389 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5112 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -204,8 +208,12 @@
       <ul>
         <li><a href="#引用参数">引用参数</a></li>
         <li><a href="#数组参数">数组参数</a></li>
+        <li><a href="#列表参数">列表参数</a></li>
+        <li><a href="#数量未定的参数">数量未定的参数</a></li>
+        <li><a href="#默认参数">默认参数</a></li>
       </ul>
     </li>
+    <li><a href="#重载函数">重载函数</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="函数声明" class="headerLink">
@@ -887,7 +895,186 @@ return语句的形式属于下述5种之一：</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>一如既往，vector即类似类型比内置的底层数组和指针更好。</p>
+<h3 id="列表参数" class="headerLink">
+    <a href="#%e5%88%97%e8%a1%a8%e5%8f%82%e6%95%b0" class="header-mark"></a>列表参数</h3><p>一个由{}限定的列表可以作为下述形参的实参：</p>
+<ol>
+<li>类型std::initialize_list<T>，其中列表的值能隐式的转换成T</li>
+<li>能用列表中的值初始化的类型</li>
+<li>T类型数组的引用，其中列表的值能隐式的转换成T</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f1</span><span class="p">(</span><span class="n">initialize_list</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">S</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f2</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span><span class="kt">int</span> <span class="n">N</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f3</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="o">&amp;</span><span class="n">r</span><span class="p">)[</span><span class="n">N</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f4</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f1</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">});</span> <span class="c1">//T是int，initialize_list的大小是4
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f2</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="s">&#34;MKS&#34;</span><span class="p">});</span> <span class="c1">//f2(S{1,&#34;MKS&#34;});
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f3</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">});</span> <span class="c1">//T是int，N是4
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f4</span><span class="p">({</span><span class="mi">1</span><span class="p">});</span> <span class="c1">//f4(int{1});
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>如果存在二义性，则initialize_list参数的函数会被优先考虑。</p>
+<h3 id="数量未定的参数" class="headerLink">
+    <a href="#%e6%95%b0%e9%87%8f%e6%9c%aa%e5%ae%9a%e7%9a%84%e5%8f%82%e6%95%b0" class="header-mark"></a>数量未定的参数</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="p">...);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这条语句规定对标准库函数printf()的调用必须至少有一个C风格字符串的参数，同时也可以有也可以没有其他参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">printf</span><span class="p">(</span><span class="s">&#34;Hello world!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">printf</span><span class="p">(</span><span class="s">&#34;My name is %s %s&#34;</span><span class="p">,</span><span class="n">first_name</span><span class="p">,</span> <span class="n">second_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">printtf</span><span class="p">(</span><span class="s">&#34;%d + %d = %d&#34;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>想使用未限定类型的参数时，应该优先考虑使用重载函数、带默认参数的函数、接受initializer_list参数的函数或者可变参数模板。只有当参数数量和参数类型都不确定且可变模板也不适用时，才考虑使用省略号参数。</p>
+<h3 id="默认参数" class="headerLink">
+    <a href="#%e9%bb%98%e8%ae%a4%e5%8f%82%e6%95%b0" class="header-mark"></a>默认参数</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">complex</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">re</span><span class="p">,</span><span class="n">im</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">coplex</span><span class="p">(</span><span class="kt">double</span> <span class="n">r</span><span class="p">,</span><span class="kt">double</span> <span class="n">i</span><span class="p">)</span><span class="o">:</span><span class="n">re</span><span class="p">{</span><span class="n">r</span><span class="p">},</span><span class="n">im</span><span class="p">{</span><span class="n">i</span><span class="p">}{}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">complex</span><span class="p">(</span><span class="kt">double</span> <span class="n">r</span><span class="p">)</span><span class="o">:</span><span class="n">re</span><span class="p">{</span><span class="n">r</span><span class="p">},</span><span class="n">im</span><span class="p">{</span><span class="mi">0</span><span class="p">}{}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">complex</span><span class="p">()</span><span class="o">:</span><span class="n">re</span><span class="p">{</span><span class="mi">0</span><span class="p">},</span><span class="n">im</span><span class="p">{</span><span class="mi">0</span><span class="p">}{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果想在complex中加入一些调试、跟踪和统计的代码。只要加在一个地方就可以了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">complex</span><span class="p">(</span><span class="kt">double</span> <span class="n">r</span><span class="o">=</span><span class="p">{},</span> <span class="kt">double</span> <span class="n">i</span><span class="o">=</span><span class="p">{})</span><span class="o">:</span><span class="n">re</span><span class="p">{</span><span class="n">r</span><span class="p">},</span><span class="n">im</span><span class="p">{</span><span class="n">i</span><span class="p">}{}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果用户提供的参数数量不足，则使用预置的默认参数。<br>
+默认参数在函数声明时执行类型检查，在调用函数时求值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">X</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="n">def_arg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span> <span class="n">def_arg</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">X</span><span class="o">::</span><span class="n">def_arg</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">f</span><span class="p">();</span> <span class="c1">//maybe f(7)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">a</span><span class="p">.</span><span class="n">def_arg</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">f</span><span class="p">();</span> <span class="c1">//f(9)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最好避免使用值可能发生改变的默认参数。<br>
+只能为参数列表中位置靠后的参数提供默认值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="o">=</span><span class="k">nullptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span><span class="p">);</span> <span class="c1">//错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">h</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span> <span class="o">=</span><span class="k">nullptr</span><span class="p">)</span> <span class="c1">//错误
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在同一作用域的一系列声明语句中，默认参数不能重复或者改变：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span><span class="mi">7</span><span class="p">);</span> <span class="c1">//错误，不允许重复默认参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span><span class="mi">8</span><span class="p">);</span> <span class="c1">//错误，默认参数不一致
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">g</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">9</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="重载函数" class="headerLink">
+    <a href="#%e9%87%8d%e8%bd%bd%e5%87%bd%e6%95%b0" class="header-mark"></a>重载函数</h2></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
