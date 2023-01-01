@@ -1434,7 +1434,7 @@ return语句的形式属于下述5种之一：</p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">f3</span><span class="p">;</span> <span class="c1">//错误，返回类型错误
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl">    <span class="n">pf</span><span class="p">(</span><span class="s">&#34;Hera&#34;</span><span class="p">);</span> <span class="c1">// OK
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//错误，返回类型错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pf</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">//错误，返回类型错误
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="s">&#34;Zeus&#34;</span><span class="p">);</span> <span class="c1">// 错误，试图将void赋给nit
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
@@ -1459,11 +1459,11 @@ return语句的形式属于下述5种之一：</p>
 </span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">P2</span> <span class="o">=</span> <span class="kt">void</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Pa</span> <span class="n">pf</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">P2</span> <span class="n">pf2</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">P2</span> <span class="n">pf2</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pf2</span><span class="p">();</span> <span class="c1">//可能发生严重错误
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">P1</span> <span class="n">pf1</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">P1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f2</span><span class="p">);</span>  <span class="c1">// 把pf2转换回来
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pf1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pf1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>

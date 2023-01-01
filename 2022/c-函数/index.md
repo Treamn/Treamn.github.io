@@ -648,7 +648,7 @@ void f(){
     pf = &f3; //错误，返回类型错误
 
     pf("Hera"); // OK
-    pf(1) //错误，返回类型错误
+    pf(1); //错误，返回类型错误
 
     int i = pf("Zeus"); // 错误，试图将void赋给nit
 }
@@ -659,11 +659,11 @@ using P1 = int(*)(int*);
 using P2 = void(*)(void);
 
 void f(Pa pf){
-    P2 pf2 = reinterpret_cast<P2>(pf)
+    P2 pf2 = reinterpret_cast<P2>(pf);
     pf2(); //可能发生严重错误
     P1 pf1 = reinterpret_cast<P1>(f2);  // 把pf2转换回来
     int x = 7;
-    int y = pf1(&x)
+    int y = pf1(&x);
 }
 ```
 
