@@ -467,7 +467,148 @@ void g()
 
 ## 重载函数  
 
+为不同数据类型的同一种操作起相同的名字称为重载。  
+
+### 自动重载解析  
+
+当调用函数fct时，由编译器决定使用名为fct的那组函数中的哪一个，一句是考察实参类型与作用域中名为fct的哪个函数的形参类型最匹配。当找到了最佳匹配时，调用该函数；反之，引发编译器错误：
+```cpp
+void print(double);
+void print(long);
+
+void f()
+{
+    print(1L);  //print(long)
+    print(1.0); //print(double)
+    print(1);   //错误，具有二义性
+}
+```
+为了合理的解决问题，我们采用如下顺序尝试一系列评判准则：  
+[1] 精确匹配：也就是说，无须类型转换或者仅需简单地类型转换即可实现匹配  
+[2] 执行提升后匹配：也就是说，执行了整数提升(bool转为int)以及float转为double    
+[3] 执行标准类型转换后实现匹配，T\*转换为void*，以及int转换为unsigned int   
+[4] 执行用户自定义的类型转换后实现匹配  
+[5]使用函数声明中的省略号...进行匹配  
+在该体系中，如果某次函数调用在能找到匹配的最高层级上发现了不止一个可用匹配，则本次调用将因产生了二义性而被拒绝，例如：
+```cpp
+void print(int);
+void print(const chat*);
+void print(double);
+void print(long);
+void print(char);
+
+void h(char c, short s, float f){
+    print(c); //精确匹配，print(char)
+    print(i); //精确匹配，print(int)
+    print(s); //精确匹配，print(int)
+    print(f); //float转换为double的提升
+
+    print('a'); //精确匹配，print(char)
+    print(49); //精确匹配，print(int)
+    print(0); //精确匹配，print(int)
+    print("a"); //精确匹配，print(const char*)
+    print(nullptr); //nullptr_t转换const char*的提升
+}
+```
+重载函数与函数声明的次序无关。
+
+### 重载与返回类型  
+
+在重载解析过程中补考虑函数的返回类型，这样可以确保对运算符或者函数调用的解析独立于上下文：
+```cpp
+float sqrt(float);
+double sqrt(double);
+
+voi f(double da, float fla){
+    float fl = sqrt(da); //sqrt(double)
+    double d = sqrt(da); //sqrt(double)
+    fl = sqrt(fla); //sqrt(float)
+    d = sqrt(fla); //sqrt(float)
+}
+```
+
+### 重载与作用域  
+重载发生在一组重载函数的成员内部，也就是说，重载函数应该位于同一个作用域内，不同的非名字空间作用域中的函数不会重载：
+```cpp
+void f(int);
+
+void g(){
+    void f(double);
+    f(1); //调用d(double)
+}
+```
+
+基类和派生类提供的作用域不同，因此默认情况下基类函数和派生函数不会发生重载：
+```cpp
+struct Base{
+    void f(int);
+};
+
+struct Derived:Base{
+    void f(double);
+};
+
+void g(Derived& d){
+    d.f(1); //Derived::f(double)
+}
+```
+
+### 多实参解析  
+对于一组重载函数以及一次调用来说，如果该调用对于各函数的参数类型在计算的效率和精度上差别明显，则可以应用重载解析规则从中选出最合适的函数：
+```cpp
+int pow(int, int);
+double pow(double, double);
+complex pow(double, complex);
+complex pow(complex, int);
+complex pow(complex, complex);
+
+void k(coomplex z){
+    int i = pow(2,2);
+    double d = pow(2.0, 2.0);
+    complex z2 = pow(2, z);
+    complex z3 = pow(z, 2);
+    complex z4 = pow(z, z);
+}
+```
+当重载函数包含两个或者多个参数时，上述的解析规则将作用于每一个参数，并且选出该参数的最佳匹配函数。如果某个函数是其中一个参数的最佳匹配，停驶在其他参数上也是更优的匹配或者至少不弱于别的函数，则该函数就是最终确定的最佳匹配函数。如果找不到符合上述条件的函数，则本次调用将因二义性的原因被拒绝：
+```cpp
+void g(){
+    double d = pow(2.0, 2); //错误，是调用pow(int(2.0),2)还是pow(2.0double(2))
+}
+```
+对于该调用来说，2.0的最佳匹配函数是pow(double, double)，2的最佳匹配函数是pow(int, int)，因此存在二义性，是一次错误的调用。  
+
+### 手动重载解析  
+某个函数的重载版本过少或过多都可能导致二义性，例如：
+```cpp
+void f1(char);
+void f1(long);
+
+void f2(char*);
+void f2(int*);
+
+void k(int i){
+    f1(i); //二义性：f1(char)还是f1(long)
+    f2(0); //二义性：f2(char*)还是f2(int*)
+}
+```
+在可能的情况下，尽量把一组重载函数当成整体来看，考察其对于函数的恶语义来说是否有意义。  
 
 
+## 前置和后置条件
+我们把函数调用是应该遵循的约定称为前置条件，把函数返回值应该遵循的约定称为后置条件：
+```cpp
+int area(int len, int wid)
+/*
+计算长方形的面积  
 
+前置条件：长方形的长和宽都是正数
 
+后置条件：返回值是正数  
+
+后置条件：返回值是长方形的面积，其中长方形的长和宽分别是len和wid
+*/
+{
+    return len*wid;
+}
+```

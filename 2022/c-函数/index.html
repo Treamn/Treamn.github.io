@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 常量表达式","wordcount":  5112 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 常量表达式","wordcount":  6693 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/","datePublished": "2022-11-09T15:53:25+08:00","dateModified": "2022-11-09T15:53:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -150,15 +150,24 @@
         <li><a href="#默认参数">默认参数</a></li>
       </ul>
     </li>
-    <li><a href="#重载函数">重载函数</a></li>
+    <li><a href="#重载函数">重载函数</a>
+      <ul>
+        <li><a href="#自动重载解析">自动重载解析</a></li>
+        <li><a href="#重载与返回类型">重载与返回类型</a></li>
+        <li><a href="#重载与作用域">重载与作用域</a></li>
+        <li><a href="#多实参解析">多实参解析</a></li>
+        <li><a href="#手动重载解析">手动重载解析</a></li>
+      </ul>
+    </li>
+    <li><a href="#前置和后置条件">前置和后置条件</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;函数</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5112 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6693 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -213,7 +222,16 @@
         <li><a href="#默认参数">默认参数</a></li>
       </ul>
     </li>
-    <li><a href="#重载函数">重载函数</a></li>
+    <li><a href="#重载函数">重载函数</a>
+      <ul>
+        <li><a href="#自动重载解析">自动重载解析</a></li>
+        <li><a href="#重载与返回类型">重载与返回类型</a></li>
+        <li><a href="#重载与作用域">重载与作用域</a></li>
+        <li><a href="#多实参解析">多实参解析</a></li>
+        <li><a href="#手动重载解析">手动重载解析</a></li>
+      </ul>
+    </li>
+    <li><a href="#前置和后置条件">前置和后置条件</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="函数声明" class="headerLink">
@@ -1074,7 +1092,270 @@ return语句的形式属于下述5种之一：</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="重载函数" class="headerLink">
-    <a href="#%e9%87%8d%e8%bd%bd%e5%87%bd%e6%95%b0" class="header-mark"></a>重载函数</h2></div>
+    <a href="#%e9%87%8d%e8%bd%bd%e5%87%bd%e6%95%b0" class="header-mark"></a>重载函数</h2><p>为不同数据类型的同一种操作起相同的名字称为重载。</p>
+<h3 id="自动重载解析" class="headerLink">
+    <a href="#%e8%87%aa%e5%8a%a8%e9%87%8d%e8%bd%bd%e8%a7%a3%e6%9e%90" class="header-mark"></a>自动重载解析</h3><p>当调用函数fct时，由编译器决定使用名为fct的那组函数中的哪一个，一句是考察实参类型与作用域中名为fct的哪个函数的形参类型最匹配。当找到了最佳匹配时，调用该函数；反之，引发编译器错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="mi">1L</span><span class="p">);</span>  <span class="c1">//print(long)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span> <span class="c1">//print(double)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>   <span class="c1">//错误，具有二义性
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为了合理的解决问题，我们采用如下顺序尝试一系列评判准则：<br>
+[1] 精确匹配：也就是说，无须类型转换或者仅需简单地类型转换即可实现匹配<br>
+[2] 执行提升后匹配：也就是说，执行了整数提升(bool转为int)以及float转为double <br>
+[3] 执行标准类型转换后实现匹配，T*转换为void*，以及int转换为unsigned int<br>
+[4] 执行用户自定义的类型转换后实现匹配<br>
+[5]使用函数声明中的省略号&hellip;进行匹配<br>
+在该体系中，如果某次函数调用在能找到匹配的最高层级上发现了不止一个可用匹配，则本次调用将因产生了二义性而被拒绝，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="n">chat</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">char</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">h</span><span class="p">(</span><span class="kt">char</span> <span class="n">c</span><span class="p">,</span> <span class="kt">short</span> <span class="n">s</span><span class="p">,</span> <span class="kt">float</span> <span class="n">f</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">c</span><span class="p">);</span> <span class="c1">//精确匹配，print(char)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">//精确匹配，print(int)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="c1">//精确匹配，print(int)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="p">);</span> <span class="c1">//float转换为double的提升
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">);</span> <span class="c1">//精确匹配，print(char)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="mi">49</span><span class="p">);</span> <span class="c1">//精确匹配，print(int)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//精确匹配，print(int)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="s">&#34;a&#34;</span><span class="p">);</span> <span class="c1">//精确匹配，print(const char*)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span> <span class="c1">//nullptr_t转换const char*的提升
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重载函数与函数声明的次序无关。</p>
+<h3 id="重载与返回类型" class="headerLink">
+    <a href="#%e9%87%8d%e8%bd%bd%e4%b8%8e%e8%bf%94%e5%9b%9e%e7%b1%bb%e5%9e%8b" class="header-mark"></a>重载与返回类型</h3><p>在重载解析过程中补考虑函数的返回类型，这样可以确保对运算符或者函数调用的解析独立于上下文：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">float</span> <span class="nf">sqrt</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="nf">sqrt</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">voi</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">da</span><span class="p">,</span> <span class="kt">float</span> <span class="n">fla</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">float</span> <span class="n">fl</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">da</span><span class="p">);</span> <span class="c1">//sqrt(double)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">da</span><span class="p">);</span> <span class="c1">//sqrt(double)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">fl</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">fla</span><span class="p">);</span> <span class="c1">//sqrt(float)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">d</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">fla</span><span class="p">);</span> <span class="c1">//sqrt(float)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="重载与作用域" class="headerLink">
+    <a href="#%e9%87%8d%e8%bd%bd%e4%b8%8e%e4%bd%9c%e7%94%a8%e5%9f%9f" class="header-mark"></a>重载与作用域</h3><p>重载发生在一组重载函数的成员内部，也就是说，重载函数应该位于同一个作用域内，不同的非名字空间作用域中的函数不会重载：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">//调用d(double)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>基类和派生类提供的作用域不同，因此默认情况下基类函数和派生函数不会发生重载：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Base</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Derived</span><span class="o">:</span><span class="n">Base</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="n">Derived</span><span class="o">&amp;</span> <span class="n">d</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">d</span><span class="p">.</span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">//Derived::f(double)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="多实参解析" class="headerLink">
+    <a href="#%e5%a4%9a%e5%ae%9e%e5%8f%82%e8%a7%a3%e6%9e%90" class="header-mark"></a>多实参解析</h3><p>对于一组重载函数以及一次调用来说，如果该调用对于各函数的参数类型在计算的效率和精度上差别明显，则可以应用重载解析规则从中选出最合适的函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pow</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="nf">pow</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="kt">double</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">complex</span> <span class="nf">pow</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="n">complex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">complex</span> <span class="nf">pow</span><span class="p">(</span><span class="n">complex</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">complex</span> <span class="nf">pow</span><span class="p">(</span><span class="n">complex</span><span class="p">,</span> <span class="n">complex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">k</span><span class="p">(</span><span class="n">coomplex</span> <span class="n">z</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">complex</span> <span class="n">z2</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">complex</span> <span class="n">z3</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">complex</span> <span class="n">z4</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当重载函数包含两个或者多个参数时，上述的解析规则将作用于每一个参数，并且选出该参数的最佳匹配函数。如果某个函数是其中一个参数的最佳匹配，停驶在其他参数上也是更优的匹配或者至少不弱于别的函数，则该函数就是最终确定的最佳匹配函数。如果找不到符合上述条件的函数，则本次调用将因二义性的原因被拒绝：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//错误，是调用pow(int(2.0),2)还是pow(2.0double(2))
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于该调用来说，2.0的最佳匹配函数是pow(double, double)，2的最佳匹配函数是pow(int, int)，因此存在二义性，是一次错误的调用。</p>
+<h3 id="手动重载解析" class="headerLink">
+    <a href="#%e6%89%8b%e5%8a%a8%e9%87%8d%e8%bd%bd%e8%a7%a3%e6%9e%90" class="header-mark"></a>手动重载解析</h3><p>某个函数的重载版本过少或过多都可能导致二义性，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">char</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f2</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f2</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">k</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f1</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">//二义性：f1(char)还是f1(long)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f2</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//二义性：f2(char*)还是f2(int*)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在可能的情况下，尽量把一组重载函数当成整体来看，考察其对于函数的恶语义来说是否有意义。</p>
+<h2 id="前置和后置条件" class="headerLink">
+    <a href="#%e5%89%8d%e7%bd%ae%e5%92%8c%e5%90%8e%e7%bd%ae%e6%9d%a1%e4%bb%b6" class="header-mark"></a>前置和后置条件</h2><p>我们把函数调用是应该遵循的约定称为前置条件，把函数返回值应该遵循的约定称为后置条件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">area</span><span class="p">(</span><span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">计算长方形的面积  
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">前置条件：长方形的长和宽都是正数
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">后置条件：返回值是正数  
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">后置条件：返回值是长方形的面积，其中长方形的长和宽分别是len和wid
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">len</span><span class="o">*</span><span class="n">wid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -1108,7 +1389,7 @@ return语句的形式属于下述5种之一：</p>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                     由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.94.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">煜江叔叔</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">煜江叔叔</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
             </div>
