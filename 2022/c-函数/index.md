@@ -101,7 +101,7 @@ int& fr()
 并不存在void值，不过，可以调用void函数令其作为另一个void函数的返回值：
 ```cpp
 void g(int* p);
-void h(int* p)
+void h(int* p);
 {
     return g(p); //OK，等价与“g(p)；return；”
 }
@@ -313,7 +313,7 @@ void g(vector<int>& vi, const vector<int>& cvi)
 ### 数组参数  
 当数组作为函数的参数时，实际传入的是指向该数组首元素的指针：
 ```cpp
-int strlen(const char*)
+int strlen(const char*);
 
 void f()
 {
@@ -452,7 +452,7 @@ void g(X& a)
 ```cpp
 int f(int, int =0, char* =nullptr);
 int g(int =0, int =0,char*); //错误
-int h(int =0,int,char* =nullptr) //错误
+int h(int =0,int,char* =nullptr); //错误
 ```
 在同一作用域的一系列声明语句中，默认参数不能重复或者改变：
 ```cpp
@@ -616,7 +616,7 @@ int area(int len, int wid)
 ## 函数指针  
 程序员只能对函数做两种操作：调用它或者获取它的地址。通过获取函数地址得到的指针能被用来调用该函数：
 ```cpp
-void error(string s)
+void error(string s);
 
 void (*efct)(string); //指向函数的指针，该函数接受一个字符串参数，不返回任何东西
 

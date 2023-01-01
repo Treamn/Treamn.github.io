@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 常量表达式, 函数指针, 函数重载","wordcount":  7186 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "常量表达式, 函数指针, 函数重载","wordcount":  7186 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/","datePublished": "2022-11-09T15:53:25+08:00","dateModified": "2022-11-09T15:53:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -421,9 +421,9 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">p</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">h</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">h</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">p</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">g</span><span class="p">(</span><span class="n">p</span><span class="p">);</span> <span class="c1">//OK，等价与“g(p)；return；”
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">g</span><span class="p">(</span><span class="n">p</span><span class="p">);</span> <span class="c1">//OK，等价与“g(p)；return；”
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -806,9 +806,9 @@ return语句的形式属于下述5种之一：</p>
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">strlen</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">strlen</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">v</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;Annemarie&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">V</span><span class="p">);</span>
@@ -1070,7 +1070,7 @@ return语句的形式属于下述5种之一：</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="o">=</span><span class="k">nullptr</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span><span class="p">);</span> <span class="c1">//错误
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">h</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span> <span class="o">=</span><span class="k">nullptr</span><span class="p">)</span> <span class="c1">//错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">h</span><span class="p">(</span><span class="kt">int</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span> <span class="o">=</span><span class="k">nullptr</span><span class="p">);</span> <span class="c1">//错误
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在同一作用域的一系列声明语句中，默认参数不能重复或者改变：</p>
@@ -1372,7 +1372,7 @@ return语句的形式属于下述5种之一：</p>
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">error</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">error</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">efct</span><span class="p">)(</span><span class="n">string</span><span class="p">);</span> <span class="c1">//指向函数的指针，该函数接受一个字符串参数，不返回任何东西
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
@@ -1481,13 +1481,13 @@ return语句的形式属于下述5种之一：</p>
             <div class="post-info-md"><span><a class="link-to-mardown" href=/2022/c-%E5%87%BD%E6%95%B0/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
                     </span></div>
             <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数" data-hashtags="函数,常量表达式,函数指针,函数重载"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-hashtag="函数"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i class="fab fa-skype fa-fw"></i></a></span>
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数" data-hashtags="常量表达式,函数指针,函数重载"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-hashtag="常量表达式"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Linkedin" data-sharer="linkedin" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/"><i class="fab fa-linkedin fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Pinterest" data-sharer="pinterest" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/"><i class="fab fa-pinterest fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Reddit" data-sharer="reddit" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/"><i class="fab fa-reddit fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Skype" data-sharer="skype" data-url="http://example.org/2022/c-%E5%87%BD%E6%95%B0/" data-title="C&#43;&#43;函数"><i class="fab fa-skype fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%87%BD%E6%95%B0/">函数</a>,&nbsp;<a href="/tags/%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F/">常量表达式</a>,&nbsp;<a href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">函数指针</a>,&nbsp;<a href="/tags/%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/">函数重载</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F/">常量表达式</a>,&nbsp;<a href="/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">函数指针</a>,&nbsp;<a href="/tags/%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/">函数重载</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>

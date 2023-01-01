@@ -4,14 +4,7 @@
         <link>http://example.org/tags/%E5%87%BD%E6%95%B0/</link>
         <description>函数 - 标签 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E5%87%BD%E6%95%B0/" rel="self" type="application/rss+xml" /><item>
-    <title>C&#43;&#43;函数</title>
-    <link>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</link>
-    <pubDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</guid>
-    <description><![CDATA[函数声明函数声明负责指定函数的名字、返回值的类型以及调用该函数所需的参数数量和类型： 1 2 3 Elem* next_elem(); //无须参数，返回Elem* void exit(int); //int类型]]></description>
-</item><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 18 Oct 2022 19:14:46 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E5%87%BD%E6%95%B0/" rel="self" type="application/rss+xml" /><item>
     <title>C&#43;&#43;概览抽象机制</title>
     <link>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E6%8A%BD%E8%B1%A1%E6%9C%BA%E5%88%B6/</link>
     <pubDate>Tue, 18 Oct 2022 19:14:46 &#43;0800</pubDate><author>
