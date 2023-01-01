@@ -14,6 +14,13 @@
     </author><guid>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</guid>
     <description><![CDATA[函数声明函数声明负责指定函数的名字、返回值的类型以及调用该函数所需的参数数量和类型： 1 2 3 Elem* next_elem(); //无须参数，返回Elem* void exit(int); //int类型]]></description>
 </item><item>
+    <title>C&#43;&#43;异常处理</title>
+    <link>http://example.org/2022/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</link>
+    <pubDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>C&#43;&#43;选择适当操作</title>
     <link>http://example.org/2022/c-%E9%80%89%E6%8B%A9%E9%80%82%E5%BD%93%E6%93%8D%E4%BD%9C/</link>
     <pubDate>Mon, 07 Nov 2022 15:55:29 &#43;0800</pubDate><author>
@@ -83,12 +90,5 @@
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/io%E5%BA%93/</guid>
     <description><![CDATA[IO类iostream定义了用于读写流的基本类型 fstream定义了读写命名文件的类型 sstream定义了读写内存string对象的类型 IO]]></description>
-</item><item>
-    <title>Review</title>
-    <link>http://example.org/2022/review/</link>
-    <pubDate>Wed, 06 Jul 2022 19:45:54 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/review/</guid>
-    <description><![CDATA[cin.get()在接收到任意输入后再执行下一条语句。 声明语句使用变量前必须声明它。 尽可能在首次使用变量前声明它。 要将信息项存储在计算机中，]]></description>
 </item></channel>
 </rss>

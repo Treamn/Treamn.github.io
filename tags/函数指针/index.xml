@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>函数指针 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</link>
+        <description>函数指针 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;函数</title>
+    <link>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</link>
+    <pubDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</guid>
+    <description><![CDATA[函数声明函数声明负责指定函数的名字、返回值的类型以及调用该函数所需的参数数量和类型： 1 2 3 Elem* next_elem(); //无须参数，返回Elem* void exit(int); //int类型]]></description>
+</item></channel>
+</rss>

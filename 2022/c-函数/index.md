@@ -665,7 +665,6 @@ void f(Pa pf){
     int x = 7;
     int y = pf1(&x)
 }
-
 ```
 
 
