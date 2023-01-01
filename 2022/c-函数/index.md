@@ -612,3 +612,60 @@ int area(int len, int wid)
     return len*wid;
 }
 ```
+
+## 函数指针  
+程序员只能对函数做两种操作：调用它或者获取它的地址。通过获取函数地址得到的指针能被用来调用该函数：
+```cpp
+void error(string s)
+
+void (*efct)(string); //指向函数的指针，该函数接受一个字符串参数，不返回任何东西
+
+void f(){
+    efct = &error; //efct指向error
+    efct("error"); //通过efct调用error
+}
+```
+编译器发现efct是个函数指针，因此会调用它所指的函数。也就是说，解引用函数指针时可以用*，也可以不用；同样，在获取函数地址时可以用&，也可以不用：  
+```cpp
+void (*f1)(string) = &error;
+void (*f2)(string) = error;
+
+void g(){
+    f1("Vasa"); //上下等价
+    (*f1)("Mary Rose");
+}
+```
+函数指针的参数类型声明与函数本身类似。进行指针赋值操作时，要求完整的函数类型都必须精确匹配：
+```cpp
+void (*pf)(string);
+void f1(string);
+int f2(string);
+void f3(int*);
+
+void f(){
+    pf = &f1; // OK
+    pf = &f2; //错误，返回类型错误
+    pf = &f3; //错误，返回类型错误
+
+    pf("Hera"); // OK
+    pf(1) //错误，返回类型错误
+
+    int i = pf("Zeus"); // 错误，试图将void赋给nit
+}
+```
+C++允许将一个函数指针转换为别的指针类型，但之后必须把得到的结果指针转换回它原来的类型，否则就会出现意想不到的情况：
+```cpp
+using P1 = int(*)(int*);
+using P2 = void(*)(void);
+
+void f(Pa pf){
+    P2 pf2 = reinterpret_cast<P2>(pf)
+    pf2(); //可能发生严重错误
+    P1 pf1 = reinterpret_cast<P1>(f2);  // 把pf2转换回来
+    int x = 7;
+    int y = pf1(&x)
+}
+
+```
+
+

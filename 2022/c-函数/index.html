@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 常量表达式","wordcount":  6693 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "函数, 常量表达式","wordcount":  7186 ,
         "url": "http:\/\/example.org\/2022\/c-%E5%87%BD%E6%95%B0\/","datePublished": "2022-11-09T15:53:25+08:00","dateModified": "2022-11-09T15:53:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -160,14 +160,15 @@
       </ul>
     </li>
     <li><a href="#前置和后置条件">前置和后置条件</a></li>
+    <li><a href="#函数指针">函数指针</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;函数</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/"><i class="far fa-list-alt fa-fw"></i>C++程序设计语言</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6693 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="11-09">11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7186 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 15 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43;程序设计语言</span>
@@ -232,6 +233,7 @@
       </ul>
     </li>
     <li><a href="#前置和后置条件">前置和后置条件</a></li>
+    <li><a href="#函数指针">函数指针</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="函数声明" class="headerLink">
@@ -1352,6 +1354,115 @@ return语句的形式属于下述5种之一：</p>
 </span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">len</span><span class="o">*</span><span class="n">wid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="函数指针" class="headerLink">
+    <a href="#%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88" class="header-mark"></a>函数指针</h2><p>程序员只能对函数做两种操作：调用它或者获取它的地址。通过获取函数地址得到的指针能被用来调用该函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">error</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">efct</span><span class="p">)(</span><span class="n">string</span><span class="p">);</span> <span class="c1">//指向函数的指针，该函数接受一个字符串参数，不返回任何东西
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">efct</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">;</span> <span class="c1">//efct指向error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">efct</span><span class="p">(</span><span class="s">&#34;error&#34;</span><span class="p">);</span> <span class="c1">//通过efct调用error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编译器发现efct是个函数指针，因此会调用它所指的函数。也就是说，解引用函数指针时可以用*，也可以不用；同样，在获取函数地址时可以用&amp;，也可以不用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">f1</span><span class="p">)(</span><span class="n">string</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">f2</span><span class="p">)(</span><span class="n">string</span><span class="p">)</span> <span class="o">=</span> <span class="n">error</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">g</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f1</span><span class="p">(</span><span class="s">&#34;Vasa&#34;</span><span class="p">);</span> <span class="c1">//上下等价
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">(</span><span class="o">*</span><span class="n">f1</span><span class="p">)(</span><span class="s">&#34;Mary Rose&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>函数指针的参数类型声明与函数本身类似。进行指针赋值操作时，要求完整的函数类型都必须精确匹配：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="n">string</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f1</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">f2</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f3</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">f1</span><span class="p">;</span> <span class="c1">// OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">f2</span><span class="p">;</span> <span class="c1">//错误，返回类型错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">f3</span><span class="p">;</span> <span class="c1">//错误，返回类型错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">pf</span><span class="p">(</span><span class="s">&#34;Hera&#34;</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//错误，返回类型错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="s">&#34;Zeus&#34;</span><span class="p">);</span> <span class="c1">// 错误，试图将void赋给nit
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>C++允许将一个函数指针转换为别的指针类型，但之后必须把得到的结果指针转换回它原来的类型，否则就会出现意想不到的情况：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">P1</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">int</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">P2</span> <span class="o">=</span> <span class="kt">void</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Pa</span> <span class="n">pf</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">P2</span> <span class="n">pf2</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pf2</span><span class="p">();</span> <span class="c1">//可能发生严重错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">P1</span> <span class="n">pf1</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">P1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f2</span><span class="p">);</span>  <span class="c1">// 把pf2转换回来
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pf1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
