@@ -4,12 +4,12 @@
         <link>http://example.org/tags/%E6%9E%9A%E4%B8%BE/</link>
         <description>枚举 - 标签 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 01 Jan 2023 18:39:26 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%9E%9A%E4%B8%BE/" rel="self" type="application/rss+xml" /><item>
-    <title>C&#43;&#43;结联枚</title>
-    <link>http://example.org/2023/c-%E7%BB%93%E8%81%94%E6%9E%9A/</link>
-    <pubDate>Sun, 01 Jan 2023 18:39:26 &#43;0800</pubDate><author>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 27 Oct 2022 19:58:33 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%9E%9A%E4%B8%BE/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;结构联合与枚举</title>
+    <link>http://example.org/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/</link>
+    <pubDate>Thu, 27 Oct 2022 19:58:33 &#43;0800</pubDate><author>
         <name>煜江叔叔</name>
-    </author><guid>http://example.org/2023/c-%E7%BB%93%E8%81%94%E6%9E%9A/</guid>
+    </author><guid>http://example.org/2022/c-%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E4%B8%8E%E6%9E%9A%E4%B8%BE/</guid>
     <description><![CDATA[结构数组是相同类型的集合，相反，struct是任意类型元素的集合： 1 2 3 4 5 6 7 8 struct Address{ const char* name; int number; const char* street; const char* town; char state[2]; const char* zip; }; 声明Address类]]></description>
 </item></channel>
 </rss>

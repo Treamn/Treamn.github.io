@@ -1,5 +1,4 @@
-# C++结联枚
-
+# C++结构联合与枚举
 
 
 ## 结构  
@@ -134,14 +133,14 @@ struct Point{
     int x,y;
 };
 
-Point points[3]{{1,2},{3,4},{5,6}};
+
 int x2 = points[2].x;
 
 struct Array{
     Point elem[3];
 };
 
-Array points2 {{1,2},{3,4},{5,6}};
+
 int y2 = points2.elem[2].y;
 ```
 把内置数组置于struct内部意味着我们可以把数组当成一个对象来用，可以在初始化和赋值时直接拷贝struct：
@@ -364,6 +363,4 @@ enum Color_code:char{green,yellow,orange,red}; //定义
 enum{arrow_up=1, arrow_down, arrow_sideways};
 ```
 如果只需要一组整型变量，而不是用于声明变量的类型，则可以使用未命名的enum。
-
-
 
