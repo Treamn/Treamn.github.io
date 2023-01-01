@@ -133,14 +133,14 @@ struct Point{
     int x,y;
 };
 
-Point points[3]{{1,2},{3,4},{5,6}};
+// Point points[3]{{1,2},{3,4},{5,6}};
 int x2 = points[2].x;
 
 struct Array{
     Point elem[3];
 };
 
-Array points2 {{1,2},{3,4},{5,6}};
+// Array points2 {{1,2},{3,4},{5,6}};
 int y2 = points2.elem[2].y;
 ```
 把内置数组置于struct内部意味着我们可以把数组当成一个对象来用，可以在初始化和赋值时直接拷贝struct：
