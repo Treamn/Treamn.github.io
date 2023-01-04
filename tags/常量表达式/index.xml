@@ -4,7 +4,14 @@
         <link>http://example.org/tags/%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
         <description>常量表达式 - 标签 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 04 Jan 2023 18:10:45 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;名字空间</title>
+    <link>http://example.org/2023/c-%E5%90%8D%E5%AD%97%E7%A9%BA%E9%97%B4/</link>
+    <pubDate>Wed, 04 Jan 2023 18:10:45 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/c-%E5%90%8D%E5%AD%97%E7%A9%BA%E9%97%B4/</guid>
+    <description><![CDATA[名字空间名字空间的概念用来直接表示本属一体的一组属性。名字空间的成员都位于相同的作用域中，无须特殊符号即可互相访问，而从名字空间外访问它们就]]></description>
+</item><item>
     <title>C&#43;&#43;函数</title>
     <link>http://example.org/2022/c-%E5%87%BD%E6%95%B0/</link>
     <pubDate>Wed, 09 Nov 2022 15:53:25 &#43;0800</pubDate><author>
