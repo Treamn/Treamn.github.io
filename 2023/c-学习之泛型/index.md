@@ -88,8 +88,29 @@ replace(list.begin(), list.end(), 0, 42);
 ```cpp
 replace_copy(list.cbegin(), list.cend(), back_inserter(ivec), 0, 42);
 ```
-调整后，原序列不变，新序列保存在ivec中。
+调整后，原序列不变，新序列保存在ivec中。  
 
 
 
+## 重排容器元素算法    
 
+### sort()   
+```cpp
+sort(vec.beegin(), vec.end());
+```
+将无序vec重新排列为有序vec。
+
+### unique()  
+unique()将容器中重复出现的元素只保留一个，并将其他移至末尾。  
+
+
+
+### lambda表达式  
+可将其理解为一个未命名的内联函数。   
+如果lambda的函数体包含任何单一return语句之外的内容，且未指定返回类型，则返回void。  
+
+
+**lambda表达式部分待补充**
+
+
+## 再探迭代器

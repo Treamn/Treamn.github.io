@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2023\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%B3%9B%E5%9E%8B\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "泛型, 容器","wordcount":  870 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "泛型, 容器","wordcount":  1040 ,
         "url": "http:\/\/example.org\/2023\/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%B3%9B%E5%9E%8B\/","datePublished": "2023-03-13T17:12:38+08:00","dateModified": "2023-03-13T17:12:38+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -143,14 +143,22 @@
         <li><a href="#replace_copy">replace_copy()</a></li>
       </ul>
     </li>
+    <li><a href="#重排容器元素算法">重排容器元素算法</a>
+      <ul>
+        <li><a href="#sort">sort()</a></li>
+        <li><a href="#unique">unique()</a></li>
+        <li><a href="#lambda表达式">lambda表达式</a></li>
+      </ul>
+    </li>
+    <li><a href="#再探迭代器">再探迭代器</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "wide")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">C&#43;&#43;学习之泛型</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/c++%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>C++学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/c++-primer/"><i class="far fa-list-alt fa-fw"></i>C++ Primer</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-13">03-13</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-13">03-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 870 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-13">03-13</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-13">03-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1040 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - C&#43;&#43; Primer</span>
@@ -197,6 +205,14 @@
         <li><a href="#replace_copy">replace_copy()</a></li>
       </ul>
     </li>
+    <li><a href="#重排容器元素算法">重排容器元素算法</a>
+      <ul>
+        <li><a href="#sort">sort()</a></li>
+        <li><a href="#unique">unique()</a></li>
+        <li><a href="#lambda表达式">lambda表达式</a></li>
+      </ul>
+    </li>
+    <li><a href="#再探迭代器">再探迭代器</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>泛型算法可用于不同类型的容器和不同类型的元素,大多数算法定义域algorothm库中。</p>
@@ -335,7 +351,25 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>调整后，原序列不变，新序列保存在ivec中。</p>
+<h2 id="重排容器元素算法" class="headerLink">
+    <a href="#%e9%87%8d%e6%8e%92%e5%ae%b9%e5%99%a8%e5%85%83%e7%b4%a0%e7%ae%97%e6%b3%95" class="header-mark"></a>重排容器元素算法</h2><h3 id="sort" class="headerLink">
+    <a href="#sort" class="header-mark"></a>sort()</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">sort</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">beegin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>将无序vec重新排列为有序vec。</p>
+<h3 id="unique" class="headerLink">
+    <a href="#unique" class="header-mark"></a>unique()</h3><p>unique()将容器中重复出现的元素只保留一个，并将其他移至末尾。</p>
+<h3 id="lambda表达式" class="headerLink">
+    <a href="#lambda%e8%a1%a8%e8%be%be%e5%bc%8f" class="header-mark"></a>lambda表达式</h3><p>可将其理解为一个未命名的内联函数。<br>
+如果lambda的函数体包含任何单一return语句之外的内容，且未指定返回类型，则返回void。</p>
+<p><strong>lambda表达式部分待补充</strong></p>
+<h2 id="再探迭代器" class="headerLink">
+    <a href="#%e5%86%8d%e6%8e%a2%e8%bf%ad%e4%bb%a3%e5%99%a8" class="header-mark"></a>再探迭代器</h2></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
