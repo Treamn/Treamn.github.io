@@ -4,9 +4,16 @@
         <link>http://example.org/</link>
         <description>Dling | 煜江的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 04 Jan 2023 20:20:39 &#43;0800</lastBuildDate>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 13 Mar 2023 17:12:38 &#43;0800</lastBuildDate>
             <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>C&#43;&#43;学习之泛型</title>
+    <link>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%B3%9B%E5%9E%8B/</link>
+    <pubDate>Mon, 13 Mar 2023 17:12:38 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%B3%9B%E5%9E%8B/</guid>
+    <description><![CDATA[泛型算法可用于不同类型的容器和不同类型的元素,大多数算法定义域algorothm库中。 只读算法find()1 2 3 4 5 #include &lt;algorithm&gt; vector&lt;int&gt; vec{1,2,3,4,5}; int val = 4; auto result = find(vec.cbegin(),]]></description>
+</item><item>
     <title>C&#43;&#43;类</title>
     <link>http://example.org/2023/c-%E7%B1%BB/</link>
     <pubDate>Wed, 04 Jan 2023 20:20:39 &#43;0800</pubDate><author>
@@ -83,12 +90,5 @@
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/c-%E6%A6%82%E8%A7%88%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
     <description><![CDATA[类型在定义一个变量时，如果变量的类型可以由初始化器推断得到，则无须显式指定其类型： 1 2 3 4 5 auto b = true; //bool auto ch = &#39;x&#39;; //char auto i = 123; //int auto d = 1.2; //double auto z = sqrt(y);]]></description>
-</item><item>
-    <title>轻量化网络内容小结</title>
-    <link>http://example.org/2022/lightweight/</link>
-    <pubDate>Tue, 27 Sep 2022 16:49:45 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/lightweight/</guid>
-    <description><![CDATA[ADDerNetQ:在硬件设备上加法的复杂度远小于乘法, 为更好地减少计算量提出AdderNet. 对AdderNet中的Winograd算法 （]]></description>
 </item></channel>
 </rss>

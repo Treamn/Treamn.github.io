@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>泛型 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E6%B3%9B%E5%9E%8B/</link>
+        <description>泛型 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 13 Mar 2023 17:12:38 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E6%B3%9B%E5%9E%8B/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;学习之泛型</title>
+    <link>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%B3%9B%E5%9E%8B/</link>
+    <pubDate>Mon, 13 Mar 2023 17:12:38 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%B3%9B%E5%9E%8B/</guid>
+    <description><![CDATA[泛型算法可用于不同类型的容器和不同类型的元素,大多数算法定义域algorothm库中。 只读算法find()1 2 3 4 5 #include &lt;algorithm&gt; vector&lt;int&gt; vec{1,2,3,4,5}; int val = 4; auto result = find(vec.cbegin(),]]></description>
+</item></channel>
+</rss>
