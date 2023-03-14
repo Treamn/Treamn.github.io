@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>map - 标签 - Dling</title>
+        <link>http://example.org/tags/map/</link>
+        <description>map - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 14 Mar 2023 10:34:58 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/map/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;学习之关联容器</title>
+    <link>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</link>
+    <pubDate>Tue, 14 Mar 2023 10:34:58 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</guid>
+    <description><![CDATA[mapmap是关键字－值对的集合。 map&lt;string, int&gt; word分别指定关键字的类型和值的类型。 word.first和word.second分别用于取关键字和]]></description>
+</item></channel>
+</rss>
