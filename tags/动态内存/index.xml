@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>动态内存 - 标签 - Dling</title>
+        <link>http://example.org/tags/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
+        <description>动态内存 - 标签 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 15 Mar 2023 10:01:17 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;学习之动态内存</title>
+    <link>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
+    <pubDate>Wed, 15 Mar 2023 10:01:17 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</guid>
+    <description><![CDATA[动态内存与智能指针动态内存的管理是通过一对运算符来完成的：new，在动态内存中卫队才能够分配空间并返回一个指向该对象的指针；delete接受]]></description>
+</item></channel>
+</rss>

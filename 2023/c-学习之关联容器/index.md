@@ -4,9 +4,7 @@
 
 ## map  
 map是关键字－值对的集合。　  
-`map<string, int>　word`分别指定关键字的类型和值的类型。      
-
-　　　　　　　　
+`map<string, int>　word`分别指定关键字的类型和值的类型。      　　　　
 `word.first`和`word.second`分别用于取关键字和值。　
 
 
