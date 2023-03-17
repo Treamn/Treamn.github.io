@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>简单 - 系列 - Dling</title>
+        <link>http://example.org/series/%E7%AE%80%E5%8D%95/</link>
+        <description>简单 - 系列 - Dling</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 17 Mar 2023 08:56:38 &#43;0800</lastBuildDate><atom:link href="http://example.org/series/%E7%AE%80%E5%8D%95/" rel="self" type="application/rss+xml" /><item>
+    <title>Leetcode2389</title>
+    <link>http://example.org/2023/2389/</link>
+    <pubDate>Fri, 17 Mar 2023 08:56:38 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/2389/</guid>
+    <description><![CDATA[题目描述给你一个长度为 n 的整数数组 nums ，和一个长度为 m 的整数数组 queries 。 返回一个长度为 m 的数组 answer ，其中 answer[i] 是 nums 中 元素之和小于等于 queries[i] 的子序列的最大长度]]></description>
+</item></channel>
+</rss>

@@ -4,9 +4,16 @@
         <link>http://example.org/</link>
         <description>Dling | 煜江的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 15 Mar 2023 10:01:17 &#43;0800</lastBuildDate>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 17 Mar 2023 08:56:38 &#43;0800</lastBuildDate>
             <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Leetcode2389</title>
+    <link>http://example.org/2023/2389/</link>
+    <pubDate>Fri, 17 Mar 2023 08:56:38 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/2389/</guid>
+    <description><![CDATA[题目描述给你一个长度为 n 的整数数组 nums ，和一个长度为 m 的整数数组 queries 。 返回一个长度为 m 的数组 answer ，其中 answer[i] 是 nums 中 元素之和小于等于 queries[i] 的子序列的最大长度]]></description>
+</item><item>
     <title>C&#43;&#43;学习之动态内存</title>
     <link>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
     <pubDate>Wed, 15 Mar 2023 10:01:17 &#43;0800</pubDate><author>
@@ -83,12 +90,5 @@
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/c-%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/</guid>
     <description><![CDATA[指针对于类型T来说，T是表示“指向T的指针”的；类型。换句话说，T类型的变量能存放T类型对象的地址： 1 2 char c = &#39;a&#39;; char* p = &amp;c; //p存放c的地址 对]]></description>
-</item><item>
-    <title>C&#43;&#43;类型与声明</title>
-    <link>http://example.org/2022/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E/</link>
-    <pubDate>Thu, 20 Oct 2022 19:36:20 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/c-%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%A3%B0%E6%98%8E/</guid>
-    <description><![CDATA[类型布尔值根据定义，当我们想把布尔值转换成整数时，trye转为1，false转为0。反之，整数值也能在需需要的时候隐式的转换成布尔值，其中非]]></description>
 </item></channel>
 </rss>
