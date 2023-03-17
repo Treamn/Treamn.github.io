@@ -39,7 +39,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/2023\/2389\/"
-        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "前缀和","wordcount":  402 ,
+        },"image": ["http:\/\/example.org\/images\/screenshot.png"],"genre": "posts","keywords": "前缀和","wordcount":  423 ,
         "url": "http:\/\/example.org\/2023\/2389\/","datePublished": "2023-03-17T08:56:38+08:00","dateModified": "2023-03-17T08:56:38+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "煜江叔叔","logo": "http:\/\/example.org\/avatar.jpg"},"author": {
@@ -130,7 +130,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">煜江叔叔</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/"><i class="far fa-folder fa-fw"></i>每日一题</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/leetcode/"><i class="far fa-list-alt fa-fw"></i>Leetcode</a>&nbsp;<a href="/series/%E7%AE%80%E5%8D%95/"><i class="far fa-list-alt fa-fw"></i>简单</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-17">03-17</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-17">03-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 402 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="03-17">03-17</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="03-17">03-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 423 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
@@ -170,7 +170,7 @@
 <h2 id="解题思路" class="headerLink">
     <a href="#%e8%a7%a3%e9%a2%98%e6%80%9d%e8%b7%af" class="header-mark"></a>解题思路</h2><p>因为仅求元素和小于等于 queries[i] 的子序列的最大长度，因此可以先对 nums 进行排序，排序后不影响最终结果。  <br>
 首先，声明一个长度为 n+1 大小的数组 f 用于存储 nums 中前 i 个元素之和， 声明一个长度为 m 的数组 ans 用于存储最终结果。   <br>
-其次，由于求最大长度的子序列，因此使用 upper_bound() 查找 queries[i] 是否在 f 中出现，如果没出现，将 ans[i] 置零；如果出现，则将 ans[i] 置为当前位置-1。 此处 -1 是由于 upper_bound() 返回的是查找元素之后的位置，因此需要 -1。  <br>
+其次，由于求最大长度的子序列，因此使用 upper_bound() 查找 queries[i] 是否在 f 中出现，如果没出现，将 ans[i] 置零；如果出现，则将 ans[i] 置为当前位置-1。 此处 -1 是由于 upper_bound() 返回的是首个大于查找元素的位置，而 f[i]存储的是 nums 中前 i-1 个元素的和，因此需要 -1。  <br>
 最终，返回ans，本题结束。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
