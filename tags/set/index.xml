@@ -4,7 +4,14 @@
         <link>http://example.org/tags/set/</link>
         <description>set - 标签 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 14 Mar 2023 10:34:58 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/set/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 20 Mar 2023 16:31:21 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/set/" rel="self" type="application/rss+xml" /><item>
+    <title>OOP</title>
+    <link>http://example.org/2023/oop/</link>
+    <pubDate>Mon, 20 Mar 2023 16:31:21 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/oop/</guid>
+    <description><![CDATA[概述虚函数：基类希望它的派生类个自定义适合自身的版本，此时基类就将这些函数声明成虚函数。 定义基类和派生类定义基类作为继承关系中根节点的类通常]]></description>
+</item><item>
     <title>C&#43;&#43;学习之关联容器</title>
     <link>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</link>
     <pubDate>Tue, 14 Mar 2023 10:34:58 &#43;0800</pubDate><author>

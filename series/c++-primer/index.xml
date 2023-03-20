@@ -4,7 +4,14 @@
         <link>http://example.org/series/c&#43;&#43;-primer/</link>
         <description>C&#43;&#43; Primer - 系列 - Dling</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>897862595@qq.com (煜江叔叔)</managingEditor>
-            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 15 Mar 2023 10:01:17 &#43;0800</lastBuildDate><atom:link href="http://example.org/series/c&#43;&#43;-primer/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>897862595@qq.com (煜江叔叔)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 20 Mar 2023 16:31:21 &#43;0800</lastBuildDate><atom:link href="http://example.org/series/c&#43;&#43;-primer/" rel="self" type="application/rss+xml" /><item>
+    <title>OOP</title>
+    <link>http://example.org/2023/oop/</link>
+    <pubDate>Mon, 20 Mar 2023 16:31:21 &#43;0800</pubDate><author>
+        <name>煜江叔叔</name>
+    </author><guid>http://example.org/2023/oop/</guid>
+    <description><![CDATA[概述虚函数：基类希望它的派生类个自定义适合自身的版本，此时基类就将这些函数声明成虚函数。 定义基类和派生类定义基类作为继承关系中根节点的类通常]]></description>
+</item><item>
     <title>C&#43;&#43;学习之动态内存</title>
     <link>http://example.org/2023/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
     <pubDate>Wed, 15 Mar 2023 10:01:17 &#43;0800</pubDate><author>
@@ -67,12 +74,5 @@
         <name>煜江叔叔</name>
     </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/</guid>
     <description><![CDATA[优先级与结合律 优先级会影响程序的正确性，这一点也适用于解引用和指针运算。 1 2 3 int ia[] = {0,2,4,6,8}; int last = *(ia + 4); //此时last值为ia[4]的值 last = *ia +]]></description>
-</item><item>
-    <title>C&#43;&#43;学习之string、vector、迭代器和数组</title>
-    <link>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/</link>
-    <pubDate>Sat, 19 Mar 2022 17:43:16 &#43;0800</pubDate><author>
-        <name>煜江叔叔</name>
-    </author><guid>http://example.org/2022/c-%E5%AD%A6%E4%B9%A0%E4%B9%8Bstringvector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E6%95%B0%E7%BB%84/</guid>
-    <description><![CDATA[stringstring表示可变长的字符序列，使用string类型前需要包含string头文件，同时需要在命名空间中声明。需要注意，stri]]></description>
 </item></channel>
 </rss>
